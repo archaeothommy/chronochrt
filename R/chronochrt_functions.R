@@ -1,24 +1,55 @@
 library(tidyverse)
 library(readxl)
 
+xy <- add_chron(xy, "Amerika", "Panama", 300, 400, "sub", 1.5, new_table = FALSE)
 
 # Make new chronological unit ---------------------------------------------
 
+  # makes a tibble or add a row to a tibble with the columns region, unit, start, end, kind,
+  # allows input of single values or vectors
+  # works only with the given naming scheme, for other ones use regular dplyr-functions (add_row)
 
+  # to implement: telling error messages
+
+add_chron <- function(data, region, unit, start, end, kind = c(NA, "add", "sub", "addsub"), level, new_table = FALSE, ...)
+  {
+  if (!is.na(check_format())) {stop(check_format())}
+  if (new_table == TRUE) {data <- tibble("region" = region, "unit" = unit, "start" = start, "end" = end, "kind" = kind, ...)}
+  if (new_table == FALSE) {data <- add_row(data, region, unit, start, end, "kind" = kind, ...)}
+  data
+}
 
 # Import existing dataset -------------------------------------------------
 
-data_chronochart <- read_excel("test.xlsx") %>%
-  mutate(x_center = (2*(column_pos-1)+1)/(2*column_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
-         x_width = 1/column_tot,
-         y_center = (Start+End)/2,
-         y_width = End - Start)
+  # makes a tibble out of a file, the relevant columns must be identified and will be renamed
 
-# # Label input  ------------------------------------------------------------
+  # implementation needed: guessing of format from file name and choosing of right import method to get more flexibility
+
+import_chron <- function(path, region, unit, start, end, kind, level, ...)
+  {
+   data <- read_excel(path, ...) %>%
+    rename(region = region, unit= unit, start = start, kind = kind, level = level)
+   # implementation check_format like in add_chron
+  data
+}
+
+# Label input  ------------------------------------------------------------
 
 
 
 # Plot chart --------------------------------------------------------------------
+
+  # store plot information in hidden variable
+make_chronochart <- function(data)
+  {
+  data <- data %>%
+
+  mutate(x_center = (2*(column_pos-1)+1)/(2*column_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
+         x_width = 1/column_tot,
+         y_center = (Start+End)/2,
+         y_width = End - Start)
+}
+
 
 plot_chronochart <- ggplot(data_chronochart)
 plot_chronochart +
@@ -212,3 +243,14 @@ function (base_size = 11, base_family = "", base_line_size = base_size/22,
                                 colour = NA), complete = TRUE)
 }
 
+
+# Check formats -----------------------------------------------------------
+
+  # evaluation to an expression NA if everything is fine and errormessage if something is wrong
+check_format <- funtion()
+  {
+    #zu implementierende checks:
+    #stopifnot(is.character(region), is.numeric(start), is.numeric(end), level%%1==0, kind %in% c(NA, "add", "sub", "addsub"))
+    # inkl. Ausgabe vernünftiger Fehlermeldungen
+
+}
