@@ -1,7 +1,30 @@
 library(tidyverse)
 library(readxl)
 
-xy <- add_chron(xy, "Amerika", "Panama", 300, 400, "sub", 1.5, new_table = FALSE)
+# example/playground
+xy <- add_chron(xy,
+                c("A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "C", "B", "B", "C", "C", "C", "C", "A", "A", "A"),
+                c("Test 1", "Test 2b", "Test 2", "Test 2a", "Test 6a", "Test 6b", "Test 6c", "Test 6d", "Test 3", "Test 1", "Test 2", "Test 3", "Test 3", "Test 4", "Test 5", "Test 1", "Test 2", "Test 4", "Test 5", "Test 6", "Test 2a1", "Test 2a2"),
+                c(-2500, -750, -1500, -1500, -400, -350, -150, 100, -200, -3000, -2000, -1500, -750, -700, -150, -2000, -1500, 0, 150, -400, -1500, -1000),
+                c(-1500, -200, -200, -750, -350, -250, 100, 300, 500, -2000, -1500, -700, 0, -150, 100, -1500, -750, 150, 300, 300, -1000, -750),
+                c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3),
+                c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE),
+                new_table = TRUE) %>%
+    add_chron(., c("D"), c("Test 1", "Test 2", "Test 3", "Test 3a", "Test 3b", "Test 4"), c(100, 200, 300, 300, 400, 500), c(200, 300, 500, 400, 500, 600), c(1, 1, 1, 2, 2, 1)) %>%
+
+  group_by(region, add) %>%
+  mutate(subchron = subchron_count(start, end)) %>%
+  mutate(col_tot = case_when(level > subchron ~ level,
+                             level == subchron ~ level +1,
+                             level < subchron ~ level + subchron)) %>%
+  mutate(x_center = (2*(level-1)+1)/(2*col_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
+         x_width = 1/col_tot,
+         y_center = (start+end)/2,
+         y_width = end - start) %>%
+  mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
+ # Problem weiterhin: Test 2b: wie implementieren?
+
+plot_chronochart(xy)
 
 # Make new chronological unit ---------------------------------------------
 
@@ -11,11 +34,11 @@ xy <- add_chron(xy, "Amerika", "Panama", 300, 400, "sub", 1.5, new_table = FALSE
 
   # to implement: telling error messages
 
-add_chron <- function(data, region, unit, start, end, kind = c(NA, "add", "sub", "addsub"), level, new_table = FALSE, ...)
+add_chron <- function(data, region, unit, start, end, level = 1, add = FALSE, new_table = FALSE, ...)
   {
-  if (!is.na(check_format())) {stop(check_format())}
-  if (new_table == TRUE) {data <- tibble("region" = region, "unit" = unit, "start" = start, "end" = end, "kind" = kind, ...)}
-  if (new_table == FALSE) {data <- add_row(data, region, unit, start, end, "kind" = kind, ...)}
+  #if (!is.na(check_format())) {stop(check_format())}
+  if (new_table == TRUE) {data <- tibble(region, unit, start, end, level, add, ...)}
+  if (new_table == FALSE) {data <- add_row(data, region, unit, start, end, level, add, ...)}
   data
 }
 
@@ -25,10 +48,10 @@ add_chron <- function(data, region, unit, start, end, kind = c(NA, "add", "sub",
 
   # implementation needed: guessing of format from file name and choosing of right import method to get more flexibility
 
-import_chron <- function(path, region, unit, start, end, kind, level, ...)
+import_chron <- function(path, region, unit, start, end, level, add = FALSE, ...)
   {
    data <- read_excel(path, ...) %>%
-    rename(region = region, unit= unit, start = start, kind = kind, level = level)
+    rename(region = region, unit= unit, start = start, kind = kind, level = level, add = add)
    # implementation check_format like in add_chron
   data
 }
@@ -40,27 +63,31 @@ import_chron <- function(path, region, unit, start, end, kind, level, ...)
 # Plot chart --------------------------------------------------------------------
 
   # store plot information in hidden variable
-make_chronochart <- function(data)
+plot_chronochart <- function(data)
   {
   data <- data %>%
+    group_by(region, add) %>%
+    mutate(subchron = subchron_count(start, end)) %>%
+    mutate(col_tot = case_when(level > subchron ~ level,
+                               level == subchron ~ level +1,
+                               level < subchron ~ level + subchron)) %>%
+    mutate(x_center = (2*(level-1)+1)/(2*col_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
+           x_width = 1/col_tot,
+           y_center = (start+end)/2,
+           y_width = end - start) %>%
+    mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
 
-  mutate(x_center = (2*(column_pos-1)+1)/(2*column_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
-         x_width = 1/column_tot,
-         y_center = (Start+End)/2,
-         y_width = End - Start)
+  plot <- ggplot(data) +
+    geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid") +
+    geom_text(aes(x = x_center, y = y_center, label = unit)) +
+    scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL) +
+    scale_y_continuous(name = "", breaks = round(seq(min(data$start), max(data$end), by = 250),1), minor_breaks = NULL) +
+    facet_grid(cols = vars(region), scales = "free_x", space = "free_x") +
+    theme_bw() +
+    theme(panel.spacing = unit(0, "lines"), panel.background = element_rect(fill = "grey"))
+
+  plot
 }
-
-
-plot_chronochart <- ggplot(data_chronochart)
-plot_chronochart +
-  geom_tile(aes(x = x_center, width = 1/column_tot, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid") +
-  geom_text(aes(x = x_center, y = y_center, label = Epoch)) +
-  scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL) +
-  scale_y_continuous(name = "Year", breaks = round(seq(min(data_chronochart$Start), max(data_chronochart$End), by = 250),1), minor_breaks = NULL) +
-  facet_grid(cols = vars(Area)) +
-  theme_bw() +
-  theme(panel.spacing = unit(0, "lines"))
-
 
 # Plot labels -------------------------------------------------------------
 
@@ -250,7 +277,26 @@ function (base_size = 11, base_family = "", base_line_size = base_size/22,
 check_format <- funtion()
   {
     #zu implementierende checks:
-    #stopifnot(is.character(region), is.numeric(start), is.numeric(end), level%%1==0, kind %in% c(NA, "add", "sub", "addsub"))
+    #stopifnot(is.character(region), is.numeric(start), is.numeric(end), level = is numeric + ganzzahlig , add = boolean
     # inkl. Ausgabe vernünftiger Fehlermeldungen
 
+}
+
+
+# Helper function ---------------------------------------------------------
+
+subchron_count <- function(left, right) #
+{
+  data <- rep_len(0, length(left))
+
+  for(i in 1:(length(left)))
+  {
+    for(j in 1:length(left))
+    {
+      if (left[i] >= left[j] & left[i] < right[j] & i != j){
+        data[i] <- data[i]+1
+      }
+    }
+  }
+  data
 }
