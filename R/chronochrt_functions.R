@@ -1,6 +1,6 @@
 library(tidyverse)
 library(readxl)
-
+library(imager)
 # example/playground
 xy <- add_chron(xy,
                 c("A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "C", "B", "B", "C", "C", "C", "C", "A", "A", "A"),
@@ -10,21 +10,9 @@ xy <- add_chron(xy,
                 c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3),
                 c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE),
                 new_table = TRUE) %>%
-    add_chron(., c("D"), c("Test 1", "Test 2", "Test 3", "Test 3a", "Test 3b", "Test 4"), c(100, 200, 300, 300, 400, 500), c(200, 300, 500, 400, 500, 600), c(1, 1, 1, 2, 2, 1)) %>%
+    add_chron(., c("D"), c("Test 1", "Test 2", "Test 3", "Test 3a", "Test 3b", "Test 4"), c(100, 200, 300, 300, 400, 500), c(200, 300, 500, 400, 500, 600), c(1, 1, 1, 2, 2, 1))
 
-  group_by(region, add) %>%
-  mutate(subchron = subchron_count(start, end)) %>%
-  mutate(col_tot = case_when(level > subchron ~ level,
-                             level == subchron ~ level +1,
-                             level < subchron ~ level + subchron)) %>%
-  mutate(x_center = (2*(level-1)+1)/(2*col_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
-         x_width = 1/col_tot,
-         y_center = (start+end)/2,
-         y_width = end - start) %>%
-  mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
- # Problem weiterhin: Test 2b: wie implementieren?
-
-plot_chronochart(xy)
+plot_chronochrt(xy, years_major = 250)
 
 # Make new chronological unit ---------------------------------------------
 
@@ -58,226 +46,111 @@ import_chron <- function(path, region, unit, start, end, level, add = FALSE, ...
 
 # Label input  ------------------------------------------------------------
 
+  # add text labels
+
+    # works analogous to add_chron
+
+  add_label_text <- function (region, year, annotation, ...)
+  {
+    #if (!is.na(check_format())) {stop(check_format())}
+    labels <- tibble(region, year, annotation, ...)
+
+    labels
+  }
+
+  # add image labels
+
+    #functions aimed: input of image,
+  # determining input for geom_raster (x, y min/max) out of image size, prevent distortion
+  # storing in list so that all images can be plotted with one command
+  # shrink images to size given
+
+  add_image <- function (region, path, year,
+  {
+    labels_image <-
+
+  }
+
+
+  # for bitmaps/files:
+  annotation_raster(readPNG("C:/Dokumente/Forschung/Vignette Erz.png"), 0.25, 0.5, -300, 300)
+
+
 
 
 # Plot chart --------------------------------------------------------------------
 
-  # store plot information in hidden variable
-plot_chronochart <- function(data)
+  # to implement: differentiation between e. g. Test 2b and Test 2a1 (last subunits and subunits with missing column)
+  # current: all last subunits affected
+
+  # in plot: switches/input for: labels, breaks auf y-Achse,
+
+plot_chronochrt <- function(data, year, labels_text, years_major = 100, breaks_minor = 1, labels_image)
   {
-  data <- data %>%
+  data <- data %>% # calculation of geometry
     group_by(region, add) %>%
     mutate(subchron = subchron_count(start, end)) %>%
     mutate(col_tot = case_when(level > subchron ~ level,
                                level == subchron ~ level +1,
                                level < subchron ~ level + subchron)) %>%
-    mutate(x_center = (2*(level-1)+1)/(2*col_tot), # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
+    mutate(x_center = (level-0.5)/col_tot, # column_pos lowered by one to keep counting of position starting at 1, i. e. coherent to the natural counting habit and coherent mit counting for column_tot
            x_width = 1/col_tot,
            y_center = (start+end)/2,
            y_width = end - start) %>%
+    mutate_at(., .vars = c(x_center, x_width), .funs = width_corr(x_center, x_width)) %>%
+   # mutate(x_width = if_else(level > subchron & subchron != 0, true = 1/col_tot + 1/(2*(col_tot+1)), false = x_width),
+   #       x_center = if_else(level > subchron & subchron != 0, true = (level-0.5)/col_tot - 1/(4*(col_tot+1)), false = x_center)) %>%
     mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
 
-  plot <- ggplot(data) +
+  plot <- ggplot(data) + # plot
     geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid") +
     geom_text(aes(x = x_center, y = y_center, label = unit)) +
-    scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL) +
-    scale_y_continuous(name = "", breaks = round(seq(min(data$start), max(data$end), by = 250),1), minor_breaks = NULL) +
+    scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
+    scale_y_continuous(name = "", breaks = round(seq(min(data$start), max(data$end), by = years_major),1)) +
     facet_grid(cols = vars(region), scales = "free_x", space = "free_x") +
-    theme_bw() +
-    theme(panel.spacing = unit(0, "lines"), panel.background = element_rect(fill = "grey"))
+    theme_chronochrt()
+
+   # geom_text(data = labels_text, aes(y=year, x = ###, label = annotation, hjust = 0, vjust = 0.5), na.rm = TRUE, size = 2)
+
 
   plot
 }
 
-# Plot labels -------------------------------------------------------------
-
-
-
-
 # ChronochRt theme --------------------------------------------------------
 
-# structure copied from theme_grey, the basic theme in ggplot2
-theme_chronochrt <- function (base_size = 11, base_family = "", base_line_size = base_size/22,
-          base_rect_size = base_size/22)
-{
-  half_line <- base_size / 2
-  theme(
-    line = element_line(
-      colour = "black",
-      size = base_line_size,
-      linetype = 1,
-      lineend = "butt"
-    ),
-    rect = element_rect(
-      fill = "white",
-      colour = "black",
-      size = base_rect_size,
-      linetype = 1
-    ),
-    text = element_text(
-      family = base_family,
-      face = "plain",
-      colour = "black",
-      size = base_size,
-      lineheight = 0.9,
-      hjust = 0.5,
-      vjust = 0.5,
-      angle = 0,
-      margin = margin(),
-      debug = FALSE
-    ),
-    axis.line = element_blank(),
-    axis.line.x = NULL,
-    axis.line.y = NULL,
-    axis.text = element_text(size = rel(0.8),
-                             colour = "grey30"),
-    axis.text.x = element_text(margin = margin(t = 0.8 *
-                                                 half_line /
-                                                 2), vjust = 1),
-    axis.text.x.top = element_text(margin = margin(b = 0.8 *
-                                                     half_line /
-                                                     2), vjust = 0),
-    axis.text.y = element_text(margin = margin(r = 0.8 *
-                                                 half_line /
-                                                 2), hjust = 1),
-    axis.text.y.right = element_text(margin = margin(l = 0.8 *
-                                                       half_line /
-                                                       2), hjust = 0),
-    axis.ticks = element_line(colour = "grey20"),
-    axis.ticks.length = unit(half_line / 2, "pt"),
-    axis.ticks.length.x = NULL,
-    axis.ticks.length.x.top = NULL,
-    axis.ticks.length.x.bottom = NULL,
-    axis.ticks.length.y = NULL,
-    axis.ticks.length.y.left = NULL,
-    axis.ticks.length.y.right = NULL,
-    axis.title.x = element_text(margin = margin(t = half_line / 2),
-                                vjust = 1),
-    axis.title.x.top = element_text(margin = margin(b = half_line / 2),
-                                    vjust = 0),
-    axis.title.y = element_text(
-      angle = 90,
-      margin = margin(r = half_line /
-                        2),
-      vjust = 1
-    ),
-    axis.title.y.right = element_text(
-      angle = -90,
-      margin = margin(l = half_line /
-                        2),
-      vjust = 0
-    ),
-    legend.background = element_rect(colour = NA),
-    legend.spacing = unit(2 * half_line, "pt"),
-    legend.spacing.x = NULL,
-    legend.spacing.y = NULL,
-    legend.margin = margin(half_line,
-                           half_line, half_line, half_line),
-    legend.key = element_rect(fill = "grey95",
-                              colour = "white"),
-    legend.key.size = unit(1.2, "lines"),
-    legend.key.height = NULL,
-    legend.key.width = NULL,
-    legend.text = element_text(size = rel(0.8)),
-    legend.text.align = NULL,
-    legend.title = element_text(hjust = 0),
-    legend.title.align = NULL,
-    legend.position = "right",
-    legend.direction = NULL,
-    legend.justification = "center",
-    legend.box = NULL,
-    legend.box.margin = margin(0, 0,
-                               0, 0, "cm"),
-    legend.box.background = element_blank(),
-    legend.box.spacing = unit(2 * half_line, "pt"),
-    panel.background = element_rect(fill = "grey92",
-                                    colour = NA),
-    panel.border = element_blank(),
-    panel.grid = element_line(colour = "white"),
-    panel.grid.minor = element_line(size = rel(0.5)),
-    panel.spacing = unit(half_line,
-                         "pt"),
-    panel.spacing.x = NULL,
-    panel.spacing.y = NULL,
-    panel.ontop = FALSE,
-    strip.background = element_rect(fill = "grey85",
-                                    colour = NA),
-    strip.text = element_text(
-      colour = "grey10",
-      size = rel(0.8),
-      margin = margin(0.8 * half_line,
-                      0.8 * half_line, 0.8 * half_line, 0.8 * half_line)
-    ),
-    strip.text.x = NULL,
-    strip.text.y = element_text(angle = -90),
-    strip.placement = "inside",
-    strip.placement.x = NULL,
-    strip.placement.y = NULL,
-    strip.switch.pad.grid = unit(half_line / 2,
-                                 "pt"),
-    strip.switch.pad.wrap = unit(half_line / 2,
-                                 "pt"),
-    plot.background = element_rect(colour = "white"),
-    plot.title = element_text(
-      size = rel(1.2),
-      hjust = 0,
-      vjust = 1,
-      margin = margin(b = half_line)
-    ),
-    plot.subtitle = element_text(
-      hjust = 0,
-      vjust = 1,
-      margin = margin(b = half_line)
-    ),
-    plot.caption = element_text(
-      size = rel(0.8),
-      hjust = 1,
-      vjust = 1,
-      margin = margin(t = half_line)
-    ),
-    plot.tag = element_text(
-      size = rel(1.2),
-      hjust = 0.5,
-      vjust = 0.5
-    ),
-    plot.tag.position = "topleft",
-    plot.margin = margin(half_line,
-                         half_line, half_line, half_line), complete = TRUE)
-}
+# based on theme_grey, basic theme in ggplot2
+theme_chronochrt <- function (base_size = 11, base_family = "", base_line_size = base_size / 22, base_rect_size = base_size / 22)
+  {
+    theme_grey(
+      base_size = base_size,
+      base_family = base_family,
+      base_line_size = base_line_size,
+      base_rect_size = base_rect_size
+    ) %+replace%
+      theme(
+        panel.background = element_rect(fill = "grey85",
+                                        colour = NA),
+        panel.border = element_rect(fill = NA,
+                                    colour = "black"),
+        panel.grid = element_line(colour = "grey50"),
+        panel.grid.minor = element_line(size = rel(0.5)),
+        panel.spacing = unit(0, "lines"),
+        strip.background = element_rect(fill = "white",
+                                        colour = "black"),
 
-# Alternative: based on theme_bw (native in ggplot2) ======================
-
-function (base_size = 11, base_family = "", base_line_size = base_size/22,
-          base_rect_size = base_size/22)
-{
-
-  theme_grey(
-    base_size = base_size,
-    base_family = base_family,
-    base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    theme(
-      panel.background = element_rect(fill = "white",
-                                      colour = NA),
-      panel.border = element_rect(fill = NA,
-                                  colour = "grey20"),
-      panel.grid = element_line(colour = "grey92"),
-      panel.grid.minor = element_line(size = rel(0.5)),
-      strip.background = element_rect(fill = "grey85",
-                                      colour = "grey20"),
-      legend.key = element_rect(fill = "white",
-                                colour = NA), complete = TRUE)
-}
-
+        legend.key = element_rect(fill = "white",
+                                  colour = NA),
+        complete = TRUE
+      )
+  }
 
 # Check formats -----------------------------------------------------------
 
   # evaluation to an expression NA if everything is fine and errormessage if something is wrong
-check_format <- funtion()
+check_format <- function()
   {
     #zu implementierende checks:
-    #stopifnot(is.character(region), is.numeric(start), is.numeric(end), level = is numeric + ganzzahlig , add = boolean
+    #stopifnot(is.character(region, annotation), is.numeric(start, end , year), level = is numeric + ganzzahlig , add = boolean
     # inkl. Ausgabe vernünftiger Fehlermeldungen
 
 }
@@ -285,18 +158,38 @@ check_format <- funtion()
 
 # Helper function ---------------------------------------------------------
 
-subchron_count <- function(left, right) #
-{
-  data <- rep_len(0, length(left))
-
-  for(i in 1:(length(left)))
+subchron_count <- function(left, right) # counts subchrons
   {
-    for(j in 1:length(left))
+    data <- rep_len(0, length(left))
+
+    for(i in 1:length(left))
     {
-      if (left[i] >= left[j] & left[i] < right[j] & i != j){
-        data[i] <- data[i]+1
+      for(j in 1:length(left))
+      {
+        if (left[i] >= left[j] & left[i] < right[j] & i != j){
+          data[i] <- data[i]+1
+        }
       }
     }
+    data
   }
-  data
-}
+
+
+width_corr <- function(x_center, x_width) # corrects width if there are missing subunits in other subchrons
+  {
+    data <- rep_len(0, length(x_center))
+
+    for(i in 1:length(x_center))
+    {
+      for(j in 1:length(x_center))
+      {
+        k <- x_center[i] + (x_width[i]/2) - x_center[j] + (x_width[j]/2),
+
+        if (x_center[i] < x_center[j] & k != 0 & k < x_width[i]){
+          x_center[j] <- x_center[j] - k/2;
+          x_width[j] <-  x_width[j] + k
+          }
+      }
+    }
+    data
+  }
