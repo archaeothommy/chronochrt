@@ -16,33 +16,37 @@ xy <- add_chron(xy,
 labels <- add_text_label(labels,
                          c("A", "B"),
                          c(-900, 0),
-                         c("LABEL1", "LABEL2"),
+                         0.7,
+                         c("LAB \n EL1", "LABEL2"),
                          add = FALSE) %>%
-  add_text_label(., c("C", "A"), c(-500, -1000), c("#", "LABEL4"))
+  add_text_label(., c("C", "A"), c(-500, -1000), 0.9, c("#", "LABEL4"))
 
 images <- add_image_label(images,
                          c("A", "B"),
                          c(-2250, 250),
+                         0.5,
                          c("C:/Dokumente/Forschung/Vignette Erz.png", "https://www.r-project.org/logo/Rlogo.png"),
                          add = FALSE) %>%
-  add_image_label(., c("B", "D"), c(-500, 250), c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
+  add_image_label(., c("B", "D"), c(-500, 250), 0.8, c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
 
-plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_image = images, labels_x = 0.8, years_major = 250, breaks_minor = 5)
+plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_image = images, years_major = 250, breaks_minor = 5, path = "Test.jpg", height = 29.7, width = 21, units = "cm")
+
+#
 
 # Make new chronological unit ---------------------------------------------
 
-  # makes a tibble or add a row to a tibble with the columns region, unit, start, end, kind,
+  # makes a tibble or add a row to a tibble with the columns region, name, start, end, kind,
   # allows input of single values or vectors
   # works only with the given naming scheme, for other ones use regular dplyr-functions (add_row)
 
   # to implement: telling error messages
   # could probably be enhanced with missing-function to avoid input of data argument "new_table" analogous to plot-switches
 
-add_chron <- function(data, region, unit, start, end, level = 1, add = FALSE, new_table = FALSE, ...)
+add_chron <- function(data, region, name, start, end, level = 1, add = FALSE, new_table = FALSE, ...)
   {
   #if (!is.na(check_format())) {stop(check_format())}
-  if (new_table == TRUE) {data <- tibble(region, unit, start, end, level, add, ...)}
-  if (new_table == FALSE) {data <- add_row(data, region, unit, start, end, level, add, ...)}
+  if (new_table == TRUE) {data <- tibble(region, name, start, end, level, add, ...)}
+  if (new_table == FALSE) {data <- add_row(data, region, name, start, end, level, add, ...)}
   data
 }
 
@@ -54,10 +58,10 @@ add_chron <- function(data, region, unit, start, end, level = 1, add = FALSE, ne
     #guessing of format from file name and choosing of right import method to get more flexibility
     # check if file exists with file.exists(...)
 
-import_chron <- function(path, region, unit, start, end, level, add = FALSE, ...)
+import_chron <- function(path, region, name, start, end, level, add = FALSE, ...)
   {
    data <- read_excel(path, ...) %>%
-    rename(region = region, unit= unit, start = start, kind = kind, level = level, add = add)
+    rename(region = region, name = name, start = start, kind = kind, level = level, add = add)
    # implementation check_format like in add_chron
   data
 }
@@ -69,11 +73,11 @@ import_chron <- function(path, region, unit, start, end, level, add = FALSE, ...
     # works analogous to add_chron
     # could probably enhanced with missing-function to avoid input of data argument "new_table" analogous to plot-switches
 
-add_text_label <- function(data, region, year, annotation, add = TRUE, ...)
+add_text_label <- function(data, region, year, position, annotation, add = TRUE, ...)
 {
   #if (!is.na(check_format())) {stop(check_format())}
-  if (add == FALSE) {data <- tibble(region, year, annotation, ...)}
-  if (add == TRUE) {data <- add_row(data, region, year, annotation, ...)}
+  if (add == FALSE) {data <- tibble(region, year, position, annotation, ...)}
+  if (add == TRUE) {data <- add_row(data, region, year, position, annotation, ...)}
   data
 }
 
@@ -81,11 +85,11 @@ add_text_label <- function(data, region, year, annotation, add = TRUE, ...)
 
     #works analogous to add_text_label
 
-add_image_label <- function (data, region, year, image_path, add = TRUE, ...)
+add_image_label <- function (data, region, year, position = 0.9, image_path, add = TRUE, ...)
 {
   #if (!is.na(check_format())) {stop(check_format())} + file.exists
-  if (add == FALSE) {data <- tibble(region, year, image_path, ...)}
-  if (add == TRUE) {data <- add_row(data, region, year, image_path, ...)}
+  if (add == FALSE) {data <- tibble(region, year, position, image_path, ...)}
+  if (add == TRUE) {data <- add_row(data, region, year, position, image_path, ...)}
   data
 }
 
@@ -93,11 +97,14 @@ add_image_label <- function (data, region, year, image_path, add = TRUE, ...)
 
   # all text labels are right-aligned to the given x co-ordinate to avoid running out of bounds
   # all image labels are scaled to uniform height
+  # fontsize input is in mm (?)
 
-# to implement: plot must be saved, aspect ratio of images must be corrected
+# aspect ratio of images must be corrected
 
-plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NULL, labels_x = 0.9 , years_major = 100, breaks_minor = 1)
+plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NULL, font_size_chrons = 6, font_size_labels = 4, years_major = 100, breaks_minor = 1, path = NULL, width, height, units, chron_title_x = NULL, chron_title_y = NULL, line_break = 8, ...)
   {
+  # check input formats must be implemented
+
   data <- data %>% # calculation of geometry
     group_by(region, add) %>%
     mutate(subchron = subchron_count(start, end)) %>%
@@ -115,24 +122,38 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
     select(-x_center_corr, -x_width_corr) %>%
     mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
 
+  if (missing(chron_title_x)) {chron_title_x <- data$x_center}
+  if (missing(chron_title_y)) {chron_title_y <- data$y_center}
+
   plot <- ggplot(data) + # plot
     geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid") +
-    geom_text(aes(x = x_center, y = y_center, label = unit)) +
+    geom_text(aes(x = chron_title_x, y = chron_title_y, label = name), size = font_size_chrons) +
 
     if(!missing(labels_text)) {
-      geom_text(data = labels_text, aes(y=year, x = labels_x, label = annotation, hjust = 1), na.rm = TRUE, size = 2)
+      geom_text(data = labels_text, aes(y=year, x = position, label = annotation, hjust = 1), na.rm = TRUE, size = font_size_labels)
     }
 
   plot <- plot +
     if(!missing(labels_image)) {
-      geom_image(data = labels_image, aes(y=year, x = labels_x, image = image_path), na.rm = TRUE, size = 0.2, asp = 1)
+      geom_image(data = labels_image, aes(y=year, x = position, image = image_path), na.rm = TRUE, size = 0.2, asp = 1)
     }
 
   plot <- plot +
     scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
     scale_y_continuous(name = year, breaks = round(seq(min(data$start), max(data$end), by = years_major),1), expand = c(0,0)) +
-    facet_grid(cols = vars(region), scales = "free_x", space = "free_x") +
-    theme_chronochrt()
+    facet_grid(cols = vars(region), scales = "free_x", space = "free_x", labeller = label_wrap_gen(width = line_break)) +
+    theme_chronochrt() +
+    theme(axis.text=element_text(size = (font_size_chrons*0.8*72.27/25.4)),
+          axis.title=element_text(size = font_size_chrons*72.27/25.4, face="bold"),
+          strip.text.x = element_text(size = font_size_chrons*72.27/25.4, face="bold"),
+          ) #+
+#    labs(caption = "Citation of the release paper")
+
+    plot <- plot +
+    if(!missing(path)) {
+      ggsave(filename = path, width = width, height = height, units = units, ...)
+    }
+
 
   plot
 }
@@ -160,6 +181,7 @@ theme_chronochrt <- function (base_size = 11, base_family = "", base_line_size =
 
         legend.key = element_rect(fill = "white",
                                   colour = NA),
+        plot.caption = element_text(vjust = 9, hjust = 1),
         complete = TRUE
       )
   }
