@@ -27,7 +27,7 @@ images <- add_image_label(images,
                          add = FALSE) %>%
   add_image_label(., c("B", "D"), c(-500, 250), c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
 
-plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_image = images, labels_x = 0.8, years_major = 250)
+plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_image = images, labels_x = 0.8, years_major = 250, breaks_minor = 5)
 
 # Make new chronological unit ---------------------------------------------
 
@@ -91,9 +91,10 @@ add_image_label <- function (data, region, year, image_path, add = TRUE, ...)
 
 # Plot chart --------------------------------------------------------------------
 
-  # in plot: switches/input for: labels, breaks auf y-Achse
-  # all labels are right-aligned to the given x co-ordinate to avoid running out of bounds
+  # all text labels are right-aligned to the given x co-ordinate to avoid running out of bounds
   # all image labels are scaled to uniform height
+
+# to implement: plot must be saved, aspect ratio of images must be corrected
 
 plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NULL, labels_x = 0.9 , years_major = 100, breaks_minor = 1)
   {
@@ -129,7 +130,7 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
 
   plot <- plot +
     scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
-    scale_y_continuous(name = year, breaks = round(seq(min(data$start), max(data$end), by = years_major),1)) +
+    scale_y_continuous(name = year, breaks = round(seq(min(data$start), max(data$end), by = years_major),1), expand = c(0,0)) +
     facet_grid(cols = vars(region), scales = "free_x", space = "free_x") +
     theme_chronochrt()
 

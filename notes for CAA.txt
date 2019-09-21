@@ -1,0 +1,33 @@
+wichtige Informationen im Vortrag: 
+
+benötigte Packages: tidyverse, read_excel (nur für Import aus Excel), ggimage (nur für Plot der Bildlabels)
+-> wenn entsprechende Funktion nicht genutzt, funktioniert ChronochRt auch ohne diese packages
+ 
+Eingabe immer als einzelnes Chron/label oder als Vektor; wenn Vektor, dann wird bei ungleichen Längen der Vektoren der Rest aufgefüllt
+-> z. B. Eingabe aller Chrons für gleiche Region: Region muss nur einmal eingegeben werden
+-> funktioniert aber nur, solang danach nicht noch etwas anderes kommen soll 
+-> Verhalten kommt aus tibble-Befehl
+
+Import von Datensätzen bislang auf Excel begrenzt, Akzeptanz anderer Datenformate angestrebt/noch nicht implementiert
+
+pro Region wird ein zusätzliches System unterstützt (z. B. "frühe" und "späte" Chronologien). Bei mehr Systemen sollten diese als separate "Regionen" angelegt werden, schon allein der Übersichtlichkeit halber (z. B. Autoren als "Region"-Name)
+
+Eingabe unsicherer Grenzen bislang nicht implementiert, Ideen willkommen (gestrichelte Linien, Diagonale zwischen den sicheren Grenzen, ...), gleiches gilt für fließende Übergänge
+
+Text- und Bildlabel werden unabhängig voneinander unterstützt, momentan plot aller auf gleicher x-Koordinate (sinnvoll?); Textlabel rechtsbündig, Bilder werden mittig auf Koordinate platziert 
+
+Ästhetik ist work in progress: Versuch über gegebene Größe des Gesamtplots geeignete Schriftgrößen zu implementieren, Seitenverhältnis der Bildlabel zu berechnen etc., Erfolg ungewiss, Zeilenumbrück müssen ebenfalls noch implementiert werden
+
+sämtliche Checks auf korrekte Dateneingabe ebenfalls noch fehlend, ebenso Doku
+
+Ausblick: 
+Stand-alone-Version oder zumindest GUI als ShinyApp
+
+kann auch prinzipiell auch für andere Tabellen (z. B. parallele Sessions von Tagungen) genutzt werden, aber noch nicht getestet ob Uhrzeiten genauso funktionieren würden wie Jahreszahlen
+
+Release des Packages auf Gitlab für Beta-Tester geplant im ### ? (wann?)
+
+nicht erzählen/Hintergrund: 
+Zwischenschritte auf Achsen deutlich komplizierter als Haupteinteilung, Argument "breaks_minor" daher bislang nicht implementiert und ggplot-Standard genutzt
+
+Fußzeile mit Quellennachweis unter dem Plot? (wie bei den Oxcal-Plots)
