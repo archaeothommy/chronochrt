@@ -1,6 +1,7 @@
 library(tidyverse)
 library(readxl)
-library(imager) # oder ggimage for plotting?
+library(ggimage) # needed only to plot image labels
+
 # example/playground
 xy <- add_chron(xy,
                 c("A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "C", "B", "B", "C", "C", "C", "C", "A", "A", "A"),
@@ -19,7 +20,14 @@ labels <- add_text_label(labels,
                          add = FALSE) %>%
   add_text_label(., c("C", "A"), c(-500, -1000), c("#", "LABEL4"))
 
-plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_x = 0.8, years_major = 250)
+images <- add_image_label(images,
+                         c("A", "B"),
+                         c(-2250, 250),
+                         c("C:/Dokumente/Forschung/Vignette Erz.png", "https://www.r-project.org/logo/Rlogo.png"),
+                         add = FALSE) %>%
+  add_image_label(., c("B", "D"), c(-500, 250), c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
+
+plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_image = images, labels_x = 0.8, years_major = 250)
 
 # Make new chronological unit ---------------------------------------------
 
@@ -71,30 +79,23 @@ add_text_label <- function(data, region, year, annotation, add = TRUE, ...)
 
   # add image labels
 
-    #functions aimed: input of image,
-  # determining input for geom_raster (x, y min/max) out of image size, prevent distortion
-  # storing in list so that all images can be plotted with one command
-  # shrink images to size given
+    #works analogous to add_text_label
 
-  add_image <- function (region, path, year,
-  {
-    labels_image <-
-
-  }
-
-
-  # for bitmaps/files:
-  annotation_raster(readPNG("C:/Dokumente/Forschung/Vignette Erz.png"), 0.25, 0.5, -300, 300)
-
-
-
+add_image_label <- function (data, region, year, image_path, add = TRUE, ...)
+{
+  #if (!is.na(check_format())) {stop(check_format())} + file.exists
+  if (add == FALSE) {data <- tibble(region, year, image_path, ...)}
+  if (add == TRUE) {data <- add_row(data, region, year, image_path, ...)}
+  data
+}
 
 # Plot chart --------------------------------------------------------------------
 
   # in plot: switches/input for: labels, breaks auf y-Achse
-  # labels are right-aligned to the given x co-ordinate to avoid running out of bounds
+  # all labels are right-aligned to the given x co-ordinate to avoid running out of bounds
+  # all image labels are scaled to uniform height
 
-plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NA, labels_x =0.9 , years_major = 100, breaks_minor = 1)
+plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NULL, labels_x = 0.9 , years_major = 100, breaks_minor = 1)
   {
   data <- data %>% # calculation of geometry
     group_by(region, add) %>%
@@ -116,12 +117,16 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
   plot <- ggplot(data) + # plot
     geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid") +
     geom_text(aes(x = x_center, y = y_center, label = unit)) +
+
     if(!missing(labels_text)) {
       geom_text(data = labels_text, aes(y=year, x = labels_x, label = annotation, hjust = 1), na.rm = TRUE, size = 2)
     }
-  # if(!missing(labels_image)) {
-  #   geom_text(data = labels_text, aes(y=year, x = labels_x, label = annotation, hjust = 1), na.rm = TRUE, size = 2)
-  # }
+
+  plot <- plot +
+    if(!missing(labels_image)) {
+      geom_image(data = labels_image, aes(y=year, x = labels_x, image = image_path), na.rm = TRUE, size = 0.2, asp = 1)
+    }
+
   plot <- plot +
     scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
     scale_y_continuous(name = year, breaks = round(seq(min(data$start), max(data$end), by = years_major),1)) +
