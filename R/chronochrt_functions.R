@@ -21,15 +21,15 @@ labels <- add_text_label(labels,
                          add = FALSE) %>%
   add_text_label(., c("C", "A"), c(-500, -1000), 0.9, c("#", "LABEL4"))
 
-images <- add_image_label(images,
-                         c("A", "B"),
-                         c(-2250, 250),
-                         0.5,
-                         c("C:/Dokumente/Forschung/Vignette Erz.png", "https://www.r-project.org/logo/Rlogo.png"),
-                         add = FALSE) %>%
-  add_image_label(., c("B", "D"), c(-500, 250), 0.8, c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
+# images <- add_image_label(images,
+#                         c("A", "B"),
+ #                        c(-2250, 250),
+  #                       0.5,
+   #                      c("C:/Dokumente/Forschung/Vignette Erz.png", "https://www.r-project.org/logo/Rlogo.png"),
+    #                     add = FALSE) %>%
+  # add_image_label(., c("B", "D"), c(-500, 250), 0.8, c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
 
-plot_chronochrt(xy, year = "Jahr", labels_text = labels, labels_image = images, years_major = 250, breaks_minor = 5, path = "Test.jpg", height = 29.7, width = 21, units = "cm")
+plot_chronochrt(xy, year = "Jahr", labels_text = labels, years_major = 250, breaks_minor = 5, path = "Test.jpg", height = 29.7, width = 21, units = "cm")
 
 #
 
