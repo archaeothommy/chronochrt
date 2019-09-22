@@ -126,7 +126,11 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
   if (missing(chron_title_y)) {chron_title_y <- data$y_center}
 
   plot <- ggplot(data) + # plot
+<<<<<<< HEAD
     geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid", size = 0.5) +
+=======
+    geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid") +
+>>>>>>> 86f7a91364fff80172c317e9d8434267105cd7e2
     geom_text(aes(x = chron_title_x, y = chron_title_y, label = name), size = font_size_chrons) +
 
     if(!missing(labels_text)) {
