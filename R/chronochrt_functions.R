@@ -61,7 +61,7 @@ add_chron <- function(data, region, name, start, end, level = 1, add = FALSE, ne
 import_chron <- function(path, region, name, start, end, level, add = FALSE, ...)
   {
    data <- read_excel(path, ...) %>%
-    rename(region = region, name = name, start = start, kind = kind, level = level, add = add)
+    rename(region = region, name = name, start = start, end = end, level = level, add = add)
    # implementation check_format like in add_chron
   data
 }
@@ -120,7 +120,9 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
     mutate(x_center = x_center_corr,
            x_width = x_width_corr) %>%
     select(-x_center_corr, -x_width_corr) %>%
-    mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
+    mutate(x_center = replace(x_center, add == TRUE, x_center + 1)) #%>%
+ #   ungroup() %>%
+ #   mutate(region = as.factor(region))
 
   if (missing(chron_title_x)) {chron_title_x <- data$x_center}
   if (missing(chron_title_y)) {chron_title_y <- data$y_center}
@@ -130,7 +132,7 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
     geom_text(aes(x = chron_title_x, y = chron_title_y, label = name), size = font_size_chrons) +
 
     if(!missing(labels_text)) {
-      geom_text(data = labels_text, aes(y=year, x = position, label = annotation, hjust = 1), na.rm = TRUE, size = font_size_labels)
+      geom_text(data = labels_text, aes(y=year, x = position, label = annotation, hjust = 1, vjust = 1), na.rm = TRUE, size = font_size_labels)
     }
 
   plot <- plot +
@@ -145,8 +147,7 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
     theme_chronochrt() +
     theme(axis.text=element_text(size = (font_size_chrons*0.8*72.27/25.4)),
           axis.title=element_text(size = font_size_chrons*72.27/25.4, face="bold"),
-          strip.text.x = element_text(size = font_size_chrons*72.27/25.4, face="bold"),
-          ) #+
+          strip.text.x = element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
 #    labs(caption = "Citation of the release paper")
 
     plot <- plot +
