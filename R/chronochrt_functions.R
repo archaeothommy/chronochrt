@@ -46,9 +46,14 @@ tibble::tribble()
 
 add_chron <- function(data, region, name, start, end, level = 1, add = FALSE, new_table = FALSE, ...)
   {
-  #if (!is.na(check_format())) {stop(check_format())}
+
   if (new_table == TRUE) {data <- tibble::tibble(region, name, start, end, level, add, ...)}
   if (new_table == FALSE) {data <- dplyr::add_row(data, region, name, start, end, level, add, ...)}
+
+  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start), is.numeric(data$end), round(data$level) == data$level, is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
   data
 }
 
@@ -59,11 +64,15 @@ add_chron <- function(data, region, name, start, end, level = 1, add = FALSE, ne
     # works analogous to add_chron
     # could probably enhanced with missing-function to avoid input of data argument "new_table" analogous to plot-switches
 
-add_text_label <- function(data, region, year, position, annotation, add = TRUE, ...)
+add_text_label <- function(data, region, year, position, label, add = TRUE, ...)
 {
-  #if (!is.na(check_format())) {stop(check_format())}
-  if (add == FALSE) {data <- tibble::tibble(region, year, position, annotation, ...)}
-  if (add == TRUE) {data <- dplyr::add_row(data, region, year, position, annotation, ...)}
+  if (add == FALSE) {data <- tibble::tibble(region, year, position, label, ...)}
+  if (add == TRUE) {data <- dplyr::add_row(data, region, year, position, label, ...)}
+
+  if (!all(is.character(data$region), is.numeric(data$year), is.character(data$label), is.numeric(data$year), is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+  }
+
   data
 }
 
@@ -76,6 +85,15 @@ add_image_label <- function (data, region, year, position = 0.9, image_path, add
   #if (!is.na(check_format())) {stop(check_format())} + file.exists
   if (add == FALSE) {data <- tibble::tibble(region, year, position, image_path, ...)}
   if (add == TRUE) {data <- dplyr::add_row(data, region, year, position, image_path, ...)}
+
+  if (!all(is.character(data$region), is.numeric(data$year), is.numeric(data$position), is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
+  }
+
+  if (!file.exists(data$image_path)) {
+    stop("The path(s) of one or more files are not correct or the files do not exist.")
+  }
+
   data
 }
 
@@ -88,8 +106,22 @@ add_image_label <- function (data, region, year, position = 0.9, image_path, add
 # aspect ratio of images must be corrected
 
 plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NULL, font_size_chrons = 6, font_size_labels = 4, years_major = 100, breaks_minor = 1, path = NULL, width, height, units, chron_title_x = NULL, chron_title_y = NULL, line_break = 8, ...)
-  {
-  # check input formats must be implemented
+{
+  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start), is.numeric(data$end), round(data$level) == data$level, is.logical(data$add))) {
+    stop("One or more columns of the chronological data incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
+  if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position), is.logical(labels_text$add))) {
+    stop("One or more columns of the text label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+  }
+
+  if (!all(is.character(labels_image$region), is.numeric(labels_image$year), is.numeric(labels_image$position), is.logical(labels_image$add))) {
+    stop("One or more columns of the image label data contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
+  }
+
+  if (!file.exists(labels_image$image_path)) {
+    stop("The path(s) of one or more image labels are not correct or the files do not exist.")
+  }
 
   data <- data %>% # calculation of geometry
     dplyr::group_by(region, add) %>%
@@ -119,7 +151,7 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
     ggplot2::geom_text(aes(x = chron_title_x, y = chron_title_y, label = name), size = font_size_chrons) +
 
     if(!missing(labels_text)) {
-      ggplot2::geom_text(data = labels_text, aes(y=year, x = position, label = annotation, hjust = 1, vjust = 1), na.rm = TRUE, size = font_size_labels)
+      ggplot2::geom_text(data = labels_text, aes(y=year, x = position, label = label, hjust = 1, vjust = 1), na.rm = TRUE, size = font_size_labels)
     }
 
   plot <- plot +
@@ -173,17 +205,6 @@ theme_chronochrt <- function (base_size = 11, base_family = "", base_line_size =
         complete = TRUE
       )
   }
-
-# Check formats -----------------------------------------------------------
-
-  # evaluation to an expression NA if everything is fine and errormessage if something is wrong
-check_format <- function()
-  {
-    #zu implementierende checks:
-    #stopifnot(is.character(region, annotation), is.numeric(start, end , year), level = is numeric + ganzzahlig , add = boolean
-    # inkl. Ausgabe vernünftiger Fehlermeldungen
-
-}
 
 
 # Helper functions ---------------------------------------------------------

@@ -25,25 +25,21 @@
 import_chron <- function(path, region, name, start, end, level, add = FALSE, delim, ...)
 {
 
-  ext <- strsplit(basename(data_path), split = "\\.")[[1]][-1] # extract file format
+  ext <- strsplit(basename(path), split = "\\.")[[1]][-1] # extract file format
 
   if (ext %in% c("xlsx", "xls")) {
-    import_chron_excel(path = path, region = region, name = name, start = start, end = end, level = level, add = add, ...)
+    data <- import_chron_excel(path = path, region = region, name = name, start = start, end = end, level = level, add = add, ...)
   }
 
-  if (ext = c("csv")) {
-    import_chron_csv(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
-
-  } else {
-      import_chron_delim(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
+  if (ext = "csv") {
+    data <- import_chron_csv(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
+    } else {
+    data <- import_chron_delim(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
     }
 
-  #check columns formats
+  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start), is.numeric(data$end), round(data$level) == data$level, is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
+  data
 }
-
-
-# implementation check_format like in add_chron
-
-# Select the data path
-# path <- "Example_data/ex_urnfield_periods.xlsx"
-# data_path <- path
