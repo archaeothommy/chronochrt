@@ -22,10 +22,10 @@
 #'@export
 
 
-import_chron_excel <- function(path, region, name, start, end, level, add = FALSE, ...)
+import_chron_excel <- function(path, region, name, start, end, level, add, ...)
 {
   data <- readxl::read_excel(path = path, na = "!", ...) %>%
-    dplyr::rename(region = region, name = name, start = start, end = end, level = level, add = add)
+    dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)))
 
   data
 }
@@ -50,25 +50,32 @@ import_chron_excel <- function(path, region, name, start, end, level, add = FALS
 #' @return A table containing the desired chronological information.
 #'
 #' @examples
-#' UK_chronology <- import_chron(path = "Example_data/ex_urnfield_periods.xlsx", "Region", "Name", "Start", "End", "Level")
 
 #'@export
 
 
-import_chron_csv <- function(path, region, name, start, end, level, add = FALSE,  delim, ...)
+import_chron_csv <- function(path, region, name, start, end, level, add,  delim, ...)
 {
+  if (missing(delim)) {
+    stop("Argument delim is not defined.")
+  }
+
+  if (!mising(delim) && !is.character(delim)) {
+    stop("Wrong input format: delim must be a character string, either , or ; .")
+  }
+
   if (!(delim %in% c(",", ";"))) {
-    stop("csv file recognised, delim must be set either to ",","," or ",";",". Alternatively use another file format.")
+    stop("csv file recognised, delim must be set either to , or ; . Alternatively use another file format.")
   }
 
   if (delim = ",") {
     data <- readr::read_csv(file = path, na = "!", ...) %>%
-      dplyr::rename(region = region, name = name, start = start, end = end, level = level, add = add)
+      dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)))
   }
 
   if (delim = ";") {
-  data <- readr::read_csv2(file = path, na = "!", ...) %>%
-    dplyr::rename(region = region, name = name, start = start, end = end, level = level, add = add)
+    data <- readr::read_csv2(file = path, na = "!", ...) %>%
+      dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)))
   }
 
   data
@@ -94,30 +101,34 @@ import_chron_csv <- function(path, region, name, start, end, level, add = FALSE,
 #' @return A table containing the desired chronological information.
 #'
 #' @examples
-#' UK_chronology <- import_chron(path = "Example_data/ex_urnfield_periods.xlsx", "Region", "Name", "Start", "End", "Level")
 
 #'@export
 
 
-import_chron_delim <- function(path, region, name, start, end, level, delim, add = FALSE, ...)
+import_chron_delim <- function(path, region, name, start, end, level, delim, add, ...)
 {
+
   if (missing(delim)) {
-    stop("Argument delim is undefined.")
+    stop("Argument delim is not defined.")
+  }
+
+  if (!mising(delim) && !is.character(delim)) {
+    stop("Wrong input format: delim must be a character string.")
   }
 
   if (delim = "\t") {
     data <- readr::read_tsv(file = path, na = "!", ...) %>%
-      dplyr::rename(region = region, name = name, start = start, end = end, level = level, add = add)
+      dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)))
 
   }
 
   if (delim = " ") {
     data <- readr::read_table2(file = path, na = "!", ...) %>%
-      dplyr::rename(region = region, name = name, start = start, end = end, level = level, add = add)
+      dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)))
 
   } else {
     data <- readr::read_delim(file = path, delim = delim, na = "!", ...) %>%
-      dplyr::rename(region = region, name = name, start = start, end = end, level = level, add = add)
+      dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)))
   }
 
   data

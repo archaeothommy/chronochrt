@@ -3,6 +3,20 @@ library(readxl)
 library(ggimage) # needed only to plot image labels
 
 # example/playground ---------------------------
+z <- tibble(test = c("A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "C", "B", "B", "C", "C", "C", "C", "A", "A", "A"),
+            test2 = c("Test 1", "Test 2b", "Test 2", "Test 2a", "Test 6a", "Test 6b", "Test 6c", "Test 6d", "Test 3", "Test 1", "Test 2", "Test 3", "Test 3", "Test 4", "Test 5", "Test 1", "Test 2", "Test 4", "Test 5", "Test 6", "Test 2a1", "Test 2a2"),
+            test3 = c(-2500, "-750/-700", -1500, -1500, -400, -350, -150, 100, -200, -3000, -2000, -1500, -750, -700, -150, -2000, -1500, 0, 150, -400, -1500, -1000),
+            test4 = c(-1500, "-200/-150", -200, -750, -350, -250, 100, 300, 500, -2000, -1500, -700, 0, -150, 100, -1500, -750, 150, 300, 300, -1000, -750),
+            test5 = c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3),
+            test6 = c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE))
+
+z <- convert_to_chron(z, region = "test", name = "test2", start = "test3", end = "test4", level = "test5", add = "test6") %>%
+  add_chron(., c("D"), c("Test 1", "Test 2", "Test 3", "Test 3a", "Test 3b", "Test 4"), c(100, 200, 300, 300, 400, 500), c(200, 300, 500, 400, 500, 600), c(1, 1, 1, 2, 2, 1))
+
+
+
+plot_chronochrt(z)
+
 xy <- add_chron(xy,
                 c("A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "C", "B", "B", "C", "C", "C", "C", "A", "A", "A"),
                 c("Test 1", "Test 2b", "Test 2", "Test 2a", "Test 6a", "Test 6b", "Test 6c", "Test 6d", "Test 3", "Test 1", "Test 2", "Test 3", "Test 3", "Test 4", "Test 5", "Test 1", "Test 2", "Test 4", "Test 5", "Test 6", "Test 2a1", "Test 2a2"),
@@ -13,41 +27,101 @@ xy <- add_chron(xy,
                 new_table = TRUE) %>%
     add_chron(., c("D"), c("Test 1", "Test 2", "Test 3", "Test 3a", "Test 3b", "Test 4"), c(100, 200, 300, 300, 400, 500), c(200, 300, 500, 400, 500, 600), c(1, 1, 1, 2, 2, 1))
 
-labels <- add_text_label(labels,
+
+order <- c("D", "B", "A", "C")
+
+xy <- arrange_regions(xy, region = "region", order = order)
+
+labels <- add_label_text(labels,
                          c("A", "B"),
                          c(-900, 0),
-                         0.7,
+                         c(1.5, 0.7),
                          c("LAB\nEL1", "LABEL2"),
                          add = FALSE) %>%
-  add_text_label(., c("C", "A"), c(-500, -1000), 0.9, c("#", "LABEL4"))
+  add_label_text(., c("C", "A"), c(-500, -1000), 0.9, c("#", "LABEL4"))
 
-# images <- add_image_label(images,
-#                         c("A", "B"),
- #                        c(-2250, 250),
-  #                       0.5,
-   #                      c("C:/Dokumente/Forschung/Vignette Erz.png", "https://www.r-project.org/logo/Rlogo.png"),
-    #                     add = FALSE) %>%
-  # add_image_label(., c("B", "D"), c(-500, 250), 0.8, c("https://www.r-project.org/logo/Rlogo.png", "C:/Dokumente/Forschung/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
+ images <- add_label_image(images,
+                         c("D", "B"),
+                         c(250, 250),
+                         0.5,
+                         c("G:/Vignette Erz.png", "https://www.r-project.org/logo/Rlogo.png"),
+                         add = FALSE) %>%
+   add_label_image(., c("B", "A"), c(-500, -2250), 0.8, c("https://www.r-project.org/logo/Rlogo.png", "G:/Projekte/Cu-Isotope_Schmelz-Fraktionierung_FRA_DBM/Schmelzversuche_Mayen/Logos/dfg_logo_englisch_blau_en.jpg"))
 
-plot_chronochrt(xy, year = "Jahr", labels_text = labels, years_major = 250, breaks_minor = 5)
+plot_chronochrt(z, axis_title = "Jahr", labels_text = zzz, years_major = 200.5, years_minor = 115, color_fill = "yellow", color_line = "lightgreen", size_line = 2, height = 21, width = 29.7, units = "cm", path = "Test_ugly.jpg") #labels_image = images, image_size = c(.5,.2,.2,.25),
+
+# Converting to chron -----------------------------------------------------
+convert_to_chron <- function(data, region, name, start, end, level, add, ...)
+{
+  if (!exists(deparse(substitute(data)))) {
+    stop("The object ", substitute(data) , " does not exist.")
+  }
+
+  if (!is.data.frame(data)) {
+    stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
+  }
+
+  data <- rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)), ...)
+
+  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
+  if (!all(round(data$level) == data$level)) {
+    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
+  }
+
+  data
+}
+
+# Arrange regions ---------------------------------------------------------
+
+arrange_regions <- function(data, region, order)
+{
+  if (!exists(deparse(substitute(data)))) {
+    stop("The object ", substitute(data) , " does not exist.")
+  }
+
+  if (!exists(deparse(substitute(order)))) {
+    stop("The object ", substitute(order) , " does not exist.")
+  }
+
+  if (!is.data.frame(data)) {
+    stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
+  }
+
+  if (!is.character(region)) {
+    stop("Incompatible input format: ", substitute(region), " must be a character string.")
+  }
+
+  if (!is.character(order) && !is.vector(order)) {
+    stop("Incompatible input format: ", substitute(order), " must be a vector of unique character strings.")
+  }
+
+  data <- mutate(data, !!region := factor(!!(as.name(region)), levels = order))
+
+  data
+}
+
+
 
 # Make new chronological unit ---------------------------------------------
 
-  # makes a tibble or add a row to a tibble with the columns region, name, start, end, kind,
-  # allows input of single values or vectors
-  # works only with the given naming scheme, for other ones use regular dplyr-functions (add_row)
-
-  # to implement: telling error messages
-  # could probably be enhanced with missing-function to avoid input of data argument "new_table" analogous to plot-switches
-
 add_chron <- function(data, region, name, start, end, level = 1, add = FALSE, new_table = FALSE, ...)
-  {
+{
+  if (!exists(deparse(substitute(data))) && new_table == FALSE) {
+    stop("The object ", substitute(data) , " does not exist.")
+  }
 
   if (new_table == TRUE) {data <- tibble::tibble(region, name, start, end, level, add, ...)}
-  if (new_table == FALSE) {data <- dplyr::add_row(data, region, name, start, end, level, add, ...)}
+  if (new_table == FALSE) {data <- dplyr::add_row(data, region , name, start, end, level, add, ...)}
 
-  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), round(data$level) == data$level, is.logical(data$add))) {
+  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
+  if (!all(round(data$level) == data$level)) {
+    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
   }
 
   data
@@ -57,11 +131,12 @@ add_chron <- function(data, region, name, start, end, level = 1, add = FALSE, ne
 
   # add text labels
 
-    # works analogous to add_chron
-    # could probably enhanced with missing-function to avoid input of data argument "new_table" analogous to plot-switches
-
-add_text_label <- function(data, region, year, position, label, add = TRUE, ...)
+add_label_text <- function(data, region, year, position, label, add = FALSE, ...)
 {
+  if (!exists(deparse(substitute(data))) && add == TRUE) {
+    stop("The object ", substitute(data) , " does not exist.")
+  }
+
   if (add == FALSE) {data <- tibble::tibble(region, year, position, label, ...)}
   if (add == TRUE) {data <- dplyr::add_row(data, region, year, position, label, ...)}
 
@@ -74,20 +149,17 @@ add_text_label <- function(data, region, year, position, label, add = TRUE, ...)
 
   # add image labels
 
-    #works analogous to add_text_label
-
-add_image_label <- function (data, region, year, position = 0.9, image_path, add = TRUE, ...)
+add_label_image <- function (data, region, year, position = 0.9, image_path, add = FALSE, ...)
 {
-  #if (!is.na(check_format())) {stop(check_format())} + file.exists
+  if (!exists(deparse(substitute(data))) && add == TRUE) {
+    stop("The object ", substitute(data) , " does not exist.")
+  }
+
   if (add == FALSE) {data <- tibble::tibble(region, year, position, image_path, ...)}
   if (add == TRUE) {data <- dplyr::add_row(data, region, year, position, image_path, ...)}
 
   if (!all(is.character(data$region), is.numeric(data$year), is.numeric(data$position))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
-  }
-
-  if (!file.exists(data$image_path)) {
-    stop("The path(s) of one or more files are not correct or the files do not exist.")
   }
 
   data
@@ -97,27 +169,105 @@ add_image_label <- function (data, region, year, position = 0.9, image_path, add
 
   # all text labels are right-aligned to the given x co-ordinate to avoid running out of bounds
   # all image labels are scaled to uniform height
-  # fontsize input is in mm (?)
+  # fontsize input is in mm
 
 # aspect ratio of images must be corrected
 
-plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_image = NULL, font_size_chrons = 6, font_size_labels = 4, years_major = 100, breaks_minor = 1, path = NULL, width, height, units, chron_title_x = NULL, chron_title_y = NULL, line_break = 8, ...)
+plot_chronochrt <- function(data, axis_title = "Years", labels_text, font_size_chrons = 6, font_size_labels = 4, years_major = 100, years_minor, path = NULL, width, height, units, chron_title_x, chron_title_y, line_break = 8, color_fill = "white", color_line = "black", size_line = 0.5, ...) #labels_image = NULL, image_size = 0.2,
 {
-  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), round(data$level) == data$level, is.logical(data$add))) {
-    stop("One or more columns of the chronological data incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  if (!exists(deparse(substitute(data)))) {
+    stop("The object ", substitute(data) , " does not exist.")
   }
 
-  if (!missing(labels_text) & !all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
+  if (!missing(labels_text) && !exists(deparse(substitute(labels_text)))) {
+    stop("The object ", substitute(labels_text) , " does not exist.")
+  }
+
+  # if (!missing(labels_image) && !exists(deparse(substitute(labels_image)))) {
+  #   stop("The object ", substitute(labels_image) , " does not exist.")
+  # }
+
+  if (!is.data.frame(data)) {
+    stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
+  }
+
+  if (!all(is.character(data$region) | is.factor(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
+  if (!all(round(data$level) == data$level)) {
+    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
+  }
+
+  if (!missing(labels_text) && !all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
     stop("One or more columns of the text label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
   }
 
-  if (!missing(labels_image) & !all(is.character(labels_image$region), is.numeric(labels_image$year), is.numeric(labels_image$position))) {
-    stop("One or more columns of the image label data contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
+#  if (!missing(labels_image) && !all(is.character(labels_image$region), is.numeric(labels_image$year), is.numeric(labels_image$position))) {
+#    stop("One or more columns of the image label data contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
+#  }
+
+  if (!is.character(axis_title)) {
+    stop("Wrong inout format: ", axis_title, "must be a character string.")
   }
 
-#  if (!missing(labels_image) & !file.exists(labels_image$image_path)) {
-#    stop("The path(s) of one or more image labels are not correct or the files do not exist.")
-#  }
+  if (!is.numeric(font_size_chrons)) {
+    font_size_chrons <- 6
+  }
+
+  if (!is.numeric(font_size_labels)) {
+    font_size_labels <- 4
+  }
+
+  if (!is.numeric(years_major)) {
+    years_major <- 100
+  }
+
+  if (!is_character(color_fill)) {
+    color_fill <- "white"
+  }
+
+  if (!is.character(color_line)) {
+    color_line <- "black"
+  }
+
+  if (!is.numeric(size_line)) {
+    size_line <- 0.5
+  }
+
+  if (!is.numeric(line_break)) {
+    line_break = 8
+  }
+
+  if (!missing(path) && !is.character(path)) {
+    stop("Wrong inout format: ", path, "must be a string.")
+  }
+
+  if (!missing(path) && !dir.exists(dirname(path))) {
+    stop("The directory ", getwd(), "/", dirname(path), " does not exist.")
+  }
+
+  if (!missing(width) && !is.numeric(width)) {
+    width <- NA
+  }
+
+  if (!missing(height) && !is.numeric(height)) {
+    height <- NA
+  }
+
+  if (!missing(units)) {
+    if (!is.character(units)) {
+      stop("Units must be a string. The following units are support: mm, cm, in.")
+    }
+
+    if (!(units %in% c("in", "cm", "mm"))) {
+      stop("This unit is not supported. Only the following units are support: mm, cm, in.")
+    }
+  }
+
+  if(missing(years_minor) || !is.numeric(years_minor)) {
+    years_minor <- years_major/2
+    }
 
   data <- data %>% # calculation of geometry
     dplyr::group_by(region, add) %>%
@@ -139,43 +289,49 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
     dplyr::mutate(x_center = x_center_corr,
                   x_width = x_width_corr) %>%
     dplyr::select(-x_center_corr, -x_width_corr) %>%
-    dplyr::mutate(x_center = replace(x_center, add == TRUE, x_center + 1)) #%>%
-
-  #   ungroup() %>%
-  #   mutate(region = as.factor(region))
+    dplyr::mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
 
   if (missing(chron_title_x)) {chron_title_x <- data$x_center} # if name of chrons should be placed different than in their center
   if (missing(chron_title_y)) {chron_title_y <- data$y_center}
 
+
   plot <- ggplot2::ggplot(data) + # plot
-    ggplot2::geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = "white", color = "black", linetype = "solid", size = 0.5) +
+    ggplot2::geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = color_fill, color = color_line, linetype = "solid", size = size_line) +
     ggplot2::geom_text(aes(x = chron_title_x, y = chron_title_y, label = name), size = font_size_chrons)
 
    if ("start2" %in% colnames(data)) {
      plot <- plot +
-       ggplot2::geom_segment(data = data %>% filter(!is.na(start2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = start, yend = start), color = "white", linetype = "dashed", size = 0.5) +
-       ggplot2::geom_segment(data = data %>% filter(!is.na(start2)), aes(x = x_center - x_width/2, xend = x_center - x_width/2, y = start2, yend = start2), color = "black", linetype = "dashed", size = 0.5)
+       ggplot2::geom_segment(data = data %>% filter(!is.na(start2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = start, yend = start), color = color_fill, linetype = "dashed", size = size_line) +
+       ggplot2::geom_segment(data = data %>% filter(!is.na(start2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = start2, yend = start2), color = color_line, linetype = "dashed", size = size_line)
      }
 
    if ("end2" %in% colnames(data)) {
      plot <- plot +
-       ggplot2::geom_segment(data = data %>% filter(!is.na(end2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = end, yend = end), color = "white", linetype = "dashed", size = 0.5) +
-       ggplot2::geom_segment(data = data %>% filter(!is.na(end2)), aes(x = x_center - x_width/2, xend = x_center - x_width/2, y = end2, yend = end2), color = "black", linetype = "dashed", size = 0.5)
+       ggplot2::geom_segment(data = data %>% filter(!is.na(end2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = end, yend = end), color = color_fill, linetype = "dashed", size = size_line) +
+       ggplot2::geom_segment(data = data %>% filter(!is.na(end2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = end2, yend = end2), color = color_line, linetype = "dashed", size = size_line)
     }
 
   if(!missing(labels_text)) {
+    if (is.factor(data$region)) {
+      labels_text <- mutate(labels_text, region = factor(region, levels = levels(data$region)))
+      }
+
     plot <- plot +
       ggplot2::geom_text(data = labels_text, aes(y=year, x = position, label = label, hjust = 1, vjust = 0.5), na.rm = TRUE, size = font_size_labels)
     }
 
-  if(!missing(labels_image)) {
-    plot <- plot +
-      ggplot2::geom_image(data = labels_image, aes(y=year, x = position, image = image_path), na.rm = TRUE, size = 0.2, asp = 1)
-    }
+  # if(!missing(labels_image)) {
+  #   if (is.factor(data$region)) {
+  #     labels_text <- mutate(labels_text, region = factor(region, levels = levels(data$region)))
+  #     }
+  #
+  #   plot <- plot +
+  #     ggimage::geom_image(data = labels_image, aes(y=year, x = position, image = image_path), na.rm = TRUE, size = image_size, asp = 4)
+  #   }
 
   plot <- plot +
-    ggplot2::scale_x_continuous(name = "", breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
-    ggplot2::scale_y_continuous(name = year, breaks = round(seq(min(data$start), max(data$end), by = years_major),1), expand = c(0,0)) +
+    ggplot2::scale_x_continuous(name = NULL, breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
+    ggplot2::scale_y_continuous(name = axis_title, breaks = round(seq(min(data$start), max(data$end), by = years_major),1), minor_breaks = round(seq(min(data$start), max(data$end), by = years_minor),1), expand = c(0,0)) +
     ggplot2::facet_grid(cols = vars(region), scales = "free_x", space = "free_x", labeller = label_wrap_gen(width = line_break)) +
     theme_chronochrt() +
     theme(axis.text=element_text(size = font_size_chrons*0.8*72.27/25.4),
@@ -183,14 +339,15 @@ plot_chronochrt <- function(data, year = "years", labels_text = NULL, labels_ima
           strip.text.x = element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
     #labs(caption = "Citation of the release paper")
 
-    plot <- plot +
     if(!missing(path)) {
-      ggplot2::ggsave(filename = path, width = width, height = height, units = units, ...)
+      plot <- plot +
+        ggplot2::ggsave(filename = path, width = width, height = height, units = units, ...)
     }
 
 
   plot
 }
+
 
 # ChronochRt theme --------------------------------------------------------
     # based on theme_grey, basic theme in ggplot2

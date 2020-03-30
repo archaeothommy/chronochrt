@@ -25,6 +25,10 @@
 import_chron <- function(path, region, name, start, end, level, add = FALSE, delim, ...)
 {
 
+  if (!file.exists(path)) {
+    stop("The file path is not correct or the file does not exist.")
+  }
+
   ext <- strsplit(basename(path), split = "\\.")[[1]][-1] # extract file format
 
   if (ext %in% c("xlsx", "xls")) {
@@ -37,8 +41,12 @@ import_chron <- function(path, region, name, start, end, level, add = FALSE, del
     data <- import_chron_delim(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
     }
 
-  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start), is.numeric(data$end), round(data$level) == data$level, is.logical(data$add))) {
+  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  }
+
+  if (!all(round(data$level) == data$level)) {
+    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
   }
 
   data
