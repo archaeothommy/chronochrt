@@ -1,18 +1,29 @@
 Package: ChronochRt
-Title: What the Package Does (One Line, Title Case)
+Title: Creating chronological charts with R
 Version: 0.0.0.9000
+Date: "2020-04-01"
+Imports: 
+  tidyverse
 Authors@R: 
     person(given = "Thomas",
            family = "Rose",
-           role = c("aut"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           role = c("aut", "cre"),
+           email = "thomas.rose@daad-alumni.de",
+           comment = c(ORCID = "0000-0002-8186-3566"))
      person(given = "Chiara",
            family = "Girotto"",
            role = c("aut"),
            email = "chiara.girotto@web.de",
            comment = c(ORCID = "0000-0001-6412-342X"))
 Description: What the package does (one paragraph).
-License: What license it uses
+License: GPL-3 | file LICENSE
+URL: 
+BugReports: 
+Depends: 
+    R (>=3.2)
+Imports: 
+    tidyverse
+Suggests:
+    readxl
 Encoding: UTF-8
 LazyData: true
