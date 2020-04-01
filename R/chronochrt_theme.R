@@ -1,8 +1,7 @@
-
 #' The ChronochRt ggplot theme
 #'
-
-#' This is a theme to provide a ready-to-use layout of chronological charts. See Examples how to alter its appearance with \code{\link[ggplot2]{theme()}}.
+#' This is a theme to provide a ready-to-use layout of chronological charts. See
+#' Examples how to alter its appearance with \code{\link[ggplot2]{theme()}}.
 #'
 #' @param base_size base font size
 #' @param base_family base font family

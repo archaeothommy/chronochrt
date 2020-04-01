@@ -1,49 +1,82 @@
 #' Plot a chronological charts
 #'
-#' This function converts a chronological data set into a chronological chart. It provides basic features for the export of the plot and for its customaisation.
+#' This function converts a chronological data set into a chronological chart.
+#' It provides basic features for the export of the plot and for its
+#' customaisation.
 #'
-#' The plot will use \code{\link[chronochrt]{theme_chronochrt()}} by default. Additional customisation of the plot can be done by adding additional layers to the plot (see Examples). In this case \code{filename} must not be specified or \code{\link[ggplot2]{ggsave()}} must be called again at the end to save the final plot.
-#' It is assumed that most of the text labels will be located on the right side of each column. For this reason they are right aligned to prevent them from running outside the plotting area. Vertically, it will be placed centered on the \code{year} given. Text in labels can be wrapped by inserting \code{"\n"} (without blanks).
-#' The following arguments will silently use the default values, if the input is incompatible: \code{axis_title}, \code{font_size_chrons}, \code{font_size_labels}, \code{years_major}, \code{color_fill}, \code{color_line}, \code{size_line}, \code{line_break}.
+#' The plot will use \code{\link[chronochrt]{theme_chronochrt()}} by default.
+#' Additional customisation of the plot can be done by adding additional layers
+#' to the plot (see Examples). In this case \code{filename} must not be
+#' specified or \code{\link[ggplot2]{ggsave()}} must be called again at the end
+#' to save the final plot.
+#'
+#' It is assumed that most of the text labels will be located on the right side
+#' of each column. For this reason they are right aligned to prevent them from
+#' running outside the plotting area. Vertically, it will be placed centered on
+#' the \code{year} given. Text in labels can be wrapped by inserting \code{"\n"}
+#' (without blanks).
+#'
+#' The following arguments will silently use the default values, if the input is
+#' incompatible: \code{axis_title}, \code{font_size_chrons},
+#' \code{font_size_labels}, \code{years_major}, \code{color_fill},
+#' \code{color_line}, \code{size_line}, \code{line_break}.
 #'
 #' @param data A data set with chronological data.
 #' @param labels_text A data set containing the text labels.
-#' @param chron_name_x Specifies the horizontal position of the chronological unit's names. It can be:
-#' \itemize{
-#'     \item a character string with the name of the respective column in \code{data},
-#'     \item a number. Then all names will plot at this position,
-#'     \item a numeric vector specifiying the position of each name;
-#'     \item it must not be specified if a column with the name "chron_name_x" already exists in \code{data};
-#'     \item if not specified and not present in \code{data}, names are placed in the centers of the chonological units.
-#'     }
-#' @param chron_name_y Specifies the vertical position of the chronological unit's names. It can be:
-#' \itemize{
-#'     \item a character string with the name of the respective column in \code{data},
-#'     \item a number. Then all names will plot at this position,
-#'     \item a numeric vector specifiying the position of each name;
-#'     \item it must not be specified if a column with the name "chron_name_y" already exists in \code{data};
-#'     \item if not specified and not present in \code{data}, names are placed in the centers of the chonological units.
-#'     }
-#' @param chron_name_angle Specifies the angle of the chronological unit's names. It can be:
-#' \itemize{
-#'     \item a character string with the name of the respective column in \code{data},
-#'     \item a number. Then all names are placed in the same angle,
-#'     \item a numeric vector specifiying the position of each name;
-#'     \item it must not be specified if a column with the name "chron_name_angle" already exists in \code{data};
-#'     \item if not specified and not present in \code{data}, the default value \code{0} is used, i.e. horzontal.
-#'     }
-#' @param axis_title A character string with the axis label of the vertical axis. Default is \code{"Years"}.
-#' @param years_major A number in years giving the interval axis labels should be drawn on the vertical axis. Default is \code{100].
-#' @param years_minor An optional number in years giving the interval additional lines should be drawn to ease orientation in the plot. If not defined they will be drawn in the middle between the axis labels. If they should not be plottet, set this argument to the same value like \code{years_major}.
-#' @param filename A character string with the filename or path. If specified, the plot will be saved on the given location. The file format is automatically recognised from the file extension. The most common file types are supported, e.g. \code{.tiff}, \code{.png}, \code{.jpg}, \code{.eps}, and \code{.pdf}. To export as \code{.svg} installation of the package \code{\link[svglite]} is required. See \code{\link[ggplot2]{ggsave()}} for more details about the supported file formats.
-#' @param plot_dim Dimensions of the plot as a vector in the format \code{c(width, height, units)}. Supported units are "cm", "mm", in". For example, \code{plot_dim = c(5,5,"cm")} will produce a plot of the dimensions 5 x 5 cm. If unspecified, the standard values of the respective graphic device are used.
-#' @param font_size_chrons Font size of the names of the chronological units in mm. The default is \code{6} mm.
-#' @param font_size_labels Font size of the text labels  in mm. The default is \code{4} mm.
-#' @param line_break Line length of the section labels in characters. Text will be Wrapped at the blank closest to the specified number of characters. Default is \code{8} characters.
-#' @param color_fill Fill colour of the chronological units. The default is \code{"white"}. See the color specification section of \code{par()} for how to specify colors in R.
-#' @param color_line Line (border) colour of the chronological units. The default is \code{"black"}. See the color specification section of \code{par()} for how to specify colors in R.
+#' @param chron_name_x,chron_name_y Specifies the horizontal and vertical
+#'   position of the chronological unit's names. They can be: \itemize{ \item a
+#'   character string with the name of the respective column in \code{data},
+#'   \item a number. Then all names will plot at this position, \item a numeric
+#'   vector specifiying the position of each name; \item it must not be
+#'   specified if a column with the name "chron_name_x" already exists in
+#'   \code{data}; \item if not specified and not present in \code{data}, names
+#'   are placed in the centers of the chonological units. }
+#' @param chron_name_angle Specifies the angle of the chronological unit's
+#'   names. It can be: \itemize{ \item a character string with the name of the
+#'   respective column in \code{data}, \item a number. Then all names are placed
+#'   in the same angle, \item a numeric vector specifiying the position of each
+#'   name; \item it must not be specified if a column with the name
+#'   "chron_name_angle" already exists in \code{data}; \item if not specified
+#'   and not present in \code{data}, the default value \code{0} is used, i.e.
+#'   horzontal. }
+#' @param axis_title A character string with the axis label of the vertical
+#'   axis. Default is \code{"Years"}.
+#' @param years_major A number in years giving the interval axis labels should
+#'   be drawn on the vertical axis. Default is \code{100}.
+#' @param years_minor An optional number in years giving the interval additional
+#'   lines should be drawn to ease orientation in the plot. If not defined they
+#'   will be drawn in the middle between the axis labels. If they should not be
+#'   plottet, set this argument to the same value like \code{years_major}.
+#' @param filename A character string with the filename or path. If specified,
+#'   the plot will be saved on the given location. The file format is
+#'   automatically recognised from the file extension. The most common file
+#'   types are supported, e.g. \code{.tiff}, \code{.png}, \code{.jpg},
+#'   \code{.eps}, and \code{.pdf}. To export as \code{.svg} installation of the
+#'   package \code{\link{[svglite]}} is required. See
+#'   \code{\link[ggplot2]{ggsave()}} for more details about the supported file
+#'   formats.
+#' @param plot_dim Dimensions of the plot as a vector in the format
+#'   \code{c(width, height, units)}. Supported units are "cm", "mm", in". For
+#'   example, \code{plot_dim = c(5,5,"cm")} will produce a plot of the
+#'   dimensions 5 x 5 cm. If unspecified, the standard values of the respective
+#'   graphic device are used.
+#' @param font_size_chrons Font size of the names of the chronological units in
+#'   mm. The default is \code{6} mm.
+#' @param font_size_labels Font size of the text labels  in mm. The default is
+#'   \code{4} mm.
+#' @param line_break Line length of the section labels in characters. Text will
+#'   be Wrapped at the blank closest to the specified number of characters.
+#'   Default is \code{8} characters.
+#' @param color_fill Fill colour of the chronological units. The default is
+#'   \code{"white"}. See the color specification section of \code{par()} for how
+#'   to specify colors in R.
+#' @param color_line Line (border) colour of the chronological units. The
+#'   default is \code{"black"}. See the color specification section of
+#'   \code{par()} for how to specify colors in R.
 #' @param size_line Thickness of the line in mm. The default is \code{0.5} mm.
-#' @param ... Additional arguments passed to \code{\link[ggplot2]{ggsave()}} to enhance the saved plot like \code{dpi} to specify its resolution. See \code{\link[ggplot2]{ggsave()}} for detailed information.
+#' @param ... Additional arguments passed to \code{\link[ggplot2]{ggsave()}} to
+#'   enhance the saved plot like \code{dpi} to specify its resolution. See
+#'   \code{\link[ggplot2]{ggsave()}} for detailed information.
 #'
 #' @return A chronological chart
 #'
@@ -53,7 +86,15 @@
 #'
 #' @importFrom magrittr %>%
 
-plot_chronochrt <- function(data, labels_text, chron_name_x, chron_name_y, chron_name_angle = 0, axis_title = "Years", years_major = 100, years_minor, filename, plot_dim, font_size_chrons = 6, font_size_labels = 4, line_break = 8, color_fill = "white", color_line = "black", size_line = 0.5, ...) #labels_image = NULL, image_size = 0.2,
+plot_chronochrt <- function(data, labels_text,
+                            chron_name_x, chron_name_y, chron_name_angle = 0,
+                            axis_title = "Years",
+                            years_major = 100, years_minor,
+                            filename, plot_dim,
+                            font_size_chrons = 6, font_size_labels = 4,
+                            line_break = 8,
+                            color_fill = "white", color_line = "black",
+                            size_line = 0.5, ...) #labels_image = NULL, image_size = 0.2,
 {
   if (!exists(deparse(substitute(data)))) {
     stop("The object ", substitute(data) , " does not exist.")

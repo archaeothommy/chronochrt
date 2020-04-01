@@ -1,32 +1,47 @@
 #' Import data for Chronological chart
 #'
-#' The function imports and converts chronological information from tabular data saved as \code{.csv}, \code{.xlsx} and \code{.xls}, and any other kind of delimited file format into a ready-to-use data set for plotting with ChronochRt. It automatically selects the appropriate import function from the file extension and the argument \code{delim}. To import excel files, the package \code{\link[readxl]} must be installed.
+#' The function imports and converts chronological information from tabular data
+#' saved as \code{.csv}, \code{.xlsx} and \code{.xls}, and any other kind of
+#' delimited file format into a ready-to-use data set for plotting with
+#' ChronochRt. It automatically selects the appropriate import function from the
+#' file extension and the argument \code{delim}. To import excel files, the
+#' package \code{\link{[readxl]}} must be installed.
 #'
-#' Additional columns in the import file will be imported as they are. Among these might be e.g. columns specifying the x and y position of the names to place them at an arbitrary spot.
+#' Additional columns in the import file will be imported as they are. Among
+#' these might be e.g. columns specifying the x and y position of the names to
+#' place them at an arbitrary spot.
 #'
 #' @param path Either a path or a weblink to the file to be imported.
-#' @param region A character string with the column name of the regions/sections in the plot.
-#' @param name A character string with the column name of the names of the chronological units. Must be a character string.
-#' @param start A character string with the column name of the start dates of the chronological units.
-#' @param end A character string with the column name of the end date of the chronological units.
-#' @param level A character string with the column name of the level of the chronological unit.
-#' @param add  A character string with the column name of the columns which signals whether the chronological units within a geographical area should be drawn separately.
-#' @param delim A character string with the separator for tabular data. USe \code{delim = "\t"} for tab-separated data. Must be provided for all file types except \code{.xlsx} or \code{.xls}.
-#' @param ... Additional arguments passed to the respective import functions. See their documentation for details:
-#' \itemize{
-#'   \item \code{\link[readxl]{read_excel()]}} for file formats \code{.xlsx} and \code{.xls}
-#'   \iten \code{\link[readr]{read_csv()}} for the file format \code{.csv}
+#' @param region A character string with the column name of the regions/sections
+#'   in the plot.
+#' @param name A character string with the column name of the names of the
+#'   chronological units. Must be a character string.
+#' @param start A character string with the column name of the start dates of
+#'   the chronological units.
+#' @param end A character string with the column name of the end date of the
+#'   chronological units.
+#' @param level A character string with the column name of the level of the
+#'   chronological unit.
+#' @param add  A character string with the column name of the columns which
+#'   signals whether the chronological units within a geographical area should
+#'   be drawn separately.
+#' @param delim A character string with the separator for tabular data. USe
+#'   \code{delim = "\t"} for tab-separated data. Must be provided for all file
+#'   types except \code{.xlsx} or \code{.xls}.
+#' @param ... Additional arguments passed to the respective import functions.
+#'   See their documentation for details:
+#'   \itemize{
+#'     \item \code{\link[readxl]{read_excel()]}} for file formats \code{.xlsx}
+#'     and \code{.xls},
+#'   \item \code{\link[readr]{read_csv()}} for the file format \code{.csv},
 #'   \item \code{\link[readr]{read_delim()}} for all other file formats.
 #'   }
-#'
 #'
 #' @return A tibble containing the desired chronological information.
 #'
 #' @examples
 #'
-
-
-#'@export
+#' @export
 
 import_chron <- function(path, region, name, start, end, level, add, delim, ...)
 {
@@ -45,7 +60,7 @@ import_chron <- function(path, region, name, start, end, level, add, delim, ...)
     data <- import_chron_excel(path = path, region = region, name = name, start = start, end = end, level = level, add = add, ...)
   }
 
-  if (ext = "csv" && delim %in% c(",", ";")) {
+  if (ext == "csv" && delim %in% c(",", ";")) {
     data <- import_chron_csv(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
     } else {
     data <- import_chron_delim(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
