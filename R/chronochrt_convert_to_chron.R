@@ -2,6 +2,7 @@
 #'
 #' Convert an already existing data set in a ready-to-plot data set.
 #'
+
 #' Additional columns useful for plotting might e.g. specify the x and y position of the names to place them at an arbitrary spot
 #'
 #' @param data A data frame or tibble

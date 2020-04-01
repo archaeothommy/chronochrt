@@ -87,6 +87,7 @@ plot_chronochrt <- function(data, labels_text, chron_name_x, chron_name_y, chron
   #    stop("One or more columns of the image label data contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
   #  }
 
+
   if (!is.character(axis_title)) {stop("Wrong inout format: ", axis_title, "must be a character string.")}
 
   if (!is.numeric(font_size_chrons)) {font_size_chrons <- 6}

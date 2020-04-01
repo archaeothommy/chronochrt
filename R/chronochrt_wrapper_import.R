@@ -14,8 +14,8 @@
 #' @param delim A character string with the separator for tabular data. USe \code{delim = "\t"} for tab-separated data. Must be provided for all file types except \code{.xlsx} or \code{.xls}.
 #' @param ... Additional arguments passed to the respective import functions. See their documentation for details:
 #' \itemize{
-#'   \item \code{\link[readxl]{read_excel]}} for file formats \code{.xlsx} and \code{.xls}
-#'   \iten \code{\link[readr]{read_csv}} for the file format \code{.csv}
+#'   \item \code{\link[readxl]{read_excel()]}} for file formats \code{.xlsx} and \code{.xls}
+#'   \iten \code{\link[readr]{read_csv()}} for the file format \code{.csv}
 #'   \item \code{\link[readr]{read_delim()}} for all other file formats.
 #'   }
 #'
