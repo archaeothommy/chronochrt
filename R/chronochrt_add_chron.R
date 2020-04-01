@@ -6,7 +6,7 @@
 #' \code{start} and \code{end} of neighbouring chronological units must be fit to get a good plotting results, as well as the start date of e.g. the top chronological unit and its respective oldest sub-units. Dates in BCE must provided as negative data. Currently, only years can be handled (i.e. 2020 but not 20.20.2020).
 #' Is \code{start} and \code{end} dates are not certain or the change between chronological units is regarded a period, dates must be given as character string in the format \code("1000/2000"). The order does not matter. But also here, be consistent in order and in matching \code{start} and \code{end} dates to avoid unclean borders in the plot.
 #' The \code{level} indicates the position of the chronological unit. \code{level = 1} denotes a top chronological unit (e.g. Ha), a sub-unit (e.g. Ha B) is \code{level = 2}, a sub-sub-unit (e.g. Ha B1) \code{level = 3} etc. The parameter \code{add} indicates whether the respective chronological unit(s) should be plotted in the same or an additional column. This might be useful if competing chronologies in one region exist (e.g. short and long chronologies). See the vignette for a detailed explanation how the parameters \code{level} and \code{add} work.
-#' Additional columns useful for plotting might e,g, specify the x and y position of the names to place them at an arbitrary spot.
+#' Additional columns might be useful to e.g.  specify the x and y position of the names of the chronological units to place them at an arbitrary spot.
 #'
 #' @param data A data set with chronological data. Must not be provided if \code{new_table = FALSE}.
 #' @param region A character string or character vector with the title(s) of the section(s).
