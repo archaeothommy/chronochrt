@@ -21,12 +21,9 @@ theme_chronochrt(
 \item{base_rect_size}{base size for rect elements}
 }
 \value{
-
+A ggplot-theme
 }
 \description{
 This is a theme to provide a ready-to-use layout of chronological charts. See
-Examples how to alter its appearance with \code{\link[ggplot2]{theme()}}.
-}
-\examples{
-Hier auch was mit theme(), z. b. um Hintergrundfarbe zu Ã¤ndern
+Examples how to alter its appearance with \code{\link[ggplot2]{theme}}.
 }

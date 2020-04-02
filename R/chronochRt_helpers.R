@@ -9,7 +9,8 @@
 #'
 #' @return A vector
 #'
-#' @noRd
+#' @keywords internal
+#' @export
 
 subchron_count <- function(left, right)
 {
@@ -39,7 +40,8 @@ subchron_count <- function(left, right)
 #'
 #' @return A vector
 #'
-#' @noRd
+#' @keywords internal
+#' @export
 
 center_corr <- function(center, width)
 {
@@ -69,7 +71,8 @@ center_corr <- function(center, width)
 #'
 #' @return A vector
 #'
-#' @noRd
+#' @keywords internal
+#' @export
 
 width_corr <- function(center, width)
 {

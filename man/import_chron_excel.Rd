@@ -4,26 +4,12 @@
 \alias{import_chron_excel}
 \title{Import chronological information from excel files}
 \usage{
-import_chron_excel(path, region, name, start, end, level, add, ...)
+import_chron_excel(path, ...)
 }
 \arguments{
-\item{path}{The path of the file to be imported.}
+\item{path}{A characer string with the path of the file to be imported.}
 
-\item{region}{Specifies the colum of the geographical area/Level 1
-(overarching) headline.}
-
-\item{name}{Specifies the colum of the name of the time period.}
-
-\item{start}{Specifies the colum of the start date (can be negative).}
-
-\item{end}{Specifies the colum of the end date (can be negative).}
-
-\item{level}{Specifies the colum of sublevel.}
-
-\item{add}{= TRUE or FALSE. A binary operator indicating whether data within
-"region" should be displayed as separate column. Defaults to FALSE.}
-
-\item{...}{Additional arguments inherited from \code{\link{read_excel()}}.}
+\item{...}{Additional arguments inherited from \code{\link[readxl]{read_excel}}.}
 }
 \value{
 A tibble containing the desired chronological information.
@@ -34,10 +20,7 @@ This function imports and converts chronological information saved in
 will be substituted by "!".
 }
 \examples{
-UK_chronology <- import_chron(path = "Example_data/ex_urnfield_periods.xlsx", "Region", "Name", "Start", "End", "Level")
 
 
-}
-\author{
-Thomas Rose
+
 }

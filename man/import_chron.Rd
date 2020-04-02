@@ -7,38 +7,31 @@
 import_chron(path, region, name, start, end, level, add, delim, ...)
 }
 \arguments{
-\item{path}{Either a path or a weblink to the file to be imported.}
+\item{path}{A character string with either the path or a weblink to the file
+to be imported.}
 
-\item{region}{A character string with the column name of the regions/sections
-in the plot.}
+\item{region, name, start, end, level, add}{Character string (case sensitive) with the column names of:
+\itemize{
+\item the region/sections,
+\item the names of the chronological units,
+\item their start dates,
+\item their end dates,
+\item their level,
+\item the information whether the chronological units within a
+region/section should be drawn separately or not.
+}}
 
-\item{name}{A character string with the column name of the names of the
-chronological units. Must be a character string.}
-
-\item{start}{A character string with the column name of the start dates of
-the chronological units.}
-
-\item{end}{A character string with the column name of the end date of the
-chronological units.}
-
-\item{level}{A character string with the column name of the level of the
-chronological unit.}
-
-\item{add}{A character string with the column name of the columns which
-signals whether the chronological units within a geographical area should
-be drawn separately.}
-
-\item{delim}{A character string with the separator for tabular data. USe
+\item{delim}{A character string with the separator for tabular data. Use
 \code{delim = "\t"} for tab-separated data. Must be provided for all file
 types except \code{.xlsx} or \code{.xls}.}
 
 \item{...}{Additional arguments passed to the respective import functions.
 See their documentation for details:
 \itemize{
-  \item \code{\link[readxl]{read_excel()]}} for file formats \code{.xlsx}
+  \item \code{\link[readxl]{read_excel}} for file formats \code{.xlsx}
   and \code{.xls},
-\item \code{\link[readr]{read_csv()}} for the file format \code{.csv},
-\item \code{\link[readr]{read_delim()}} for all other file formats.
+\item \code{\link[readr]{read_csv}} for the file format \code{.csv},
+\item \code{\link[readr]{read_delim}} for all other file formats.
 }}
 }
 \value{
@@ -50,7 +43,7 @@ saved as \code{.csv}, \code{.xlsx} and \code{.xls}, and any other kind of
 delimited file format into a ready-to-use data set for plotting with
 ChronochRt. It automatically selects the appropriate import function from the
 file extension and the argument \code{delim}. To import excel files, the
-package \code{\link{[readxl]}} must be installed.
+package \pkg{readxl} must be installed.
 }
 \details{
 Additional columns in the import file will be imported as they are. Among

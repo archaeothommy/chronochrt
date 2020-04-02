@@ -55,13 +55,13 @@
 #'   existing data set.
 #' @param ... Additional columns to include in the data set and/or additional
 #'   arguments passed to \code{\link[tibble]{tibble()}} (if \code{new_table =
-#'   TRUE}) or \code{\link[tibble]{add_row()}} (if \code{new_table = FALSE}).
+#'   TRUE}) or \code{\link[tibble]{add_row}} (if \code{new_table = FALSE}).
 #' @param ... Further arguments or columns to include in or additional arguments
-#'   passed to \code{\link[tibble]{tibble()}} or
-#'   \code{\link[tibble]{add_row()}}.
+#'   passed to \code{\link[tibble]{tibble}} or
+#'   \code{\link[tibble]{add_row}}.
 #'
 #' @return A tibble with chronological data ready-to-use for plotting with
-#'   \code{\link[chronochrt]{plot_chronochrt}}.
+#'   \code{\link{plot_chronochrt}}.
 #'
 #' @export
 #'

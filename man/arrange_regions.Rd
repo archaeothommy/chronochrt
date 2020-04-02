@@ -11,12 +11,10 @@ arrange_regions(data, order)
 
 \item{order}{A character vector with desired order of the region/section
 titles. Each title must be given only once.}
-
-\item{region}{A character string with the column name of the regions/sections}
 }
 \value{
 A tibble with chronological data ready-to-use for plotting with
-  \code{\link[chronochrt]{plot_chronochrt}}.
+  \code{\link{plot_chronochrt}}.
 }
 \description{
 This function ensures that the regions/sections of a chronological chart are

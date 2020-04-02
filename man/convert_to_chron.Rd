@@ -29,11 +29,11 @@ signals whether the chronological units within a geographical area should
 be drawn separately.}
 
 \item{...}{Additional columns to include in the data set and/or additional
-arguments passed to \code{\link[dplyr]{rename()}}.}
+arguments passed to \code{\link[dplyr]{rename}}.}
 }
 \value{
 A tibble with chronological data ready-to-use for plotting with
-  \code{\link[chronochrt]{plot_chronochrt}}.
+  \code{\link{plot_chronochrt}}.
 }
 \description{
 Convert an existing data set in a ready-to-plot data set.

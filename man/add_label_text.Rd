@@ -27,12 +27,12 @@ If \code{FALSE}, the default, the input will be added to an existing data
 set.}
 
 \item{...}{Further arguments or columns to include in or additional arguments
-passed to \code{\link[tibble]{tibble()}} or
-\code{\link[tibble]{add_row()}}.}
+passed to \code{\link[tibble]{tibble}} or
+\code{\link[tibble]{add_row}}.}
 }
 \value{
 A tibble with text labels ready-to-use for plotting with
-  \code{\link[chronochrt]{plot_chronochrt}}.
+  \code{\link{plot_chronochrt}}.
 }
 \description{
 The function creates a tibble with text labels to be plotted in a
@@ -47,9 +47,8 @@ It is assumed that most of the labels will be located on the right side of
 each column. The \code{position} of a label defines it right most end to
 prevent it from running outside the plotting area. Vertically, it will be
 placed centered on the \code{year} given. Text in labels can be wrapped by
-inserting \code{\\n} (without blanks).
+inserting \code{\\n} (without blanks around it).
 }
 \examples{
-new TREU/FALSE, Vector vs. single string.
 
 }

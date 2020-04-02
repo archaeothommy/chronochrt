@@ -4,10 +4,10 @@
 #' It provides basic features for the export of the plot and for its
 #' customaisation.
 #'
-#' The plot will use \code{\link[chronochrt]{theme_chronochrt()}} by default.
+#' The plot will use \code{\link{theme_chronochrt}} by default.
 #' Additional customisation of the plot can be done by adding additional layers
 #' to the plot (see Examples). In this case \code{filename} must not be
-#' specified or \code{\link[ggplot2]{ggsave()}} must be called again at the end
+#' specified or \code{\link[ggplot2]{ggsave}} must be called again at the end
 #' to save the final plot.
 #'
 #' It is assumed that most of the text labels will be located on the right side
@@ -52,8 +52,8 @@
 #'   automatically recognised from the file extension. The most common file
 #'   types are supported, e.g. \code{.tiff}, \code{.png}, \code{.jpg},
 #'   \code{.eps}, and \code{.pdf}. To export as \code{.svg} installation of the
-#'   package \code{\link{[svglite]}} is required. See
-#'   \code{\link[ggplot2]{ggsave()}} for more details about the supported file
+#'   package \pkg{svglite} is required. See
+#'   \code{\link[ggplot2]{ggsave}} for more details about the supported file
 #'   formats.
 #' @param plot_dim Dimensions of the plot as a vector in the format
 #'   \code{c(width, height, units)}. Supported units are "cm", "mm", in". For
@@ -74,17 +74,18 @@
 #'   default is \code{"black"}. See the color specification section of
 #'   \code{par()} for how to specify colors in R.
 #' @param size_line Thickness of the line in mm. The default is \code{0.5} mm.
-#' @param ... Additional arguments passed to \code{\link[ggplot2]{ggsave()}} to
+#' @param ... Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 #'   enhance the saved plot like \code{dpi} to specify its resolution. See
-#'   \code{\link[ggplot2]{ggsave()}} for detailed information.
+#'   \code{\link[ggplot2]{ggsave}} for detailed information.
 #'
 #' @return A chronological chart
 #'
 #' @export
 #'
-#' @examples Changing background, changing theme
+#' @examples
 #'
-#' @importFrom magrittr %>%
+
+# Changing background, changing theme
 
 plot_chronochrt <- function(data, labels_text,
                             chron_name_x, chron_name_y, chron_name_angle = 0,
@@ -137,7 +138,7 @@ plot_chronochrt <- function(data, labels_text,
 
   if (!is.numeric(years_major)) {years_major <- 100}
 
-  if (!is_character(color_fill)) {color_fill <- "white"}
+  if (!is.character(color_fill)) {color_fill <- "white"}
 
   if (!is.character(color_line)) {color_line <- "black"}
 
@@ -218,72 +219,72 @@ plot_chronochrt <- function(data, labels_text,
   }
 
   data <- data %>% # calculation of geometry
-    dplyr::group_by(region, add) %>%
-    tidyr::separate(start, c("start", "start2"), sep = "/", fill = "right") %>%
-    tidyr::separate(end, c("end", "end2"), sep = "/", fill = "right") %>%
+    dplyr::group_by(.data$region, .data$add) %>%
+    tidyr::separate(.data$start, c("start", "start2"), sep = "/", fill = "right") %>%
+    tidyr::separate(.data$end, c("end", "end2"), sep = "/", fill = "right") %>%
     dplyr::mutate_at(c("start", "start2", "end", "end2"), as.numeric) %>%
-    select_if(~sum(!is.na(.)) > 0) %>%
-    dplyr::mutate(subchron = subchron_count(start, end)) %>%
-    dplyr::mutate(col_tot = dplyr::case_when(level > subchron ~ level,
-                                             level == subchron ~ level + 1,
-                                             level < subchron ~ level + subchron)) %>%
-    dplyr::mutate(x_center = (level - 0.5) / col_tot,
-                  x_width = 1 / col_tot,
-                  y_center = (start + end) / 2,
-                  y_width = end - start) %>%
-    dplyr::mutate(x_center_corr = center_corr(x_center, x_width),
-                  x_width_corr = width_corr(x_center, x_width)
+    dplyr::select_if(~sum(!is.na(.)) > 0) %>%
+    dplyr::mutate(subchron = subchron_count(.data$start, .data$end)) %>%
+    dplyr::mutate(col_tot = dplyr::case_when(.data$level > subchron ~ .data$level,
+                                             .data$level == subchron ~ .data$level + 1,
+                                             .data$level < subchron ~ .data$level + subchron)) %>%
+    dplyr::mutate(x_center = (.data$level - 0.5) / .data$col_tot,
+                  x_width = 1 / .data$col_tot,
+                  y_center = (.data$start + .data$end) / 2,
+                  y_width = .data$end - .data$start) %>%
+    dplyr::mutate(x_center_corr = center_corr(.data$x_center, .data$x_width),
+                  x_width_corr = width_corr(.data$x_center, .data$x_width)
     ) %>%
-    dplyr::mutate(x_center = x_center_corr,
-                  x_width = x_width_corr) %>%
-    dplyr::select(-x_center_corr, -x_width_corr) %>%
-    dplyr::mutate(x_center = replace(x_center, add == TRUE, x_center + 1))
+    dplyr::mutate(x_center = .data$x_center_corr,
+                  x_width = .data$x_width_corr) %>%
+    dplyr::select(-.data$x_center_corr, -.data$x_width_corr) %>%
+    dplyr::mutate(x_center = replace(.data$x_center, .data$add == TRUE, .data$x_center + 1))
 
   if (missing(chron_name_x)) {dplyr::mutate(data, chron_name_x = data$x_center)}
   if (missing(chron_name_y)) {dplyr::mutate(data, chron_name_y = data$y_center)}
 
   plot <- ggplot2::ggplot(data) + # plot
-    ggplot2::geom_tile(aes(x = x_center, width = x_width, y = y_center, height = y_width), fill = color_fill, color = color_line, linetype = "solid", size = size_line) +
-    ggplot2::geom_text(aes(x = chron_name_x, y = chron_name_y, label = name, angle = chron_name_angle), size = font_size_chrons)
+    ggplot2::geom_tile(ggplot2::aes(x = .data$x_center, width = .data$x_width, y = .data$y_center, height = .data$y_width), fill = color_fill, color = color_line, linetype = "solid", size = size_line) +
+    ggplot2::geom_text(ggplot2::aes(x = .data$chron_name_x, y = .data$chron_name_y, label = .data$name, angle = .data$chron_name_angle), size = font_size_chrons)
 
   if ("start2" %in% colnames(data)) {
     plot <- plot +
-      ggplot2::geom_segment(data = data %>% filter(!is.na(start2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = start, yend = start), color = color_fill, linetype = "dashed", size = size_line) +
-      ggplot2::geom_segment(data = data %>% filter(!is.na(start2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = start2, yend = start2), color = color_line, linetype = "dashed", size = size_line)
+      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$start2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$start, yend = .data$start), color = color_fill, linetype = "dashed", size = size_line) +
+      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$start2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$start2, yend = .data$start2), color = color_line, linetype = "dashed", size = size_line)
   }
 
   if ("end2" %in% colnames(data)) {
     plot <- plot +
-      ggplot2::geom_segment(data = data %>% filter(!is.na(end2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = end, yend = end), color = color_fill, linetype = "dashed", size = size_line) +
-      ggplot2::geom_segment(data = data %>% filter(!is.na(end2)), aes(x = x_center - x_width/2, xend = x_center + x_width/2, y = end2, yend = end2), color = color_line, linetype = "dashed", size = size_line)
+      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$end2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$end, yend = .data$end), color = color_fill, linetype = "dashed", size = size_line) +
+      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$end2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$end2, yend = .data$end2), color = color_line, linetype = "dashed", size = size_line)
   }
 
   if(!missing(labels_text)) {
     if (is.factor(data$region)) {
-      labels_text <- mutate(labels_text, region = factor(region, levels = levels(data$region)))
+      labels_text <- dplyr::mutate(labels_text, region = factor(.data$region, levels = levels(data$region)))
     }
 
     plot <- plot +
-      ggplot2::geom_text(data = labels_text, aes(y=year, x = position, label = label, hjust = 1, vjust = 0.5), na.rm = TRUE, size = font_size_labels)
+      ggplot2::geom_text(data = labels_text, ggplot2::aes(y = .data$year, x = .data$position, label = .data$label, hjust = 1, vjust = 0.5), na.rm = TRUE, size = font_size_labels)
   }
 
   # if(!missing(labels_image)) {
   #   if (is.factor(data$region)) {
-  #     labels_text <- mutate(labels_text, region = factor(region, levels = levels(data$region)))
+  #     labels_text <- mutate(labels_text, region = factor(.data$region, levels = levels(data$region)))
   #     }
   #
   #   plot <- plot +
-  #     ggimage::geom_image(data = labels_image, aes(y=year, x = position, image = image_path), na.rm = TRUE, size = image_size, asp = 4)
+  #     ggimage::geom_image(data = labels_image, ggplot2::aes(y = .data$year, x = .data$position, image = .data$image_path), na.rm = TRUE, size = image_size, asp = 4)
   #   }
 
   plot <- plot +
     ggplot2::scale_x_continuous(name = NULL, breaks = NULL, minor_breaks = NULL, expand = c(0,0)) +
     ggplot2::scale_y_continuous(name = axis_title, breaks = round(seq(min(data$start), max(data$end), by = years_major),1), minor_breaks = round(seq(min(data$start), max(data$end), by = years_minor),1), expand = c(0,0)) +
-    ggplot2::facet_grid(cols = vars(region), scales = "free_x", space = "free_x", labeller = label_wrap_gen(width = line_break)) +
+    ggplot2::facet_grid(cols = ggplot2::vars(.data$region), scales = "free_x", space = "free_x", labeller = ggplot2::label_wrap_gen(width = line_break)) +
     theme_chronochrt() +
-    theme(axis.text=element_text(size = font_size_chrons*0.8*72.27/25.4),
-          axis.title=element_text(size = font_size_chrons*72.27/25.4, face="bold"),
-          strip.text.x = element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
+    ggplot2::theme(axis.text = ggplot2::element_text(size = font_size_chrons*0.8*72.27/25.4),
+          axis.title = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold"),
+          strip.text.x = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
   #labs(caption = "Citation of the release paper")
 
   if(!missing(filename)) {

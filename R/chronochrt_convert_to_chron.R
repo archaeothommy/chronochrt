@@ -20,10 +20,10 @@
 #'   signals whether the chronological units within a geographical area should
 #'   be drawn separately.
 #' @param ... Additional columns to include in the data set and/or additional
-#'   arguments passed to \code{\link[dplyr]{rename()}}.
+#'   arguments passed to \code{\link[dplyr]{rename}}.
 #'
 #' @return A tibble with chronological data ready-to-use for plotting with
-#'   \code{\link[chronochrt]{plot_chronochrt}}.
+#'   \code{\link{plot_chronochrt}}.
 #'
 #' @export
 #'
@@ -39,7 +39,8 @@ convert_to_chron <- function(data, region, name, start, end, level, add, ...)
     stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
   }
 
-  data <- dplyr::rename(data, region = (!!as.name(region)), name = (!!as.name(name)), start = (!!as.name(start)), end = (!!as.name(end)), level = (!!as.name(level)), add = (!!as.name(add)), ...)
+  pos <- tidyselect::eval_rename(rlang::expr(c(region = region, name = name, start = start, end = end, level = level, add = add)), data)
+  names(data)[pos] <- names(pos)
 
   if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")

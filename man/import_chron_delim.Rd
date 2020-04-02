@@ -4,29 +4,15 @@
 \alias{import_chron_delim}
 \title{Import chronological information from other delimited files}
 \usage{
-import_chron_delim(path, region, name, start, end, level, delim, add, ...)
+import_chron_delim(path, delim, ...)
 }
 \arguments{
 \item{path}{the path of the file to be imported.}
 
-\item{region}{specifies the colum of the geografical area/Level 1
-(overarching) headline.}
+\item{delim}{A character string with the separator}
 
-\item{name}{specifies the colum of the name of the time period.}
-
-\item{start}{specifies the colum of the start date.}
-
-\item{end}{specifies the colum of the end date.}
-
-\item{level}{specifies the colum of sublevel.}
-
-\item{delim}{Single character used to separate fields within a record}
-
-\item{add}{= TRUE or FALSE. A binary operator indicating whether data within
-"region" should be displayed as separate column. Defaults to FALSE.}
-
-\item{...}{Additional arguments inherited from \code{read_delim()} and
-\code{read_table}.}
+\item{...}{Additional arguments inherited from \code{\link[readr]{read_delim}} and
+\code{\link[readr]{read_table}}.}
 }
 \value{
 A tibble containing the desired chronological information.

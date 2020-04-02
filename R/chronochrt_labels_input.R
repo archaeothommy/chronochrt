@@ -27,16 +27,18 @@
 #'   If \code{FALSE}, the default, the input will be added to an existing data
 #'   set.
 #' @param ... Further arguments or columns to include in or additional arguments
-#'   passed to \code{\link[tibble]{tibble()}} or
-#'   \code{\link[tibble]{add_row()}}.
+#'   passed to \code{\link[tibble]{tibble}} or
+#'   \code{\link[tibble]{add_row}}.
 #'
 #' @return A tibble with text labels ready-to-use for plotting with
-#'   \code{\link[chronochrt]{plot_chronochrt}}.
+#'   \code{\link{plot_chronochrt}}.
 #'
 #' @export
 #'
-#' @examples new TREU/FALSE, Vector vs. single string.
+#' @examples
 #'
+
+# new TRUE/FALSE, Vector vs. single string
 
 add_label_text <- function(data, region, year, position = 0.9, label, new = FALSE, ...)
 {
@@ -81,11 +83,11 @@ add_label_text <- function(data, region, year, position = 0.9, label, new = FALS
 #'   If \code{FALSE}, the default, the input will be added to an existing data
 #'   set.
 #' @param ... Further arguments or columns to include in or additional arguments
-#'   passed to \code{\link[tibble]{tibble()}} or
-#'   \code{\link[tibble]{add_row()}}.
+#'   passed to \code{\link[tibble]{tibble}} or
+#'   \code{\link[tibble]{add_row}}.
 #'
 #' @return A tibble with image labels ready-to-use for plotting with
-#'   \code{\link[chronochrt]{plot_chronochrt}}.
+#'   \code{\link{plot_chronochrt}}.
 #'
 #' @noRd
 #'

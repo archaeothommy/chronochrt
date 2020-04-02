@@ -47,12 +47,12 @@ created. If \code{FALSE}, the default, the input will be added to an
 existing data set.}
 
 \item{...}{Further arguments or columns to include in or additional arguments
-passed to \code{\link[tibble]{tibble()}} or
-\code{\link[tibble]{add_row()}}.}
+passed to \code{\link[tibble]{tibble}} or
+\code{\link[tibble]{add_row}}.}
 }
 \value{
 A tibble with chronological data ready-to-use for plotting with
-  \code{\link[chronochrt]{plot_chronochrt}}.
+  \code{\link{plot_chronochrt}}.
 }
 \description{
 This function either creates a data set with chronological data which can be

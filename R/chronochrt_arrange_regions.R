@@ -4,12 +4,11 @@
 #' arranged different from an alphabetal order.
 #'
 #' @param data A data set with chronological data and a cloumn named "region".
-#' @param region A character string with the column name of the regions/sections
 #' @param order A character vector with desired order of the region/section
 #'   titles. Each title must be given only once.
 #'
 #' @return A tibble with chronological data ready-to-use for plotting with
-#'   \code{\link[chronochrt]{plot_chronochrt}}.
+#'   \code{\link{plot_chronochrt}}.
 #'
 #' @export
 #'

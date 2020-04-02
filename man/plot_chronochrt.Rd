@@ -63,8 +63,8 @@ the plot will be saved on the given location. The file format is
 automatically recognised from the file extension. The most common file
 types are supported, e.g. \code{.tiff}, \code{.png}, \code{.jpg},
 \code{.eps}, and \code{.pdf}. To export as \code{.svg} installation of the
-package \code{\link{[svglite]}} is required. See
-\code{\link[ggplot2]{ggsave()}} for more details about the supported file
+package \pkg{svglite} is required. See
+\code{\link[ggplot2]{ggsave}} for more details about the supported file
 formats.}
 
 \item{plot_dim}{Dimensions of the plot as a vector in the format
@@ -93,9 +93,9 @@ default is \code{"black"}. See the color specification section of
 
 \item{size_line}{Thickness of the line in mm. The default is \code{0.5} mm.}
 
-\item{...}{Additional arguments passed to \code{\link[ggplot2]{ggsave()}} to
+\item{...}{Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 enhance the saved plot like \code{dpi} to specify its resolution. See
-\code{\link[ggplot2]{ggsave()}} for detailed information.}
+\code{\link[ggplot2]{ggsave}} for detailed information.}
 }
 \value{
 A chronological chart
@@ -106,10 +106,10 @@ It provides basic features for the export of the plot and for its
 customaisation.
 }
 \details{
-The plot will use \code{\link[chronochrt]{theme_chronochrt()}} by default.
+The plot will use \code{\link{theme_chronochrt}} by default.
 Additional customisation of the plot can be done by adding additional layers
 to the plot (see Examples). In this case \code{filename} must not be
-specified or \code{\link[ggplot2]{ggsave()}} must be called again at the end
+specified or \code{\link[ggplot2]{ggsave}} must be called again at the end
 to save the final plot.
 
 It is assumed that most of the text labels will be located on the right side
@@ -124,6 +124,5 @@ incompatible: \code{axis_title}, \code{font_size_chrons},
 \code{color_line}, \code{size_line}, \code{line_break}.
 }
 \examples{
-Changing background, changing theme
 
 }
