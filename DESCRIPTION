@@ -17,8 +17,8 @@ Author: Thomas Rose [aut, cre], Chiara Girotto [aut]
 Maintainer: Thomas Rose <thomas.rose@daad-alumni.de>
 Description: What the package does (one paragraph).
 License: GPL-3
-URL: 
-BugReports: 
+URL: https://gitlab.com/roset/chronochrt
+BugReports: https://gitlab.com/roset/chronochrt/issues/
 Imports:
   dplyr, 
   ggplot2,
@@ -28,7 +28,8 @@ Imports:
   rlang,
   tidyselect
 Suggests: 
-  readxl
+    readxl,
+    testthat
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
