@@ -1,0 +1,25 @@
+RegionqNameqStartqEndqLevelqadd
+Sueddeutschland (Reinecke 1911)qHa Cq-800q-700q1qFALSE
+Sueddeutschland (Reinecke 1911)qHa Bq-1000q-800q1qFALSE
+Sueddeutschland (Reinecke 1911)qHa Aq-1200q-1000q1qFALSE
+Sueddeutschland (Reinecke 1911)qBz Dq-1350q-1200q1qFALSE
+Baden (Kimmig 1940)qHa Cq-875q-700q1qFALSE
+Baden (Kimmig 1940)qHa Bq-1000q-875q1qFALSE
+Baden (Kimmig 1940)qHa Aq-1200q-1000q1qFALSE
+Baden (Kimmig 1940)qBz Dq-1350q-1200q1qFALSE
+Alpenraum (Mueller-Karpe 1959)qHa Bq-1000q-700q1qFALSE
+Alpenraum (Mueller-Karpe 1959)q3q-775q-700q2qFALSE
+Alpenraum (Mueller-Karpe 1959)q2q-900q-775q2qFALSE
+Alpenraum (Mueller-Karpe 1959)q1q-1000q-900q2qFALSE
+Alpenraum (Mueller-Karpe 1959)qHa Aq-1200q-1000q1qFALSE
+Alpenraum (Mueller-Karpe 1959)q2q-1100q-1000q2qFALSE
+Alpenraum (Mueller-Karpe 1959)q1q-1200q-1100q2qFALSE
+Alpenraum (Mueller-Karpe 1959)qBz Dq-1300q-1200q1qFALSE
+Alpenraum (Mueller-Karpe 1959)qBz Cq-1350q-1300q1qFALSE
+Mittel/Suedhessen (Herrmann 1966)qHa Bq-1000q-700q1qFALSE
+Mittel/Suedhessen (Herrmann 1966)q3q-825q-700q2qFALSE
+Mittel/Suedhessen (Herrmann 1966)q1q-1000q-825q2qFALSE
+Mittel/Suedhessen (Herrmann 1966)qHa Aq-1200q-1000q1qFALSE
+Mittel/Suedhessen (Herrmann 1966)q2q-1100q-1000q2qFALSE
+Mittel/Suedhessen (Herrmann 1966)q1q-1200q-1100q2qFALSE
+Mittel/Suedhessen (Herrmann 1966)qBz Dq-1350q-1200q1qFALSE

@@ -51,26 +51,23 @@ import_chron <- function(path, region, name, start, end, level, add, delim, ...)
 
   ext <- strsplit(basename(path), split = "\\.")[[1]][-1] # extract file format
 
-  if (!missing(delim) && !(ext %in% c("xlsx", "xls"))) {
+  if (missing(delim) && !(ext %in% c("xlsx", "xls"))) {
     stop("Missing argument: delim")
   }
 
   if (ext %in% c("xlsx", "xls")) {
     data <- import_chron_excel(path = path, ...)
-  }
-
-  if (!(ext %in% c("xlsx", "xls"))) {
-
-    if (ext == "csv" && delim %in% c(",", ";")) {
-      data <- import_chron_csv(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
     } else {
-      stop("No valid separator for csv files: ", delim)
-    }
-
-    if (ext != "csv") {
-      data <- import_chron_delim(path = path, region = region, name = name, start = start, end = end, level = level, add = add, delim = delim, ...)
-    }
-  }
+      if (ext == "csv") {
+        if (delim %in% c(",", ";")) {
+          data <- import_chron_csv(path = path, delim = delim, ...)
+          } else {
+            stop("No valid separator for csv files: ", delim)
+            }
+        } else {
+          data <- import_chron_delim(path = path, delim = delim, ...)
+        }
+      }
 
   pos <- tidyselect::eval_rename(rlang::expr(c(region = region, name = name, start = start, end = end, level = level, add = add)), data)
   names(data)[pos] <- names(pos)
@@ -82,7 +79,7 @@ import_chron <- function(path, region, name, start, end, level, add, delim, ...)
   }
 
   if (!all(round(data$level) == data$level)) {
-    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
+    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...).")
   }
 
   data
