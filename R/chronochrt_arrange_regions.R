@@ -25,11 +25,14 @@ arrange_regions <- function(data, order)
   }
 
   if (!"region" %in% names(data)) {
-    stop("Columns region does not exist in ", data, " .")
+    stop("Columns `region` does not exist in ", data, " .")
   }
 
-  if (!is.character(order) && !is.vector(order)) {
-    stop("Incompatible input format: ", substitute(order), " must be a vector of unique character strings.")
+  if (!is.character(order)) {
+    if (!is.vector(order)) {
+      stop("Incompatible input format: ", substitute(order), " must be a vector of unique character strings.")
+    } else {stop("Incompatible input format: ", substitute(order), " is not a character vector.")
+    }
   }
 
   data$region <- factor(data$region, levels = order)

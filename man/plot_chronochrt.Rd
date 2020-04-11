@@ -41,7 +41,7 @@ are placed in the centers of the chonological units. }}
 \item{chron_name_angle}{Specifies the angle of the chronological unit's
 names. It can be: \itemize{ \item a character string with the name of the
 respective column in \code{data}, \item a number. Then all names are placed
-in the same angle, \item a numeric vector specifiying the position of each
+in the same angle, \item a numeric vector specifiying the angle of each
 name; \item it must not be specified if a column with the name
 "chron_name_angle" already exists in \code{data}; \item if not specified
 and not present in \code{data}, the default value \code{0} is used, i.e.
@@ -56,7 +56,7 @@ be drawn on the vertical axis. Default is \code{100}.}
 \item{years_minor}{An optional number in years giving the interval additional
 lines should be drawn to ease orientation in the plot. If not defined they
 will be drawn in the middle between the axis labels. If they should not be
-plottet, set this argument to the same value like \code{years_major}.}
+plotted, set this argument to the same value like \code{years_major}.}
 
 \item{filename}{A character string with the filename or path. If specified,
 the plot will be saved on the given location. The file format is

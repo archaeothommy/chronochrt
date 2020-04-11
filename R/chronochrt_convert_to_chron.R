@@ -19,8 +19,6 @@
 #' @param add  A character string with the column name of the columns which
 #'   signals whether the chronological units within a geographical area should
 #'   be drawn separately.
-#' @param ... Additional columns to include in the data set and/or additional
-#'   arguments passed to \code{\link[dplyr]{rename}}.
 #'
 #' @return A tibble with chronological data ready-to-use for plotting with
 #'   \code{\link{plot_chronochrt}}.
@@ -29,7 +27,7 @@
 #'
 #' @examples
 
-convert_to_chron <- function(data, region, name, start, end, level, add, ...)
+convert_to_chron <- function(data, region, name, start, end, level, add)
 {
   if (!exists(deparse(substitute(data)))) {
     stop("The object ", substitute(data) , " does not exist.")

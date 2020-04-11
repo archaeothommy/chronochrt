@@ -4,7 +4,7 @@
 \alias{convert_to_chron}
 \title{Prepare an existing data set for plotting}
 \usage{
-convert_to_chron(data, region, name, start, end, level, add, ...)
+convert_to_chron(data, region, name, start, end, level, add)
 }
 \arguments{
 \item{data}{A data frame or tibble}
@@ -27,9 +27,6 @@ chronological unit.}
 \item{add}{A character string with the column name of the columns which
 signals whether the chronological units within a geographical area should
 be drawn separately.}
-
-\item{...}{Additional columns to include in the data set and/or additional
-arguments passed to \code{\link[dplyr]{rename}}.}
 }
 \value{
 A tibble with chronological data ready-to-use for plotting with

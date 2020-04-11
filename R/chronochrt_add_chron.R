@@ -72,12 +72,19 @@
 add_chron <- function(data, region, name, start, end, level = 1,
                       add = FALSE, new_table = FALSE, ...)
 {
-  if (!exists(deparse(substitute(data))) && new_table == FALSE) {
-    stop("The object ", substitute(data) , " does not exist.")
+  if (new_table == FALSE) {
+    if (!missing(data)) {
+      if (exists(deparse(substitute(data)))) {
+        data <- tibble::add_row(data, region , name, start, end, level, add, ...)
+      } else {
+          stop("The object ", substitute(data) , " does not exist.")
+      }
+    } else {
+        stop("The argument `data` must be provided or `new_table` must be TRUE.")
+    }
+  } else {
+    data <- tibble::tibble(region, name, start, end, level, add, ...)
   }
-
-  if (new_table == TRUE) {data <- tibble::tibble(region, name, start, end, level, add, ...)}
-  if (new_table == FALSE) {data <- tibble::add_row(data, region , name, start, end, level, add, ...)}
 
   if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")

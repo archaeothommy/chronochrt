@@ -34,7 +34,7 @@
 #' @param chron_name_angle Specifies the angle of the chronological unit's
 #'   names. It can be: \itemize{ \item a character string with the name of the
 #'   respective column in \code{data}, \item a number. Then all names are placed
-#'   in the same angle, \item a numeric vector specifiying the position of each
+#'   in the same angle, \item a numeric vector specifiying the angle of each
 #'   name; \item it must not be specified if a column with the name
 #'   "chron_name_angle" already exists in \code{data}; \item if not specified
 #'   and not present in \code{data}, the default value \code{0} is used, i.e.
@@ -46,7 +46,7 @@
 #' @param years_minor An optional number in years giving the interval additional
 #'   lines should be drawn to ease orientation in the plot. If not defined they
 #'   will be drawn in the middle between the axis labels. If they should not be
-#'   plottet, set this argument to the same value like \code{years_major}.
+#'   plotted, set this argument to the same value like \code{years_major}.
 #' @param filename A character string with the filename or path. If specified,
 #'   the plot will be saved on the given location. The file format is
 #'   automatically recognised from the file extension. The most common file
@@ -113,6 +113,13 @@ plot_chronochrt <- function(data, labels_text,
     stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
   }
 
+  if (!("region" %in% names(data))) {stop("Wrong input format: The column `region` in ", substitute(data), " does not exist.")}
+  if (!("name" %in% names(data))) {stop("Wrong input format: The column `name` in ", substitute(data), " does not exist.")}
+  if (!("start" %in% names(data))) {stop("Wrong input format: The column `start` in ", substitute(data), " does not exist.")}
+  if (!("end" %in% names(data))) {stop("Wrong input format: The column `end` in ", substitute(data), " does not exist.")}
+  if (!("level" %in% names(data))) {stop("Wrong input format: The column `level` in ", substitute(data), " does not exist.")}
+  if (!("add" %in% names(data))) {stop("Wrong input format: The column `add` in ", substitute(data), " does not exist.")}
+
   if (!all(is.character(data$region) | is.factor(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
   }
@@ -121,34 +128,52 @@ plot_chronochrt <- function(data, labels_text,
     stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
   }
 
-  if (!missing(labels_text) && !all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
+  if (!missing(labels_text)) {
+    if (!("region" %in% names(labels_text))) {stop("Wrong input format: The column `region` in ", substitute(labels_text), " does not exist.")}
+    if (!("year" %in% names(labels_text))) {stop("Wrong input format: The column `year` in ", substitute(labels_text), " does not exist.")}
+    if (!("label" %in% names(labels_text))) {stop("Wrong input format: The column `label` in ", substitute(labels_text), " does not exist.")}
+    if (!("position" %in% names(labels_text))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
+
+    if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
     stop("One or more columns of the text label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+    }
   }
 
-  #  if (!missing(labels_image) && !all(is.character(labels_image$region), is.numeric(labels_image$year), is.numeric(labels_image$position))) {
-  #    stop("One or more columns of the image label data contain incompatible data. Data must be strings (region), numeric (year, position) or logical (add).")
-  #  }
-
+  # if (!missing(labels_image)) {
+  #   if (!("region" %in% names(labels_image))) {stop("Wrong input format: The column `region` in ", substitute(labels_text), " does not exist.")}
+  #   if (!("year" %in% names(labels_image))) {stop("Wrong input format: The column `year` in ", substitute(labels_text), " does not exist.")}
+  #   if (!("position" %in% names(labels_image))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
+  #
+  #   if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
+  #     stop("One or more columns of the image label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+  #   }
+  # }
 
   if (!is.character(axis_title)) {stop("Wrong inout format: ", axis_title, "must be a character string.")}
 
-  if (!is.numeric(font_size_chrons)) {font_size_chrons <- 6}
+  if (!is.numeric(font_size_chrons) && length(font_size_chrons) != 1) {font_size_chrons <- 6}
 
-  if (!is.numeric(font_size_labels)) {font_size_labels <- 4}
+  if (!is.numeric(font_size_labels)&& length(font_size_labels) != 1) {font_size_labels <- 4}
 
-  if (!is.numeric(years_major)) {years_major <- 100}
+  if (!is.numeric(years_major)&& length(years_major) != 1) {years_major <- 100}
 
-  if (!is.character(color_fill)) {color_fill <- "white"}
+  if (!is.character(color_fill)&& length(color_fill) != 1) {color_fill <- "white"}
 
-  if (!is.character(color_line)) {color_line <- "black"}
+  if (!is.character(color_line)&& length(color_line) != 1) {color_line <- "black"}
 
-  if (!is.numeric(size_line)) {size_line <- 0.5}
+  if (!is.numeric(size_line)&& length(size_line) != 1) {size_line <- 0.5}
 
-  if (!is.numeric(line_break)) {line_break = 8}
+  if (!is.numeric(line_break)&& length(line_break) != 1) {line_break = 8}
 
-  if (!missing(filename) && !is.character(filename)) {stop("Wrong input format: ", filename, "must be a string.")}
-
-  if (!missing(filename) && !dir.exists(dirname(filename))) {stop("The directory ", dirname(filename), " does not exist.")}
+  if (!missing(filename)) {
+    if (!is.character(filename)) {stop("Wrong input format: ", filename, "must be a string.")}
+    if (!dir.exists(dirname(filename))) {stop("The directory ", dirname(filename), " does not exist.")}
+    if (missing(plot_dim)) {
+      width <- NA
+      height <- NA
+      units <- NULL
+    }
+  }
 
   if (!missing(plot_dim)) {
     width <- as.numeric(plot_dim[1])
@@ -156,67 +181,63 @@ plot_chronochrt <- function(data, labels_text,
     units <- as.character(plot_dim[3])
   }
 
-  if (missing(plot_dim) && !missing(filename)) {
-    width <- NA
-    height <- NA
-    units <- NULL
-  }
-
-  if (!(units %in% c("in", "cm", "mm"))) {stop("This unit is not supported. Only the following units are support: mm, cm, in.")}
+  if (!missing(plot_dim) && !(units %in% c("in", "cm", "mm"))) {stop("This unit is not supported. Only the following units are support: mm, cm, in.")}
 
   if(missing(years_minor) || !is.numeric(years_minor)) {years_minor <- years_major/2}
 
   if (!missing(chron_name_x)) {
 
     if (is.numeric(chron_name_x)) {
-      dplyr::mutate(data, chron_name_x = chron_name_x)
+      data <- dplyr::mutate(data, chron_name_x = chron_name_x)
       }
 
     if (is.character(chron_name_x) && length(chron_name_x) == 1) {
 
       if (chron_name_x %in% names(data)) {
-        dplyr::rename(data, chron_name_x = !!(as.name(chron_name_x)))
+        data <- dplyr::rename(data, chron_name_x = !!(as.name(chron_name_x)))
         } else {
           stop("The column ", chron_name_x, " does not exist.")
           }
+    } else {
+      stop("Wrong input format: chron_name_x must be numeric or a character string.")
     }
-  }
-
-  if (!all(missing(chron_name_x), is.numeric(chron_name_x), is.character(chron_name_x))) {
-    stop("Wrong input format: chron_name_x must be numeric or a character string.")
   }
 
   if (!missing(chron_name_y)) {
 
-    if (is.numeric(chron_name_y)) {dplyr::mutate(data, chron_name_y = chron_name_y)}
+    if (is.numeric(chron_name_y)) {
+      data <- dplyr::mutate(data, chron_name_y = chron_name_y)
+    }
 
     if (is.character(chron_name_y) && length(chron_name_y) == 1) {
 
       if (chron_name_y %in% names(data)) {
-        dplyr::rename(data, chron_name_y = !!(as.name(chron_name_y)))
+        data <- dplyr::rename(data, chron_name_y = !!(as.name(chron_name_y)))
       } else {
         stop("The column ", chron_name_y, " does not exist.")
       }
+    } else {
+      stop("Wrong input format: chron_name_y must be numeric or a character string.")
     }
   }
 
-  if (!all(missing(chron_name_y), is.numeric(chron_name_y), is.character(chron_name_y))) {
-    stop("Wrong input format: chron_name_y must be numeric or a character string.")
-  }
+   if (is.numeric(chron_name_angle)) {data <- dplyr::mutate(data, chron_name_angle = chron_name_angle)}
 
-  if (is.numeric(chron_name_angle)) {dplyr::mutate(data, chron_name_angle = chron_name_angle)}
+   if (is.character(chron_name_angle)) {
+     if (length(chron_name_angle) == 1) {
+       if (chron_name_angle %in% names(data)) {
+         data <- dplyr::rename(data, chron_name_angle = !!(as.name(chron_name_angle)))
+         } else {
+           stop("The column ", chron_name_angle, " does not exist.")
+         }
+       } else {
+         stop("Wrong input format: chron_name_angle must be a character string.")
+       }
+   }
 
-  if (is.character(chron_name_angle) && length(chron_name_angle) == 1) {
-    if (chron_name_angle %in% names(data)) {
-      dplyr::rename(data, chron_name_angle = !!(as.name(chron_name_angle)))
-      } else {
-        stop("The column ", chron_name_angle, " does not exist.")
-      }
-    }
-
-  if (!is.numeric(chron_name_angle) && !is.character(chron_name_angle)) {
-    stop("Wrong input format: chron_name_angle must be numeric or a character string.")
-  }
+   if (!is.numeric(chron_name_angle) && !is.character(chron_name_angle)) {
+     stop("Wrong input format: chron_name_angle must be numeric or a character string.")
+   }
 
   data <- data %>% # calculation of geometry
     dplyr::group_by(.data$region, .data$add) %>%
@@ -238,10 +259,11 @@ plot_chronochrt <- function(data, labels_text,
     dplyr::mutate(x_center = .data$x_center_corr,
                   x_width = .data$x_width_corr) %>%
     dplyr::select(-.data$x_center_corr, -.data$x_width_corr) %>%
-    dplyr::mutate(x_center = replace(.data$x_center, .data$add == TRUE, .data$x_center + 1))
+    dplyr::mutate(x_center = replace(.data$x_center, .data$add == TRUE, .data$x_center + 1)) %>%
+    dplyr::ungroup()
 
-  if (missing(chron_name_x)) {dplyr::mutate(data, chron_name_x = data$x_center)}
-  if (missing(chron_name_y)) {dplyr::mutate(data, chron_name_y = data$y_center)}
+  if (missing(chron_name_x)) {data <- dplyr::mutate(data, chron_name_x = .data$x_center)}
+  if (missing(chron_name_y)) {data <- dplyr::mutate(data, chron_name_y = .data$y_center)}
 
   plot <- ggplot2::ggplot(data) + # plot
     ggplot2::geom_tile(ggplot2::aes(x = .data$x_center, width = .data$x_width, y = .data$y_center, height = .data$y_width), fill = color_fill, color = color_line, linetype = "solid", size = size_line) +
