@@ -1,4 +1,4 @@
-#' ChronochRt:
+#' ChronochRt
 #'
 #' The foo package provides three categories of important functions:
 #' foo, bar and baz.

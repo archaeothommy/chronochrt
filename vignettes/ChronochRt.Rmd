@@ -1,0 +1,61 @@
+---
+title: "How does ChronochRt work?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ChronochRt}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(ChronochRt)
+library(knitr)
+library(magrittr)
+
+```
+
+# The ChronochRt workflow
+
+Creating a chronological chart with ChronochRt consits of two basic steps: Creating a data set and plotting it: 
+
+```{r MWE, echo = TRUE}
+data <- add_chron(region = "Test", 
+          name = c("1"), 
+          start = c(100), 
+          end = c(200), 
+          level = c(1), 
+          add = FALSE, 
+          new_table = TRUE)
+
+plot_chronochrt(data)
+
+```
+
+However, you most likely want to customise your plot (e. g. change the order of the columns and the font size), add annotations and and save it. Hence, the the full workflow when using ChronochRt looks like this: 
+
+```{r Workflow, echo = FALSE}
+
+#include_graphics("")
+```
+
+In the following sections we will go each of these steps. But before, it is important to understand the structure of a chronological data set and a chronological chart. 
+
+# Structure of a chronological data set and of a chronological chart
+
+A chronological data set in ChronochRt is a table with a predefined set of column names. Every function which creates or imports a data set will return a table with these columns and they are mandatory for plotting the chronological chart. 
+
+region | name | start | end | level | add 
+------ | ---- | ----- | --- | ----- | ---
+Test   | 1    | 100   | 200 | 1     | FALSE
+
+You can use additional columns and you will learn further down when you should use them. While some of the column names might be self explanatory, others are not. To understand their purpose it might be best to have a look how they built up the chronological chart: 
+
+```{r}
+
+```
+

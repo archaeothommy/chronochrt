@@ -3,7 +3,7 @@
 \docType{package}
 \name{chronochrt}
 \alias{chronochrt}
-\title{ChronochRt:}
+\title{ChronochRt}
 \description{
 The foo package provides three categories of important functions:
 foo, bar and baz.

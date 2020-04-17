@@ -11,10 +11,7 @@
 #' @return A tibble containing the desired chronological information.
 #'
 #' @export
-#' @examples
-#'
-#'
-#'
+#' @noRd
 
 import_chron_excel <- function(path,  ...)
 {
@@ -37,8 +34,7 @@ import_chron_excel <- function(path,  ...)
 #' @return A tibble containing the desired chronological information.
 #'
 #' @export
-#' @examples
-#'
+#' @noRd
 
 import_chron_csv <- function(path, delim, ...)
 {
@@ -63,9 +59,7 @@ import_chron_csv <- function(path, delim, ...)
 #' @return A tibble containing the desired chronological information.
 #'
 #' @export
-#' @examples
-#'
-#'
+#' @noRd
 
 import_chron_delim <- function(path, delim, ...)
 {
