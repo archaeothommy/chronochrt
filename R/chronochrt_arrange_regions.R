@@ -16,10 +16,6 @@
 
 arrange_regions <- function(data, order)
 {
-  if (!exists(deparse(substitute(data)))) {
-    stop("The object ", substitute(data) , " does not exist.")
-  }
-
   if (!is.data.frame(data)) {
     stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
   }

@@ -43,13 +43,10 @@
 add_label_text <- function(data, region, year, position = 0.9, label, new = FALSE, ...)
 {
   if (new == FALSE) {
-    if (exists(deparse(substitute(data)))) {
-      data <- tibble::add_row(data, region, year, position, label, ...)
-    } else {stop("The object ", substitute(data) , " does not exist.")
+    data <- tibble::add_row(data, region, year, position, label, ...)
+    } else {
+      data <- tibble::tibble(region, year, position, label, ...)
     }
-  } else {
-    data <- tibble::tibble(region, year, position, label, ...)
-  }
 
   if (!all(is.character(data$region), is.numeric(data$year), is.character(data$label), is.numeric(data$position))) {
     stop("One or more columns of the data set contain incompatible data. Data must be strings (region, label), numeric (year, position).")

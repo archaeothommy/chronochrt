@@ -1,4 +1,5 @@
 test_that("File Import", {
+
   expect_equal(object = import_chron("ex_urnfield_periods.csv", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = ","),
                expected = readxl::read_excel("ex_urnfield_periods_reference.xlsx", col_types = c("text", "text", "numeric", "numeric", "numeric", "logical")))
   expect_equal(object = import_chron("ex_urnfield_periods2.csv", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = ";"),
@@ -66,6 +67,6 @@ test_that("File Conversion", {
                                          end = "End",
                                          level = "Subunit",
                                          add = "Switch"),
-               regexp = "The object *")
+               regexp = "object *")
 
   })

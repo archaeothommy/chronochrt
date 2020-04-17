@@ -1,4 +1,5 @@
 test_that("Plotting", {
+
   expect_identical(object = p2$plot_env$color_fill,
                    expected = "red")
   expect_identical(object = p2$plot_env$color_line,
@@ -10,9 +11,9 @@ test_that("Plotting", {
   expect_equal(object = file.exists("Test_that.jpg"),
                expected = file.exists("Test_that.jpg"))
   expect_error(object = plot_chronochrt(not_existent),
-               regexp = "The object *")
+               regexp = "object*")
   expect_error(object = plot_chronochrt(test_reference, labels_text = not_existent),
-               regexp = "The object *")
+               regexp = "object*")
   expect_error(object = plot_chronochrt(test_err_Input),
                regexp = "* must be a data frame or tibble*")
   expect_error(object = plot_chronochrt(test_plot_err_level),

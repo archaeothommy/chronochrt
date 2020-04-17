@@ -1,4 +1,5 @@
 test_that("Creating and adding text labels", {
+
   expect_equal(object = add_label_text(region = c("Atlantis", "Sargassosee"),
                                        year = c(-1650, 250),
                                        position = c(1, 0.99),
@@ -25,7 +26,7 @@ test_that("Creating and adding text labels", {
                                        position = c(1, 0.99),
                                        label = c("Krieg mit Ägypten ", "Geburt von Aquaman"),
                                        new = FALSE),
-               regexp = "The object *")
+               regexp = "object *")
   expect_error(object = add_label_text(region = c("Atlantis", "Sargassosee"),
                                        year = c("-1650", 250),
                                        position = c(1, 0.99),

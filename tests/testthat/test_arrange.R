@@ -1,8 +1,9 @@
 test_that("Arrange regions", {
+
   expect_equal(object = arrange_regions(test_reference, order = c("Atlantis")),
                expected = test_arranged_reference)
   expect_error(object = arrange_regions(not_existent, order = c("Atlantis")),
-               regexp = "The object*")
+               regexp = "object*")
   expect_error(object = arrange_regions(test_arranged_err2, order = c("Atlantis")),
                regexp = "Wrong input format: *")
   expect_error(object = arrange_regions(test_arranged_err, order = c("Atlantis")),

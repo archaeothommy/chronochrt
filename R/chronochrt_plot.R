@@ -97,19 +97,8 @@ plot_chronochrt <- function(data, labels_text,
                             color_fill = "white", color_line = "black",
                             size_line = 0.5, ...) #labels_image = NULL, image_size = 0.2,
 {
-  if (!exists(deparse(substitute(data)))) {
-    stop("The object ", substitute(data) , " does not exist.")
-  }
 
-  if (!missing(labels_text) && !exists(deparse(substitute(labels_text)))) {
-    stop("The object ", substitute(labels_text) , " does not exist.")
-  }
-
-  # if (!missing(labels_image) && !exists(deparse(substitute(labels_image)))) {
-  #   stop("The object ", substitute(labels_image) , " does not exist.")
-  # }
-
-  if (!is.data.frame(data)) {
+if (!is.data.frame(data)) {
     stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
   }
 
@@ -129,23 +118,31 @@ plot_chronochrt <- function(data, labels_text,
   }
 
   if (!missing(labels_text)) {
-    if (!("region" %in% names(labels_text))) {stop("Wrong input format: The column `region` in ", substitute(labels_text), " does not exist.")}
-    if (!("year" %in% names(labels_text))) {stop("Wrong input format: The column `year` in ", substitute(labels_text), " does not exist.")}
-    if (!("label" %in% names(labels_text))) {stop("Wrong input format: The column `label` in ", substitute(labels_text), " does not exist.")}
-    if (!("position" %in% names(labels_text))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
+    if (is.data.frame(labels_text)) {
+      if (!("region" %in% names(labels_text))) {stop("Wrong input format: The column `region` in ", substitute(labels_text), " does not exist.")}
+      if (!("year" %in% names(labels_text))) {stop("Wrong input format: The column `year` in ", substitute(labels_text), " does not exist.")}
+      if (!("label" %in% names(labels_text))) {stop("Wrong input format: The column `label` in ", substitute(labels_text), " does not exist.")}
+      if (!("position" %in% names(labels_text))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
 
-    if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
-    stop("One or more columns of the text label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+      if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
+        stop("One or more columns of the text label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+      }
+    } else {
+      stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
     }
   }
 
   # if (!missing(labels_image)) {
-  #   if (!("region" %in% names(labels_image))) {stop("Wrong input format: The column `region` in ", substitute(labels_text), " does not exist.")}
-  #   if (!("year" %in% names(labels_image))) {stop("Wrong input format: The column `year` in ", substitute(labels_text), " does not exist.")}
-  #   if (!("position" %in% names(labels_image))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
+  #   if (is.data.frame(labels_image)) {
+  #     if (!("region" %in% names(labels_image))) {stop("Wrong input format: The column `region` in ", substitute(labels_text), " does not exist.")}
+  #     if (!("year" %in% names(labels_image))) {stop("Wrong input format: The column `year` in ", substitute(labels_text), " does not exist.")}
+  #     if (!("position" %in% names(labels_image))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
   #
-  #   if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
-  #     stop("One or more columns of the image label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+  #     if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
+  #       stop("One or more columns of the image label data contain incompatible data. Data must be strings (region, label), numeric (year, position), or logical (add).")
+  #     }
+  #   } else {
+  #     stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
   #   }
   # }
 

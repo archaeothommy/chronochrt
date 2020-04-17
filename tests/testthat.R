@@ -1,7 +1,4 @@
-Sys.setenv("R_TESTS" = "")
-
 library(testthat)
-library(readxl)
 library(tibble)
 library(ChronochRt)
 
