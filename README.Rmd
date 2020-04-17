@@ -30,7 +30,7 @@ install.packages("ChronochRt")
 or you can install the development version with the newest bugfixes and features from gitlab with: 
 
 ```{r}
-devtools::install_gitlab("roset/chronochrt")
+#devtools::install_gitlab("roset/chronochrt")
 ```
 
 ## Features
