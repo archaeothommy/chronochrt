@@ -13,10 +13,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(ChronochRt)
+#library(ChronochRt)
 library(knitr)
-library(magrittr)
-
+devtools::load_all()
 ```
 
 # The ChronochRt workflow

@@ -43,7 +43,6 @@ subchron_count <- function(left, right)
 #'
 #' @keywords internal
 #' @export
-#' @noRd
 
 center_corr <- function(center, width)
 {
@@ -75,7 +74,6 @@ center_corr <- function(center, width)
 #'
 #' @keywords internal
 #' @export
-#' @noRd
 
 width_corr <- function(center, width)
 {

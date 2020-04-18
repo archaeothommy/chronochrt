@@ -19,8 +19,8 @@ You can install the released version of ChronochRt from
 install.packages("ChronochRt")
 ```
 
-or you can install the development version with the newest bugfixes and
-features from gitlab with:
+or install the development version with the newest bugfixes and features
+from gitlab with:
 
 ``` r
 #devtools::install_gitlab("roset/chronochrt")
