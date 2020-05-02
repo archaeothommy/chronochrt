@@ -25,12 +25,13 @@ ChronochRt offers an easy way to draw chronological charts from tables. It aims 
 You can install the released version of ChronochRt from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-install.packages("ChronochRt")
+# install.packages("ChronochRt") - the package will be on CRAN soon
 ```
+
 or install the development version with the newest bugfixes and features from gitlab with: 
 
-```{r}
-#devtools::install_gitlab("roset/chronochrt")
+``` r
+devtools::install_gitlab("roset/chronochrt")
 ```
 
 ## Features

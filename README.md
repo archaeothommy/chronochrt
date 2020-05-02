@@ -16,14 +16,14 @@ You can install the released version of ChronochRt from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-install.packages("ChronochRt")
+# install.packages("ChronochRt") - the package will be on CRAN soon
 ```
 
 or install the development version with the newest bugfixes and features
 from gitlab with:
 
 ``` r
-#devtools::install_gitlab("roset/chronochrt")
+devtools::install_gitlab("roset/chronochrt")
 ```
 
 ## Features

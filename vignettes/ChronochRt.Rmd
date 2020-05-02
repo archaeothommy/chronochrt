@@ -18,43 +18,65 @@ library(knitr)
 devtools::load_all()
 ```
 
+
 # The ChronochRt workflow
 
-Creating a chronological chart with ChronochRt consits of two basic steps: Creating a data set and plotting it: 
+Creating a chronological chart with ChronochRt consits of two basic steps: Creating a data set and plotting. 
 
-```{r MWE, echo = TRUE}
-data <- add_chron(region = "Test", 
-          name = c("1"), 
-          start = c(100), 
-          end = c(200), 
-          level = c(1), 
-          add = FALSE, 
+```{r MWE, echo = TRUE, fig.align='center'}
+data <- add_chron(region = c("A", "A", "B", "B"), 
+          name = c("1", "2", "1", "2"), 
+          start = c(-100, 100, -50, 100), 
+          end = c(100, 200, 50, 200), 
+          level = 1,
+          add = FALSE,
           new_table = TRUE)
 
 plot_chronochrt(data)
 
 ```
 
-However, you most likely want to customise your plot (e. g. change the order of the columns and the font size), add annotations and and save it. Hence, the the full workflow when using ChronochRt looks like this: 
+
+However, you most likely want to customise your plot (e. g. change the order of the columns and the font size), add annotations, and save it. Hence, the full workflow when using ChronochRt looks usually like this: 
 
 ```{r Workflow, echo = FALSE}
 
 #include_graphics("")
 ```
 
-In the following sections we will go each of these steps. But before, it is important to understand the structure of a chronological data set and a chronological chart. 
+In the following sections we will go through each of these steps. But before we start to learn how to use ChronochRt, we need to know how it works. 
 
-# Structure of a chronological data set and of a chronological chart
 
-A chronological data set in ChronochRt is a table with a predefined set of column names. Every function which creates or imports a data set will return a table with these columns and they are mandatory for plotting the chronological chart. 
+# Data and plot structure
 
-region | name | start | end | level | add 
------- | ---- | ----- | --- | ----- | ---
-Test   | 1    | 100   | 200 | 1     | FALSE
+## The data set 
+A chronological data set in ChronochRt consists of a number of data with the same basic information. They ae stored in a table where each row gives the information of one _chron_ (a chronological unit of any kind), and the columns store the information of these chrons. The basic information of a _chron_ are:  
 
-You can use additional columns and you will learn further down when you should use them. While some of the column names might be self explanatory, others are not. To understand their purpose it might be best to have a look how they built up the chronological chart: 
+* Which `region` is the _chron_ defined for?
+* What is its `name`? 
+* When does it `start`? 
+* When does it `end`?
+* What is its `level` within the chronological system?
 
-```{r}
+For plotting we must store one additional information is needed: The parameter `add`. ChronochRt offers the option to plot an additional chronological columns for each region to include e.g. long and short chronologies of regions, or competing chronological systems. Setting the variable `add` of a _chron_ to `TRUE` signals ChronochRt to plot this _chron_ in the additional column.  
+
+Without these six variables, ChronochRt cannot produce chronological charts. Within ChronochRt their names are fixed to avoid any confusion and during the import of your data set you will have to define the corresponding columns. It is possible to store additional variables in your chrons. This might even be handy to change e.g. the position and angle of the _chron_'s names. We will return to them further below #LINK#. 
+
+NOTE:  
+In ChronochRt, each _chron_ is evaluated independently. Consequently, you have to store explicitly the name, the start and the end date of every single _chron_. These seems to be tedious, as e. g. "Ha A2" must be recorded as at least two _chrons_: "Ha A" and subchron "2". Depending on your time frame, it might be even better to define a _chron_ "Ha" for the entire Hallstatt period. And for each of them, you have to makes ure that the start and end date must match with the preceeding and subsequent _chrons_ and the (sub)chrons starting or ending at the same time. However, it easily allows to plot interruptions in the chronological sequence due to e.g. abandonment of settlements or entire regions (see example above). At the same time it keeps the structure of a chronological data set simple. 
+
+
+## The chronological chart
+
+In the plot the information of each _chron_ from a chronological data set is directly mirrored: 
+
+```{r plot_structure, echo = FALSE, fig.align='center'}
+
+chrons <- import_chron(path = "plot_structure.xlsx", region = region, name = name, start = start, end = end, level = level, add = add, range = readxl::cell_cols("A:F")) %>% 
+  filter(region != "Region C")
+  
+  
+plot_chronochrt(chrons, font_size_chrons = 2)
 
 ```
 
