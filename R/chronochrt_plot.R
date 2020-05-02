@@ -309,16 +309,17 @@ plot_chronochrt <- function(data, labels_text,
                     end = ifelse(is.na(.data$end2), NA, .data$end)) %>%
       tidyr::pivot_longer(cols = c("start", "end"), names_to = "value", values_to = "unsec") %>%
       tidyr::pivot_longer(cols = c("start2", "end2"), names_to = "value2", values_to = "unsec2") %>%
-      dplyr::filter(!is.na(.data$unsec) | !is.na(.data$unsec2)) %>%
+      dplyr::filter(!is.na(.data$unsec) & !is.na(.data$unsec2)) %>%
       dplyr::group_by(.data$region, .data$add, .data$unsec)%>%
-      dplyr::mutate(xmin = min(.data$xmin),
-                    xmax = max(.data$xmax)) %>%
+      dplyr::mutate(xmin1 = min(.data$xmin),
+                    xmax1 = max(.data$xmax)) %>%
       dplyr::ungroup() %>%
       dplyr::group_by(.data$region, .data$add, .data$unsec2)%>%
-      dplyr::mutate(xmin = min(.data$xmin),
-                    xmax = max(.data$xmax)) %>%
+      dplyr::mutate(xmin2 = min(.data$xmin),
+                    xmax2 = max(.data$xmax)) %>%
       dplyr::ungroup() %>%
-      dplyr::select(.data$xmin, .data$xmax, .data$unsec, .data$unsec2) %>%
+      dplyr::mutate(unsec2 = ifelse(.data$unsec == .data$unsec2, NA, .data$unsec2)) %>%
+      dplyr::select(.data$region, .data$xmin1, .data$xmax1, .data$xmin2, .data$xmax2, .data$unsec, .data$unsec2) %>%
       unique()
 
     plot <- plot +
@@ -326,12 +327,12 @@ plot_chronochrt <- function(data, labels_text,
                               dplyr::select(-.data$unsec2) %>%
                               tidyr::drop_na() %>%
                               unique(),
-                            ggplot2::aes(x = .data$xmin, xend = .data$xmax, y = .data$unsec, yend = .data$unsec), color = color_fill, linetype = "dashed", size = size_line) +
+                            ggplot2::aes(x = .data$xmin1, xend = .data$xmax1, y = .data$unsec, yend = .data$unsec), color = color_fill, linetype = "dashed", size = size_line) +
       ggplot2::geom_segment(data = data_unsec %>%
                               dplyr::select(-.data$unsec) %>%
                               tidyr::drop_na() %>%
                               unique(),
-                            ggplot2::aes(x = .data$xmin, xend = .data$xmax, y = .data$unsec2, yend = .data$unsec2), color = color_line, linetype = "dashed", size = size_line)
+                            ggplot2::aes(x = .data$xmin2, xend = .data$xmax2, y = .data$unsec2, yend = .data$unsec2), color = color_line, linetype = "dashed", size = size_line)
   }
 
   if(!missing(labels_text)) {
