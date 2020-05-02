@@ -25,13 +25,17 @@ test_that("Plotting", {
   expect_error(object = plot_chronochrt(test_reference, labels_text = test_labels_err2),
                regexp = "One or more columns of the text label *")
   expect_error(object = plot_chronochrt(test_reference,  axis_title = 23),
-               regexp = "Wrong inout format: *")
+               regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, filename = 23),
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, filename = "NOT-EXISTENT/plot.pdf"),
                regexp = "The directory*")
   expect_error(object = plot_chronochrt(test_reference, plot_dim = c(3, 3, "m")),
                regexp = "This unit is not supported. *")
+  expect_error(object = plot_chronochrt(test_reference, background = c(1, 2, 3)),
+               regexp = "Wrong input format: *")
+  expect_error(object = plot_chronochrt(test_reference, chron_name_align = "right"),
+               regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, chron_name_x = "not_existent"),
                regexp = "The column *")
   expect_error(object = plot_chronochrt(test_reference, chron_name_y = "not_existent"),

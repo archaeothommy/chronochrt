@@ -119,5 +119,5 @@ p <- plot_chronochrt(test_reference)
 
 p1 <- plot_chronochrt(test_reference, axis_title = "Jahre")
 
-p2 <- plot_chronochrt(data = test_plot_reference, labels_text = test_labels_reference, chron_name_x = "x_label", chron_name_y = "y_label", chron_name_angle = "angle_label", axis_title = "BC/AD", years_major = 250, years_minor = 200, filename = "Test_that.jpg", plot_dim = c(3, 3, "mm"), font_size_chrons = 4, font_size_labels = 2, line_break = 10, color_fill = "red", color_line = "green", size_line = 5, dpi = 1200)
+p2 <- plot_chronochrt(data = test_plot_reference, labels_text = test_labels_reference, chron_name_align = "left", chron_name_x = "x_label", chron_name_y = "y_label", chron_name_angle = "angle_label", axis_title = "BC/AD", years_major = 250, years_minor = 200, filename = "Test_that.jpg", plot_dim = c(3, 3, "mm"), font_size_chrons = 4, font_size_labels = 2, line_break = 10, color_fill = "red", color_line = "green", size_line = 5, background = c("white", "dashed"), dpi = 1200)
 print(p2)

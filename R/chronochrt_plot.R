@@ -23,8 +23,17 @@
 #'
 #' @param data A data set with chronological data.
 #' @param labels_text A data set containing the text labels.
+#' @param chron_name_align One of the two character strings: \code{"left"} or
+#'   \code{"center"}, the default. They determine the alignment of the
+#'   chronological unit's names relativ to its border. \itemize{ \item
+#'   \code{"center"}: Text alignment of the names will be centered. The text
+#'   will be placed in a larger distance from the left border of its
+#'   chronological unit. \item \code{"left"}: The names will be left-aligned
+#'   next to the left borders of their chronological unit.} In both cases, the
+#'   horizontal position of the chronological units' names will be identical and
+#'   their vertical position always the middle of their chronological units.
 #' @param chron_name_x,chron_name_y Specifies the horizontal and vertical
-#'   position of the chronological unit's names. They can be: \itemize{ \item a
+#'   position of the chronological units' names. They can be: \itemize{ \item a
 #'   character string with the name of the respective column in \code{data},
 #'   \item a number. Then all names will plot at this position, \item a numeric
 #'   vector specifiying the position of each name; \item it must not be
@@ -74,6 +83,14 @@
 #'   default is \code{"black"}. See the color specification section of
 #'   \code{par()} for how to specify colors in R.
 #' @param size_line Thickness of the line in mm. The default is \code{0.5} mm.
+#' @param background Optional specifications for the background of the
+#'   chronological chart as vector in the format \code{c(background color,
+#'   linetype of grid lines)} to overwrite the default behaviour of
+#'   \code{\link{theme_chronochrt}}. Any valis color and linetype specifications
+#'   are accepted, e.g. \code{c("grey90", "dotted")} (these are the default
+#'   values of \code{\link{theme_chronochrt}}. See the sections "color
+#'   specification" and "line type specification" in \code{par()} for how to
+#'   specify colors and line types in R.
 #' @param ... Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 #'   enhance the saved plot like \code{dpi} to specify its resolution. See
 #'   \code{\link[ggplot2]{ggsave}} for detailed information.
@@ -88,6 +105,7 @@
 # Changing background, changing theme
 
 plot_chronochrt <- function(data, labels_text,
+                            chron_name_align = "center",
                             chron_name_x, chron_name_y, chron_name_angle = 0,
                             axis_title = "Years",
                             years_major = 100, years_minor,
@@ -95,12 +113,13 @@ plot_chronochrt <- function(data, labels_text,
                             font_size_chrons = 6, font_size_labels = 4,
                             line_break = 8,
                             color_fill = "white", color_line = "black",
-                            size_line = 0.5, ...) #labels_image = NULL, image_size = 0.2,
+                            size_line = 0.5,
+                            background, ...) #labels_image = NULL, image_size = 0.2,
 {
 
-if (!is.data.frame(data)) {
-    stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
-  }
+  if (!is.data.frame(data)) {
+      stop("Wrong input format: ", substitute(data) , " must be a data frame or tibble.")
+    }
 
   if (!("region" %in% names(data))) {stop("Wrong input format: The column `region` in ", substitute(data), " does not exist.")}
   if (!("name" %in% names(data))) {stop("Wrong input format: The column `name` in ", substitute(data), " does not exist.")}
@@ -146,7 +165,7 @@ if (!is.data.frame(data)) {
   #   }
   # }
 
-  if (!is.character(axis_title)) {stop("Wrong inout format: ", axis_title, "must be a character string.")}
+  if (!is.character(axis_title)) {stop("Wrong input format: ", axis_title, " must be a character string.")}
 
   if (!is.numeric(font_size_chrons) && length(font_size_chrons) != 1) {font_size_chrons <- 6}
 
@@ -163,7 +182,7 @@ if (!is.data.frame(data)) {
   if (!is.numeric(line_break)&& length(line_break) != 1) {line_break = 8}
 
   if (!missing(filename)) {
-    if (!is.character(filename)) {stop("Wrong input format: ", filename, "must be a string.")}
+    if (!is.character(filename)) {stop("Wrong input format: ", filename, " must be a character string.")}
     if (!dir.exists(dirname(filename))) {stop("The directory ", dirname(filename), " does not exist.")}
     if (missing(plot_dim)) {
       width <- NA
@@ -180,9 +199,17 @@ if (!is.data.frame(data)) {
 
   if (!missing(plot_dim) && !(units %in% c("in", "cm", "mm"))) {stop("This unit is not supported. Only the following units are support: mm, cm, in.")}
 
-  if(missing(years_minor) || !is.numeric(years_minor)) {years_minor <- years_major/2}
+  if (missing(years_minor) || !is.numeric(years_minor)) {years_minor <- years_major/2}
 
-  if (!missing(chron_name_x)) {
+  if(!missing(background)) {
+    if (length(background) != 2) {stop("Wrong input format:", background, " is not a vector of length 2.")}
+    bg_fill <- background[1]
+    grid_linetype <- background[2]
+  }
+
+  if (!(chron_name_align %in% c("left", "center"))) {stop("Wrong input format: ", chron_name_align, " must be 'left' or 'center'.")}
+
+   if (!missing(chron_name_x)) {
 
     if (is.numeric(chron_name_x)) {
       data <- dplyr::mutate(data, chron_name_x = chron_name_x)
@@ -236,46 +263,75 @@ if (!is.data.frame(data)) {
      stop("Wrong input format: chron_name_angle must be numeric or a character string.")
    }
 
-  data <- data %>% # calculation of geometry
-    dplyr::group_by(.data$region, .data$add) %>%
+  data <- data %>% # calculation of geometry, commented lines for implementation with lubridate
     tidyr::separate(.data$start, c("start", "start2"), sep = "/", fill = "right") %>%
     tidyr::separate(.data$end, c("end", "end2"), sep = "/", fill = "right") %>%
     dplyr::mutate_at(c("start", "start2", "end", "end2"), as.numeric) %>%
-    dplyr::select_if(~sum(!is.na(.)) > 0) %>%
-    dplyr::mutate(subchron = subchron_count(.data$start, .data$end)) %>%
-    dplyr::mutate(col_tot = dplyr::case_when(.data$level > subchron ~ .data$level,
-                                             .data$level == subchron ~ .data$level + 1,
-                                             .data$level < subchron ~ .data$level + subchron)) %>%
-    dplyr::mutate(x_center = (.data$level - 0.5) / .data$col_tot,
-                  x_width = 1 / .data$col_tot,
-                  y_center = (.data$start + .data$end) / 2,
-                  y_width = .data$end - .data$start) %>%
-    dplyr::mutate(x_center_corr = center_corr(.data$x_center, .data$x_width),
-                  x_width_corr = width_corr(.data$x_center, .data$x_width)
-    ) %>%
-    dplyr::mutate(x_center = .data$x_center_corr,
-                  x_width = .data$x_width_corr) %>%
-    dplyr::select(-.data$x_center_corr, -.data$x_width_corr) %>%
-    dplyr::mutate(x_center = replace(.data$x_center, .data$add == TRUE, .data$x_center + 1)) %>%
-    dplyr::ungroup()
+#    dplyr::mutate(across(starts_with("start") | starts_with("end"), as.numeric)) %>%
 
-  if (missing(chron_name_x)) {data <- dplyr::mutate(data, chron_name_x = .data$x_center)}
-  if (missing(chron_name_y)) {data <- dplyr::mutate(data, chron_name_y = .data$y_center)}
+    #dplyr::mutate(start = lubridate::ymd("0000-01-01") + lubridate::years(.data$start),
+    #              start2 = lubridate::ymd("0000-01-01") + lubridate::years(.data$start2),
+    #              end = lubridate::ymd("0000-01-01") + lubridate::years(.data$end),
+    #              end2 = lubridate::ymd("0000-01-01") + lubridate::years(.data$end2)) %>%
+    #dplyr::mutate(interval = lubridate::interval(.data$start + lubridate::days(1), .data$end - lubridate::days(1))) %>%
+
+    dplyr::group_by(.data$region, .data$add) %>%
+    dplyr::mutate(xmin = (.data$level - 1) / max(.data$level),
+                  xmax = .data$level / max(.data$level)) %>%
+    dplyr::mutate(x_name = .data$xmin + ((.data$xmax - .data$xmin) / 2),
+                  y_name = .data$start + ((.data$end - .data$start) / 2)) %>%
+
+    #dplyr::mutate(xmax_uncorr = corr_xmax(.data$interval, .data$xmax)) %>%
+
+    dplyr::mutate(xmax_uncorr = corr_xmax(.data$start, .data$end, .data$xmax)) %>%
+    dplyr::mutate(xmax = dplyr::if_else(.data$xmax == .data$xmax_uncorr, 1, .data$xmax)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-.data$xmax_uncorr) %>%
+    dplyr::mutate(xmax = dplyr::if_else(.data$add == TRUE, .data$xmax + 1, .data$xmax),
+                  xmin = dplyr::if_else(.data$add == TRUE, .data$xmin + 1, .data$xmin),
+                  x_name = dplyr::if_else(.data$add == TRUE, .data$x_name + 1, .data$x_name),
+                  y_name = dplyr::if_else(.data$add == TRUE, .data$y_name + 1, .data$y_name))
+
+  if (chron_name_align == "left") {data <- dplyr::mutate(data, x_name = .data$xmin + 0.01)}
+
+  if (missing(chron_name_x)) {data <- dplyr::mutate(data, chron_name_x = .data$x_name)}
+  if (missing(chron_name_y)) {data <- dplyr::mutate(data, chron_name_y = .data$y_name)}
 
   plot <- ggplot2::ggplot(data) + # plot
-    ggplot2::geom_tile(ggplot2::aes(x = .data$x_center, width = .data$x_width, y = .data$y_center, height = .data$y_width), fill = color_fill, color = color_line, linetype = "solid", size = size_line) +
-    ggplot2::geom_text(ggplot2::aes(x = .data$chron_name_x, y = .data$chron_name_y, label = .data$name, angle = .data$chron_name_angle), size = font_size_chrons)
+    ggplot2::geom_rect(ggplot2::aes(xmin = .data$xmin, xmax = .data$xmax, ymin = .data$start, ymax = .data$end), fill = color_fill, color = color_line, linetype = "solid", size = size_line) +
+    ggplot2::geom_text(ggplot2::aes(x = .data$chron_name_x, y = .data$chron_name_y, label = .data$name, angle = .data$chron_name_angle), size = font_size_chrons, hjust = chron_name_align)
 
-  if ("start2" %in% colnames(data)) {
-    plot <- plot +
-      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$start2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$start, yend = .data$start), color = color_fill, linetype = "dashed", size = size_line) +
-      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$start2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$start2, yend = .data$start2), color = color_line, linetype = "dashed", size = size_line)
-  }
+  if (sum(!is.na(data$start2)) > 0 || sum(!is.na(data$end2)) > 0) {
 
-  if ("end2" %in% colnames(data)) {
+    data_unsec <- data %>%
+      dplyr::filter(!is.na(.data$start2) | !is.na(.data$end2)) %>%
+      dplyr::mutate(start = ifelse(is.na(.data$start2), NA, .data$start),
+                    end = ifelse(is.na(.data$end2), NA, .data$end)) %>%
+      tidyr::pivot_longer(cols = c("start", "end"), names_to = "value", values_to = "unsec") %>%
+      tidyr::pivot_longer(cols = c("start2", "end2"), names_to = "value2", values_to = "unsec2") %>%
+      dplyr::filter(!is.na(.data$unsec) | !is.na(.data$unsec2)) %>%
+      dplyr::group_by(.data$region, .data$add, .data$unsec)%>%
+      dplyr::mutate(xmin = min(.data$xmin),
+                    xmax = max(.data$xmax)) %>%
+      dplyr::ungroup() %>%
+      dplyr::group_by(.data$region, .data$add, .data$unsec2)%>%
+      dplyr::mutate(xmin = min(.data$xmin),
+                    xmax = max(.data$xmax)) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(.data$xmin, .data$xmax, .data$unsec, .data$unsec2) %>%
+      unique()
+
     plot <- plot +
-      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$end2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$end, yend = .data$end), color = color_fill, linetype = "dashed", size = size_line) +
-      ggplot2::geom_segment(data = data %>% dplyr::filter(!is.na(.data$end2)), ggplot2::aes(x = .data$x_center - .data$x_width/2, xend = .data$x_center + .data$x_width/2, y = .data$end2, yend = .data$end2), color = color_line, linetype = "dashed", size = size_line)
+      ggplot2::geom_segment(data = data_unsec %>%
+                              dplyr::select(-.data$unsec2) %>%
+                              tidyr::drop_na() %>%
+                              unique(),
+                            ggplot2::aes(x = .data$xmin, xend = .data$xmax, y = .data$unsec, yend = .data$unsec), color = color_fill, linetype = "dashed", size = size_line) +
+      ggplot2::geom_segment(data = data_unsec %>%
+                              dplyr::select(-.data$unsec) %>%
+                              tidyr::drop_na() %>%
+                              unique(),
+                            ggplot2::aes(x = .data$xmin, xend = .data$xmax, y = .data$unsec2, yend = .data$unsec2), color = color_line, linetype = "dashed", size = size_line)
   }
 
   if(!missing(labels_text)) {
@@ -304,7 +360,15 @@ if (!is.data.frame(data)) {
     ggplot2::theme(axis.text = ggplot2::element_text(size = font_size_chrons*0.8*72.27/25.4),
           axis.title = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold"),
           strip.text.x = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
-  #labs(caption = "Citation of the release paper")
+    #labs(caption = "Citation of the release paper")
+
+  if(!missing(background)) {
+    plot <- plot +
+      ggplot2::theme(panel.background = ggplot2::element_rect(fill = bg_fill),
+                     panel.grid = ggplot2::element_line(linetype = grid_linetype))
+  }
+
+
 
   if(!missing(filename)) {
     plot <- plot +

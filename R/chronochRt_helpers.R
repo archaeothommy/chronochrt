@@ -1,28 +1,28 @@
-# Counting subchrons ------------------------------------------------------
+# Determine maximum x value of parallel chrons ----------------------------
 
-#' Calcuate number of subchrons
+#' Determine maximum x value of parallel chrons
 #'
-#' This function is used to calculate for each chron the number of parallel chrons.
+#' This function determines the maximum x value of parallel chrons
 #'
-#' @param left Left argument in evaluation
-#' @param right Right argument in evaluation
+#' @param start,end Start and end of the chrons.
+#' @param xmax The upper x value of the chrons.
 #'
 #' @return A vector
 #'
 #' @keywords internal
 #' @export
-#' @noRd
 
-subchron_count <- function(left, right)
+corr_xmax <- function(start, end, xmax)
 {
-  data <- rep_len(0, length(left))
+  data <- xmax
 
-  for(i in 1:length(left))
+  for(i in 1:length(start))
   {
-    for(j in 1:length(left))
+    for(j in i:length(start))
     {
-      if (left[i] >= left[j] & left[i] < right[j] & i != j){
-        data[i] <- data[i]+1
+      if (start[i] + 1  >= start[j] && start[i] + 1 <= end[j]){
+        data[i] <- max(xmax[i], xmax[j])
+        data[j] <- max(xmax[i], xmax[j])
       }
     }
   }
@@ -30,63 +30,21 @@ subchron_count <- function(left, right)
 }
 
 
-# corrects center of a chron if there are missing subchrons ---------------
+# Implementation with lubridate -------------------------------------------
 
-#' Correct the center of a chron
-#'
-#' This function corrects the calculated center of a chron
-#'
-#' @param center The center of the chron
-#' @param width The width of the chron
-#'
-#' @return A vector
-#'
-#' @keywords internal
-#' @export
-
-center_corr <- function(center, width)
-{
-  for(i in 1:length(center))
-  {
-    for(j in 1:length(center))
-    {
-      k <- center[j] - (width[j]/2) - center[i] - (width[i]/2);
-
-      if (center[i] <= center[j] & k > 0 & k < 1 & k <= width[i]){
-        center[j] <- center[j] - k/2;
-      }
-    }
-  }
-  center
-}
-
-
-# corrects width of a chron if there are missing subchrons ----------------
-
-#' Correct the width of a chron
-#'
-#' This function corrects the calculated width of a chron
-#'
-#' @param center The center of the chron
-#' @param width The width of the chron
-#'
-#' @return A vector
-#'
-#' @keywords internal
-#' @export
-
-width_corr <- function(center, width)
-{
-  for(i in 1:length(center))
-  {
-    for(j in 1:length(center))
-    {
-      k <- center[j] - (width[j]/2) - center[i] - (width[i]/2);
-
-      if (center[i] <= center[j] & k > 0 & k < 1 & k <= width[i]){
-        width[j] <-  width[j] + k
-      }
-    }
-  }
-  width
-}
+# corr_xmax <- function(interval, xmax)
+# {
+#   data <- xmax
+#
+#   for(i in 1:length(interval))
+#   {
+#     for(j in i:length(interval))
+#     {
+#       if (lubridate::int_overlaps(interval[i], interval[j])){
+#         data[i] <- max(xmax[i], xmax[j], data[i])
+#         data[j] <- max(xmax[i], xmax[j], data[j])
+#       }
+#     }
+#   }
+#   data
+# }

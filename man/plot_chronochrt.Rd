@@ -7,6 +7,7 @@
 plot_chronochrt(
   data,
   labels_text,
+  chron_name_align = "center",
   chron_name_x,
   chron_name_y,
   chron_name_angle = 0,
@@ -21,6 +22,7 @@ plot_chronochrt(
   color_fill = "white",
   color_line = "black",
   size_line = 0.5,
+  background,
   ...
 )
 }
@@ -29,8 +31,18 @@ plot_chronochrt(
 
 \item{labels_text}{A data set containing the text labels.}
 
+\item{chron_name_align}{One of the two character strings: \code{"left"} or
+\code{"center"}, the default. They determine the alignment of the
+chronological unit's names relativ to its border. \itemize{ \item
+\code{"center"}: Text alignment of the names will be centered. The text
+will be placed in a larger distance from the left border of its
+chronological unit. \item \code{"left"}: The names will be left-aligned
+next to the left borders of their chronological unit.} In both cases, the
+horizontal position of the chronological units' names will be identical and
+their vertical position always the middle of their chronological units.}
+
 \item{chron_name_x, chron_name_y}{Specifies the horizontal and vertical
-position of the chronological unit's names. They can be: \itemize{ \item a
+position of the chronological units' names. They can be: \itemize{ \item a
 character string with the name of the respective column in \code{data},
 \item a number. Then all names will plot at this position, \item a numeric
 vector specifiying the position of each name; \item it must not be
@@ -92,6 +104,15 @@ default is \code{"black"}. See the color specification section of
 \code{par()} for how to specify colors in R.}
 
 \item{size_line}{Thickness of the line in mm. The default is \code{0.5} mm.}
+
+\item{background}{Optional specifications for the background of the
+chronological chart as vector in the format \code{c(background color,
+linetype of grid lines)} to overwrite the default behaviour of
+\code{\link{theme_chronochrt}}. Any valis color and linetype specifications
+are accepted, e.g. \code{c("grey90", "dotted")} (these are the default
+values of \code{\link{theme_chronochrt}}. See the sections "color
+specification" and "line type specification" in \code{par()} for how to
+specify colors and line types in R.}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 enhance the saved plot like \code{dpi} to specify its resolution. See

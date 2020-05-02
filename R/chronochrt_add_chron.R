@@ -74,6 +74,17 @@ add_chron <- function(data, region, name, start, end, level = 1,
 {
   if (new_table == FALSE) {
     if (!missing(data)) {
+
+      if (typeof(data$start) != typeof(start)) {
+        data$start <- as.character(data$start)
+        start <- as.character(start)
+      }
+
+      if (typeof(data$end) != typeof(end)) {
+        data$end <- as.character(data$end)
+        end <- as.character(end)
+      }
+
       data <- tibble::add_row(data, region , name, start, end, level, add, ...)
       } else {
         stop("The argument `data` must be provided or `new_table` must be TRUE.")

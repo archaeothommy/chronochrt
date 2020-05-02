@@ -24,9 +24,9 @@ theme_chronochrt <- function (base_size = 11, base_family = "", base_line_size =
     base_rect_size = base_rect_size)
     ggplot2::`%+replace%`
     ggplot2::theme(
-      panel.background = ggplot2::element_rect(fill = "grey85", colour = NA),
+      panel.background = ggplot2::element_rect(fill = "grey90", colour = NA),
       panel.border = ggplot2::element_rect(fill = NA, colour = "black"),
-      panel.grid = ggplot2::element_line(colour = "grey50"),
+      panel.grid = ggplot2::element_line(colour = "grey50", linetype = "dotted"),
       panel.grid.minor = ggplot2::element_line(size = ggplot2::rel(0.5)),
       panel.spacing = grid::unit(0, "lines"),
       strip.background = ggplot2::element_rect(fill = "white", colour = "black"),
