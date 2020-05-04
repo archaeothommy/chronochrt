@@ -19,12 +19,18 @@ test_that("File Import", {
   expect_equal(object = import_chron("ex_urnfield_periods_tab_unsec.txt", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "\t"),
                expected = readxl::read_excel("ex_urnfield_periods_unsec_reference.xlsx", col_types = c("text", "text", "text", "text", "numeric", "logical")))
 
+  expect_error(object = import_chron("ex_urnfield_periods2.csv", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add"),
+               regexp = "Missing argument:*")
+  expect_error(object = import_chron("ex_urnfield_periods2.csv", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "|"),
+               regexp = "No valid separator for*")
   expect_error(object = import_chron("ex_urnfield_periods_tab_err1.txt", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "\t"),
                regexp = "Wrong input format: *")
   expect_error(object = import_chron("ex_urnfield_periods_tab_err2.txt", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "\t"),
                regexp = "One*")
   expect_error(object = import_chron("ex_urnfield_periods_tab_err3_level.txt", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "\t"),
                regexp = "Wrong*")
+  expect_error(object = import_chron("NOT-EXISTENT/NOT-EXISTENT.txt", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "\t"),
+               regexp = "The file path *")
   })
 
 test_that("File Conversion", {

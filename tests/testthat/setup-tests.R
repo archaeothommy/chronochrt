@@ -115,7 +115,7 @@ test_plot_err_level <- tibble(region = "Atlantis",
 
 # for Tests not run in RCMD check (because it references to its own package)
 
-p <- plot_chronochrt(test_reference)
+p <- plot_chronochrt(test_reference, font_size_chrons = "b", font_size_labels = "b", years_major = c(1,2), years_minor = "w", chron_name_align = "left", chron_name_x = 0.5, chron_name_y = 0, size_line = "b", line_break = "b", color_fill = c("black", "white"), color_line = c(2,3))
 
 p1 <- plot_chronochrt(test_reference, axis_title = "Jahre")
 

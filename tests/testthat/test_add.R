@@ -44,8 +44,8 @@ test_that("Creating and adding", {
                regexp = "One *")
   expect_error(object = add_chron(region = "Atlantis",
                                   name = c("Atlas", "II", "Poseidon", "I", "a", "b", "c", "d", "Zeus", "Thanos", "a1", "a2"),
-                                  start = c("-2500/-2000", -750, -1500, -1500, -400, -350, -150, 100, -200, -400, -1500, -1000),
-                                  end = c(-1500, -200, -200, -750, -350, -250, 100, 300, 500, 300, -1000, -750),
+                                  start = c(-2500, -750, -1500, -1500, -400, -350, -150, 100, -200, -400, -1500, -1000),
+                                  end = c("-1500/-1000", -200, -200, -750, -350, -250, 100, 300, 500, 300, -1000, -750),
                                   level = c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 3, 3),
                                   add = c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE),
                                   new_table = FALSE),

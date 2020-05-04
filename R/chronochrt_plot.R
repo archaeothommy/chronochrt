@@ -167,19 +167,19 @@ plot_chronochrt <- function(data, labels_text,
 
   if (!is.character(axis_title)) {stop("Wrong input format: ", axis_title, " must be a character string.")}
 
-  if (!is.numeric(font_size_chrons) && length(font_size_chrons) != 1) {font_size_chrons <- 6}
+  if (!is.numeric(font_size_chrons) || length(font_size_chrons) != 1) {font_size_chrons <- 6}
 
-  if (!is.numeric(font_size_labels)&& length(font_size_labels) != 1) {font_size_labels <- 4}
+  if (!is.numeric(font_size_labels) || length(font_size_labels) != 1) {font_size_labels <- 4}
 
-  if (!is.numeric(years_major)&& length(years_major) != 1) {years_major <- 100}
+  if (!is.numeric(years_major) || length(years_major) != 1) {years_major <- 100}
 
-  if (!is.character(color_fill)&& length(color_fill) != 1) {color_fill <- "white"}
+  if (!any(is.character(color_fill), is.numeric(color_fill)) || length(color_fill) != 1) {color_fill <- "white"}
 
-  if (!is.character(color_line)&& length(color_line) != 1) {color_line <- "black"}
+  if (!any(is.character(color_line), is.numeric(color_line)) || length(color_line) != 1) {color_line <- "black"}
 
-  if (!is.numeric(size_line)&& length(size_line) != 1) {size_line <- 0.5}
+  if (!is.numeric(size_line) || length(size_line) != 1) {size_line <- 0.5}
 
-  if (!is.numeric(line_break)&& length(line_break) != 1) {line_break = 8}
+  if (!is.numeric(line_break) || length(line_break) != 1) {line_break = 8}
 
   if (!missing(filename)) {
     if (!is.character(filename)) {stop("Wrong input format: ", filename, " must be a character string.")}
@@ -209,7 +209,7 @@ plot_chronochrt <- function(data, labels_text,
 
   if (!(chron_name_align %in% c("left", "center"))) {stop("Wrong input format: ", chron_name_align, " must be 'left' or 'center'.")}
 
-   if (!missing(chron_name_x)) {
+  if (!missing(chron_name_x)) {
 
     if (is.numeric(chron_name_x)) {
       data <- dplyr::mutate(data, chron_name_x = chron_name_x)
@@ -221,9 +221,11 @@ plot_chronochrt <- function(data, labels_text,
         data <- dplyr::rename(data, chron_name_x = !!(as.name(chron_name_x)))
         } else {
           stop("The column ", chron_name_x, " does not exist.")
-          }
-    } else {
-      stop("Wrong input format: chron_name_x must be numeric or a character string.")
+        }
+    }
+
+    if (!is.numeric(chron_name_x) && !(is.character(chron_name_x) && length(chron_name_x) == 1)) {
+      stop("Wrong input format: chron_name_y must be numeric or a character string.")
     }
   }
 
@@ -240,28 +242,33 @@ plot_chronochrt <- function(data, labels_text,
       } else {
         stop("The column ", chron_name_y, " does not exist.")
       }
-    } else {
+    }
+
+    if (!is.numeric(chron_name_y) && !(is.character(chron_name_y) && length(chron_name_y) == 1)) {
       stop("Wrong input format: chron_name_y must be numeric or a character string.")
     }
   }
 
-   if (is.numeric(chron_name_angle)) {data <- dplyr::mutate(data, chron_name_angle = chron_name_angle)}
 
-   if (is.character(chron_name_angle)) {
-     if (length(chron_name_angle) == 1) {
-       if (chron_name_angle %in% names(data)) {
-         data <- dplyr::rename(data, chron_name_angle = !!(as.name(chron_name_angle)))
-         } else {
-           stop("The column ", chron_name_angle, " does not exist.")
-         }
+
+
+  if (is.numeric(chron_name_angle)) {data <- dplyr::mutate(data, chron_name_angle = chron_name_angle)}
+
+  if (is.character(chron_name_angle)) {
+   if (length(chron_name_angle) == 1) {
+     if (chron_name_angle %in% names(data)) {
+       data <- dplyr::rename(data, chron_name_angle = !!(as.name(chron_name_angle)))
        } else {
-         stop("Wrong input format: chron_name_angle must be a character string.")
+         stop("The column ", chron_name_angle, " does not exist.")
        }
-   }
+     } else {
+       stop("Wrong input format: chron_name_angle must be a character string.")
+     }
+  }
 
-   if (!is.numeric(chron_name_angle) && !is.character(chron_name_angle)) {
-     stop("Wrong input format: chron_name_angle must be numeric or a character string.")
-   }
+  if (!is.numeric(chron_name_angle) && !is.character(chron_name_angle)) {
+   stop("Wrong input format: chron_name_angle must be numeric or a character string.")
+  }
 
   data <- data %>% # calculation of geometry, commented lines for implementation with lubridate
     tidyr::separate(.data$start, c("start", "start2"), sep = "/", fill = "right") %>%

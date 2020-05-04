@@ -13,9 +13,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-#library(ChronochRt)
+library(ChronochRt)
 library(knitr)
-devtools::load_all()
+#devtools::load_all()
 ```
 
 
@@ -73,7 +73,7 @@ In the plot the information of each _chron_ from a chronological data set is dir
 ```{r plot_structure, echo = FALSE, fig.align='center'}
 
 chrons <- import_chron(path = "plot_structure.xlsx", region = region, name = name, start = start, end = end, level = level, add = add, range = readxl::cell_cols("A:F")) %>% 
-  filter(region != "Region C")
+  dplyr::filter(region != "Region C")
   
   
 plot_chronochrt(chrons, font_size_chrons = 2)
