@@ -366,8 +366,8 @@ plot_chronochrt <- function(data, labels_text,
     ggplot2::facet_grid(cols = ggplot2::vars(.data$region), scales = "free_x", space = "free_x", labeller = ggplot2::label_wrap_gen(width = line_break)) +
     theme_chronochrt() +
     ggplot2::theme(axis.text = ggplot2::element_text(size = font_size_chrons*0.8*72.27/25.4),
-          axis.title = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold"),
-          strip.text.x = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
+                   axis.title = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold"),
+                   strip.text.x = ggplot2::element_text(size = font_size_chrons*72.27/25.4, face="bold")) #+
     #labs(caption = "Citation of the release paper")
 
   if(!missing(background)) {

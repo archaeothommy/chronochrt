@@ -13,17 +13,17 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(ChronochRt)
+#library(ChronochRt)
 library(knitr)
-#devtools::load_all()
+devtools::load_all()
 ```
 
 
-# The ChronochRt workflow
+## The ChronochRt workflow: Overview
 
 Creating a chronological chart with ChronochRt consits of two basic steps: Creating a data set and plotting. 
 
-```{r MWE, echo = TRUE, fig.align='center'}
+```{r MWE, echo = TRUE, fig.align='center', out.width="25%"}
 data <- add_chron(region = c("A", "A", "B", "B"), 
           name = c("1", "2", "1", "2"), 
           start = c(-100, 100, -50, 100), 
@@ -47,36 +47,66 @@ However, you most likely want to customise your plot (e. g. change the order of 
 In the following sections we will go through each of these steps. But before we start to learn how to use ChronochRt, we need to know how it works. 
 
 
-# Data and plot structure
+## Data and plot structure
 
-## The data set 
-A chronological data set in ChronochRt consists of a number of data with the same basic information. They ae stored in a table where each row gives the information of one _chron_ (a chronological unit of any kind), and the columns store the information of these chrons. The basic information of a _chron_ are:  
+### The data set 
+As can be seen in the code block above, chronological data are stored in a table where each row repersents a _chron_ (i.e. a chronological unit of any kind). The columns store the information of these chrons. The basic information of a _chron_ are:  
 
-* Which `region` is the _chron_ defined for?
+* Which `region` is the _chron_ defined for? (This must not necessarily be a geographical region but can also be e.g. a reference)
 * What is its `name`? 
 * When does it `start`? 
 * When does it `end`?
 * What is its `level` within the chronological system?
+* The parameter `add`. 
 
-For plotting we must store one additional information is needed: The parameter `add`. ChronochRt offers the option to plot an additional chronological columns for each region to include e.g. long and short chronologies of regions, or competing chronological systems. Setting the variable `add` of a _chron_ to `TRUE` signals ChronochRt to plot this _chron_ in the additional column.  
+The parameter `add` is required for plotting the chart. ChronochRt offers the option to plot an additional chronological columns for each region to include e.g. long and short chronologies of regions, or competing chronological systems. Setting the variable `add` of a _chron_ to `TRUE` signals ChronochRt to plot this _chron_ in the additional column within the same region.  
 
-Without these six variables, ChronochRt cannot produce chronological charts. Within ChronochRt their names are fixed to avoid any confusion and during the import of your data set you will have to define the corresponding columns. It is possible to store additional variables in your chrons. This might even be handy to change e.g. the position and angle of the _chron_'s names. We will return to them further below #LINK#. 
+Without these six variables, ChronochRt cannot produce chronological charts. Within ChronochRt their names are fixed to avoid confusion. When you import import or convert a data set, you will have to indicate the corresponding columns. It is possible to store additional variables in your chrons. This might even be handy to change e.g. the position and angle of the _chron_'s names. We will return to this aspect further below #LINK#. 
 
 NOTE:  
-In ChronochRt, each _chron_ is evaluated independently. Consequently, you have to store explicitly the name, the start and the end date of every single _chron_. These seems to be tedious, as e. g. "Ha A2" must be recorded as at least two _chrons_: "Ha A" and subchron "2". Depending on your time frame, it might be even better to define a _chron_ "Ha" for the entire Hallstatt period. And for each of them, you have to makes ure that the start and end date must match with the preceeding and subsequent _chrons_ and the (sub)chrons starting or ending at the same time. However, it easily allows to plot interruptions in the chronological sequence due to e.g. abandonment of settlements or entire regions (see example above). At the same time it keeps the structure of a chronological data set simple. 
+In ChronochRt, each _chron_ is evaluated independently. Consequently, you have to store explicitly the name, the start date, and the end date of every single _chron_. This seems to be tedious, as e. g. "Ha A2" must be recorded as at least two _chrons_ in most cases: "Ha A" and subchron "2". Depending on your time scale, it might be even better to define a _chron_ "Ha" for the entire Hallstatt period. And for each of them, you have to make sure that the start and end date are idetnical with the preceeding and subsequent _chrons_ and the (sub)chrons starting or ending at the same time. However, it easily allows to plot interruptions in the chronological sequence due to e.g. abandonment of settlements or entire regions (see example above). At the same time it keeps the structure of a chronological data set simple. 
 
 
-## The chronological chart
+### The chronological chart
 
-In the plot the information of each _chron_ from a chronological data set is directly mirrored: 
+The information of each _chron_ from a chronological data set is directly mirrored in the plot: 
 
-```{r plot_structure, echo = FALSE, fig.align='center'}
+```{r plot_structure, echo = FALSE, message=FALSE, fig.align='center', fig.width = 10, out.width="100%"}
 
-chrons <- import_chron(path = "plot_structure.xlsx", region = region, name = name, start = start, end = end, level = level, add = add, range = readxl::cell_cols("A:F")) %>% 
-  dplyr::filter(region != "Region C")
-  
-  
-plot_chronochrt(chrons, font_size_chrons = 2)
+chrons <- add_chron(
+  region = c(region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "B", region = "B", region = "B"),
+  name = c("level = 1\nadd =\nFALSE", "level = 2\nadd =\nFALSE", "level = 3\nadd =\nFALSE", "level = 4\nadd =\nFALSE", "level = 5\nadd =\nFALSE","level = 1\nadd =\nTRUE","level = 2\nadd =\nTRUE","level = 2\nadd =\nTRUE", "add =\nTRUE", "level = 3", "add = TRUE", "level = 4", "level = 1\nadd = FALSE", "level = 2\nadd = FALSE", "level = 3\nadd = FALSE"),  
+  start = c(-500, -500, -500, -500, -500, -400, -400, 0, 0, 200, 200, 300, -500, -500, -500), 
+  end = c(500, 500, 500, 500, 500, 400, 0, 400, 200, 400, 300, 400, 500, 500, 500), 
+  level = c(1, 2, 3, 4, 5, 1, 2, 2, 3, 3, 4, 4, 1, 2, 3), 
+  add = c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE), 
+  new_table = TRUE) 
+
+plot_chronochrt(chrons, font_size_chrons = 4, line_break = 20) + 
+  ggplot2::scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0))
 
 ```
+
+The x-axis in this plot is shown for educational reasons only. Usually, it is not displayed (see example above)
+
+Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled with 1 representing the maximum `level`. Hence you can think of the x-axis as percentages when it comes to place e.g. labels in the plot. All _chrons_ with `add = TRUE`are displayed in the same way, but their x-value is shifted by 1, i.e. they are plotted between 1 and 2.  
+If not all _chrons_ are further subdivided, _chrons_ with the next higher `level`are extended towards the right (cf. example above). However, by default the names of the chrons will be placed on the same x-value like the subdivided one. This might produce on the first glance some strange looking empty space on the right side of the columns, but it enhances the readability in complex charts and leaves enough space to place additional labels in the plot. 
+
+## The ChronochRt workflow: Step-by-step
+
+### Step 1: Creating the chronological data set
+
+### Optional step: Include additional information for customisation 
+
+### Optional step: Arrange regions
+
+### Optional step: Add labels
+
+### Step 3: Plotting the chronological chart
+
+#### Step 3a: Plotting
+
+#### Step 3b: Exporting the plot
+
+#### Optional steps: Customisation of the plot
 
