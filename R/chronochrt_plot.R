@@ -357,7 +357,7 @@ plot_chronochrt <- function(data, labels_text,
   #     }
   #
   #   plot <- plot +
-  #     ggimage::geom_image(data = labels_image, ggplot2::aes(y = .data$year, x = .data$position, image = .data$image_path), na.rm = TRUE, size = image_size, asp = 4)
+  #     ggimage::geom_image(data = labels_image, ggplot2::aes(y = .data$year, x = .data$position, image = .data$image_path, size=I(size)))), na.rm = TRUE)
   #   }
 
   plot <- plot +
