@@ -1,0 +1,21 @@
+#image: rocker/geospatial:latest
+
+#test:
+ # script:
+  #  - R -e 'devtools::install(dependencies = TRUE, quick = TRUE)'
+   # - R -e 'devtools::check(error_on = "warning")'
+
+#image: rocker/rstudio
+#test:
+#   script:
+#    - apt-get update
+#    # install dependencies for package
+#    - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
+#    - R -e 'install.packages(c("testthat", "devtools"))'
+#    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+#    - R CMD build . --no-build-vignettes --no-manual
+#    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+#    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual
+#    # update code coverage
+#    - apt-get install --yes git
+#    - R -e "covr::codecov(token = 'mytoken')"
