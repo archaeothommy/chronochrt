@@ -5,6 +5,10 @@
 
 <!-- badges: start -->
 
+[![pipeline
+status](https://gitlab.com/roset/chronochrt/badges/master/pipeline.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
+[![coverage
+report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
 <!-- badges: end -->
 
 ChronochRt offers an easy way to draw chronological charts from tables.
