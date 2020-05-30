@@ -19,31 +19,31 @@ building:
 # The coverage parsing string is
 # Coverage: \d+\.\d+
 
-testing:
-    stage: test
-    allow_failure: true
-    when: on_success
-    only:
-        - master
-    script:
-        - Rscript -e 'install.packages("DT")'
-        - Rscript -e 'covr::gitlab(quiet = FALSE)'
-    artifacts:
-        paths:
-            - public
+#testing:
+#    stage: test
+#    allow_failure: true
+#    when: on_success
+#    only:
+#        - master
+#    script:
+#        - Rscript -e 'install.packages("DT")'
+#        - Rscript -e 'covr::gitlab(quiet = FALSE)'
+#    artifacts:
+#        paths:
+#            - public
 
 # To produce a code coverage report as a GitLab page see
 # https://about.gitlab.com/2016/11/03/publish-code-coverage-report-with-gitlab-pages/
 
-pages:
-    stage: deploy
-    dependencies:
-        - testing
-    script:
-        - ls
-    artifacts:
-        paths:
-            - public
-        expire_in: 30 days
-    only:
-        - master
+#pages:
+#    stage: deploy
+#    dependencies:
+#        - testing
+#    script:
+#        - ls
+#    artifacts:
+#        paths:
+#            - public
+#        expire_in: 30 days
+#    only:
+#       - master
