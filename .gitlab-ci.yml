@@ -5,9 +5,9 @@ test:
     - R -e 'devtools::install(dependencies = TRUE, quick = TRUE)'
     - R -e 'devtools::check(error_on = "error")'
 
-coverage:
-   script:
+#coverage:
+#   script:
 
     # update code coverage
-    - apt-get install --yes git
-    - R -e "covr::codecov(token = 'mytoken')"
+#    - apt-get install --yes git
+#    - R -e "covr::codecov(token = 'mytoken')"
