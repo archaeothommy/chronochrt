@@ -1,5 +1,5 @@
 ---
-title: "How does ChronochRt work?"
+title: "ChronochRt: Data and plot structure"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ChronochRt}
@@ -18,17 +18,13 @@ library(knitr)
 devtools::load_all()
 ```
 
-Before we can start working with ChronochRt, we have to load the package.  
+To execute the examples shown in this vignette, the package must loaded:  
 
 ```{r setup, eval=FALSE}
 library(ChronochRt)
 ```
 
-Additionally, familiarising ourselves with the data and plot structure of ChronochRt will facilitate to understand its workflow. 
-
-## Data and plot structure
-
-### The data set 
+## The data set 
 Chronological data are stored in a table where each row repersents a _chron_ (i.e. a chronological unit of any kind). The columns store the information of these chrons. The basic information of a _chron_ is:  
 
 * Which `region` is the _chron_ defined for? (This must not necessarily be a geographical region but can also be e.g. a reference)
@@ -40,15 +36,15 @@ Chronological data are stored in a table where each row repersents a _chron_ (i.
 
 The parameter `add` is required for plotting the chart. ChronochRt offers the option to plot an `add`itional chronological column for each region to include e.g. long and short chronologies of regions, or competing chronological systems. Setting the variable `add` of a _chron_ to `TRUE` signals ChronochRt to plot this _chron_ in the additional column within the same region.  
 
-Without these six variables, ChronochRt cannot produce chronological charts. Because the are so important and to avoid confusion, their names are fixed. When you import or convert a data set, you will have to indicate the corresponding columns (see below). It is possible to store additional variables in our chrons. This might even be handy to change e.g. the position and angle of the _chron_'s names. We will return to this aspect when it comes to the customisation of our plot. 
+Without these six variables, ChronochRt cannot produce chronological charts. Because they are so important and to avoid confusion, their names are fixed. When you import or convert a data set, you will have to indicate the corresponding columns. It is possible to store additional variables in our chrons. This might even be handy to change e.g. the position and angle of the _chron_'s names or additional information for other uses of the data set. Their name can be freely chosen and they are not evaluated during import, creation and/or conversion of a data set. 
 
-#### BCE and AD
+### BCE and AD
 Years BCE are indicated by negative `start` and `end` dates, e.g. `-100`. There is nothing else to care about the difference between BCE and AD in chronochRt. 
 
-#### Important note  
+### Important note  
 In ChronochRt, each _chron_ is evaluated independently. Consequently, we have to store all the above listed parameter for every single _chron_. And for each of them, we have to make sure that the start and end date is identical with the ones of its preceeding and subsequent _chrons_ and the subchrons starting or ending at the same year. This might become tedious quickly. However, it easily allows to plot interruptions in the chronological sequence due to e.g. abandonment of settlements or entire regions (see example below). At the same time it keeps the structure of the chronological data set simple and each _chron_ stands for itself.   
 
-### The chronological chart
+## The chronological chart
 
 After we learned, how a chronological data set is structured, lets create an instructive example data set called `chrons` and compare it to its the chronological chart (the x-axis will be shown here only for educational reasons): 
 
@@ -76,14 +72,14 @@ plot_chronochrt(chrons, font_size_chrons = 4, line_break = 20) +
 
 Admittedly, the `name`s of the _chrons_ are not very pretty. But they clearly show that the information of each _chron_ from a chronological data set is directly mirrored in the plot and can reconstructed from it.  
 
-#### How does it work? 
+### How does it work? 
 Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled with the maximum `level` representing one. In the example, the maximum `level` for our region A and the `add = TRUE`-column is 5, hence, all _chrons_ will be 1/5 wide. In the region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide and so on. This has the advantage that we can think of the x-axis as percentages and don't have to care about the number of _chrons_ or the maximum level, when we want to place additional labels or customise the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-cloumn are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
 If not all _chrons_ are further subdivided, empty space is filled by the right.most _chrons_. However, by default the names of _chrons_ from the same level will be placed on the same x-value. This might produce on the first glance some strange looking empty space on the right side of the columns (see above), but it enhances the readability in complex charts and ensures that we will have enough space to place additional labels. 
 
 ### Unclear `start` and `end` dates
 In the example above we can see a dashed horizontal line between two _chrons_ and when we look it up in the data set, we see that the respective dates are written as `"300/300"`. Sometimes, `start` and/or `end` date of a _chron_ cannot be given precisely and this vagueness needs to be indicated. The reasons for unclear transitions are manifold: the transition between two chronological units or strata is blurred, sites within a region yielded different dates for the same transition, transitions are not always clearly expressed in the material record, or it is debated whether this transition exists, to name just a few.  
 ChronochRt will automatically draw dates given in the format `"year1/year2"` as dashed instead of solid lines. To indicate a transition period, its `start` and `end` date is given, e.g. `"50/100"`. And for a disctinct date, like in our example, the two years are the same.  
-Does the order of the dates matter? Lets see what happens when we play with it a bit, using a different `region` for each kind of combination: 
+Does the order of the dates matter? Lets see what happens when we play with it a bit, using a different `region` for each kind of combination (we use `arrange_regions()` to modify the default alphabetical order of the regions in the plot): 
 
 ```{r unclear, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
@@ -122,77 +118,54 @@ plot_chronochrt(data)
 ```
 
 
-Indeed, the order matters. In the first two columns we see that vertical lines will always be drawn until the date given before the "/". And from the last column we see that we have to be consistent with the order to get a correct chronological chart. 
+Indeed, the order matters. In the first two columns we see that vertical lines will always be drawn until the date given before the "/", also the position of the _chron's_ name is calculated according to this date. And from the last column we see that we have to be consistent with the order to get a correct chronological chart. 
 
+## Custom labels 
+Custom labels are optional and hence are stored in an independent data set. We can place custom text on the chronological chart to indicate e.g. special events. The labels can be placed in the chronological chart wherever we want it. As indicated before, it is assumed that they will predominantly appear on the right side of a chronological column. Hence they are always right-aligned.  
 
-## The ChronochRt workflow: Overview
+Custom labels are recorded with the function `add_label_text()`. The information required to place a label are the `region` it should be plotted in, the `year` it should be placed, its `position` on the x-axis and the `label` text. As we learned above, the `position` must be given in values between 0 and 1 (or 2 if you use both columns in a region):   
 
-We saw in the last example that creating a chronological chart with ChronochRt consists of two basic steps:
+```{r label, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
-1. Creating a data set 
-2. Plotting the data set
+data_label <- add_label_text(region = "earlier/later", 
+                             year = 50, 
+                             position = 0.95, 
+                             label = "This date in front of the /.", 
+                             new = TRUE)
 
-With these two steps, we already covered the entire basic workflow of ChronochRt. We already carried out two more steps: adding _chrons_ and arraging the `region`s in a proper order. There are many other optional steps. Some of them can barely be regarded as optional (e.g. saving the plot for publication), while others surely are (e.g. changing the color of the background). 
+data_label <- add_label_text(data = data_label, 
+                             region = "later/earlier", 
+                             year = 100, 
+                             position = 0.9, 
+                             label = "This date in\nfront of the /.", 
+                             new = FALSE) %>%
+  add_label_text(region = "mixed", 
+                 year = 75, 
+                 position = 0.48, 
+                 label = "Both dates are\nin fromt of the /.", 
+                 new = FALSE)
 
-Taking these optional steps into account, the full workflow of ChronochRt can be summarised int he following diagramme. We will go through each step in the following sections: 
+data_label <- add_label_text(data = data_label, 
+                             region = "same", 
+                             year = c(125, 175), 
+                             position = 0.9, 
+                             label = "same", new = FALSE)
 
-```{r Workflow, echo = FALSE}
-
-#include_graphics("")
+plot_chronochrt(data, labels_text = data_label)
 ```
 
-## The ChronochRt workflow: Step-by-step
+## Compatibility with the [tidyverse](https://www.tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
 
-### Step 1: Creating the chronological data set
-A chronological data set might originate from many different sources. Hence ChronochRt offers different function to create chronological data sets: 
-
-* `import_chron()` to import any kind of tabular data. The import of Microsoft Excel files requires installation of the package [readxl](https://cran.r-project.org/web/packages/readxl/index.html). 
-* `convert_to_chron()` to convert an existing data frame into a chronological data set. 
-* `add_chron( ... , new_table = TRUE)` to create a chronological data set. 
-
-Additionally, _chrons_ can be added to existing data sets with `add_chron( ... , new_table = FALSE)`.  
-
-In all these function we have to identify the core columns of our chronological data set. All the functions will return errors if the input is not in accordance with the data structure required for chronological charts (e.g. `level` contains letters instead of numbers).  
-
-### Include additional information for customisation (optional)
-We can include additional column(s) in the chronological data set. Their names can be freely chosen and they won't be evaluated by the above mentioned functions but just passes through. This might be handy to store e.g. the position and angle of the `name`s, if we want to place them somewhere else than the default positions (see below). Or if we want to store additional information, which we need to use the chronological data set in other contexts. 
-
-### Arrange regions (optional)
-The default way of arranging the `region`s in the chronological chart is according to the alphabet. Often (like in the example above) this is not the order we are looking for. We can apply `arrange_regions()` to a chronological data set to bring them in the desired order: 
-
-```{r}
-
-```
-
-
-### Add custom labels (optional)
-We can place custom text on the chronological chart to indicate e.g. special events. The text can be placed in the chronological chart wherever we want it. As indicated before, it is assumed that it will predominantly appear on the right side of a chronological column. Hence it will be right-aligned.  
-
-Custom labels are recorded with the function `add_label_text()`. This functions works like `add_chron()`: WE can create a new data set of labels with the argument `new = TRUE` and add labels to an existing data set with `new = FALSE`.  
-The information required to place a label are the `region`it should be plotted in, the `year` it should be placed, its `position` on the x-axis and the `label` text. As we learned above, the `position` must be given in values between 0 and 1 (or 2 if you use both columns in a region): 
-
-```{r}
-
-```
-
-
-### Step 2: Plotting the chronological chart
-
-#### Step 2a: Plotting
-
-#### Text wrapping
-
-#### Step 2b: Exporting the plot
-
-#### Customisation of the plot (optional)
-
-### Compatibility with the [tidyverse](https://www.tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
-
-ChronochRt builds upon the marvellous tidyverse environment. Hence its functions can be seamlessly integrated into e.g. pipes (as we did in some examples, look for the pipe operator `%>%`) and prior or subsequent data transformation. Likewise, `plot_chronochrt()` returns a ggplot2-object, which can easily be enhanced afterwards by e.g. more complex designs using the `+` operator. As an example, the very first plot in this vignette was created with the following code: 
-
+ChronochRt builds upon the marvellous tidyverse environment. Hence its functions can be seamlessly integrated into e.g. pipes (as we did in some examples, look for the [pipe operator `%>%`](https://style.tidyverse.org/pipes.html)). Likewise, `plot_chronochrt()` returns a ggplot2-object, which can be easily enhanced afterwards by e.g. more complex designs using the `+` operator. As an example, the first plot in this vignette was created with the following code to display the usually omitted x-axis: 
 ```{r , eval=FALSE}
 
 plot_chronochrt(chrons, font_size_chrons = 4, line_break = 20) + 
   scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0))
 
 ```
+
+## Some explanation to the example code
+The examples shown in this vignette contain some "tricks", which might facilitate the usage of ChronochRt. They are not features of ChronochRt but of R and the packages ChronochRt builds upon (see above). 
+
+* Text wrapping in labels and names of _chrons_ can be easily implemented by typing `"\n"`instead of a space where the text should be wrapped (spaces at the end of lines will result in unclean text alignment). If we import our chronological data from an Excel file, text wrapping can be implemented in Excel by inserting line breaks with the combination `Alt + Return` (Windows) and `Control + Command + Enter` or `Control + Option + Enter` (Mac). 
+* If a value in a column is identical for all rows, it is sufficient to type it in once. It is not necessary to type it for every row (see the code to add the labels "same" in the last example). This facilitates not only coding but also ensures that e.g. the position or text of labels are identical and not erroneous because of typos. 

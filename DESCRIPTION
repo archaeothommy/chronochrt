@@ -1,7 +1,7 @@
 Package: ChronochRt
 Title: Creating chronological charts with R
 Version: 0.0.0.9000
-Date: "2020-04-01"
+Date: "2020-05-30"
 Authors@R: 
     c(person(given = "Thomas",
            family = "Rose",
@@ -15,7 +15,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-6412-342X")))
 Author: Thomas Rose [aut, cre], Chiara Girotto [aut]
 Maintainer: Thomas Rose <thomas.rose@daad-alumni.de>
-Description: What the package does (one paragraph).
+Description: ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an environment suitable for persons new to R.
 License: GPL-3
 URL: https://gitlab.com/roset/chronochrt
 BugReports: https://gitlab.com/roset/chronochrt/issues/
