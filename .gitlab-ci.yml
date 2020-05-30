@@ -3,7 +3,7 @@ image: rocker/tidyverse:latest
 test:
   script:
     - R -e 'devtools::install(dependencies = TRUE, quick = TRUE)'
-    - R -e 'devtools::check(error_on = "warning")'
+    - R -e 'devtools::check()'
 
 #image: rocker/rstudio
 #test:
