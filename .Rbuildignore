@@ -4,3 +4,4 @@
 ^Example_data$
 ^README\.Rmd$
 ^Cheatsheet\.ai$
+^.gitlab-ci\.yml$
