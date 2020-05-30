@@ -273,8 +273,7 @@ plot_chronochrt <- function(data, labels_text,
   data <- data %>% # calculation of geometry, commented lines for implementation with lubridate
     tidyr::separate(.data$start, c("start", "start2"), sep = "/", fill = "right") %>%
     tidyr::separate(.data$end, c("end", "end2"), sep = "/", fill = "right") %>%
-    dplyr::mutate_at(c("start", "start2", "end", "end2"), as.numeric) %>%
-#    dplyr::mutate(across(starts_with("start") | starts_with("end"), as.numeric)) %>%
+    dplyr::mutate(dplyr::across(tidyselect::starts_with("start") | tidyselect::starts_with("end"), as.numeric)) %>%
 
     #dplyr::mutate(start = lubridate::ymd("0000-01-01") + lubridate::years(.data$start),
     #              start2 = lubridate::ymd("0000-01-01") + lubridate::years(.data$start2),
