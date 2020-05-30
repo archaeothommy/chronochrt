@@ -43,7 +43,6 @@ test_plot_reference <- tibble(
   y_label = -1500,
   angle_label = 90)
 
-
 # for checking convert_to_chron()
 
 test <- tibble(Area = "Atlantis",

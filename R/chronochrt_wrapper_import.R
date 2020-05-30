@@ -57,7 +57,7 @@ import_chron <- function(path, region, name, start, end, level, add, delim, ...)
 
   if (ext %in% c("xlsx", "xls")) {
 
-    if ("readxl" %in% installed.packages() == FALSE) {
+    if ("readxl" %in% utils::installed.packages() == FALSE) {
       stop("Import of Excel files requires the package `readxl`. Please install it or choose another file format.")
     }
 
