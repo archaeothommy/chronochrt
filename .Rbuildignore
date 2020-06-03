@@ -6,3 +6,5 @@
 ^Cheatsheet\.ai$
 ^.gitlab-ci\.yml$
 ^codecov\.yml$
+^Public$
+^Public/\.gitkeep$

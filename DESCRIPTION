@@ -12,7 +12,9 @@ Authors@R:
            family = "Girotto",
            role = c("aut"),
            email = "chiara.girotto@web.de",
-           comment = c(ORCID = "0000-0001-6412-342X")))
+           comment = c(ORCID = "0000-0001-6412-342X")), 
+     person(given = "European Union",
+           role = "fnd"))
 Author: Thomas Rose [aut, cre], Chiara Girotto [aut]
 Maintainer: Thomas Rose <thomas.rose@daad-alumni.de>
 Description: ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an environment suitable for persons new to R.
