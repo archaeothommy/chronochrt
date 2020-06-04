@@ -19,11 +19,11 @@ Authors@R:
            comment = "for thesis of T. Rose"),
      person(given = "Francesca",
            family = "Balossi-Restelli",
-           role = c("ths")),
+           role = c("ths"),
            comment = "for thesis of T. Rose"),
      person(given = "Peter",
            family = "Fabian",
-           role = c("ths")),
+           role = c("ths"),
            comment = "for thesis of T. Rose"),
      person(given = "European Union",
            role = "fnd"))
