@@ -70,7 +70,7 @@ Is there a feature missing? Please let us know
 
 <tr>
 
-<td valign="top">
+<td valign="bottom">
 
 <img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200"><br>
 
