@@ -1,7 +1,7 @@
-# ChronochRt 0.##.## (in development)
+# ChronochRt 0.0.5 (beta version)
 
 ## Breaking changes
 
-* bla
-* bla 
+* Relase of the beta version
+* See Readme for features of ChronochRt
 

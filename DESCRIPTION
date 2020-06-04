@@ -1,6 +1,6 @@
 Package: ChronochRt
 Title: Creating chronological charts with R
-Version: 0.0.0.9000
+Version: 0.0.5.0000
 Date: "2020-05-30"
 Authors@R: 
     c(person(given = "Thomas",
@@ -12,7 +12,19 @@ Authors@R:
            family = "Girotto",
            role = c("aut"),
            email = "chiara.girotto@web.de",
-           comment = c(ORCID = "0000-0001-6412-342X")), 
+           comment = c(ORCID = "0000-0001-6412-342X")),
+     person(given = "Yuval",
+           family = "Goren",
+           role = c("ths"), 
+           comment = "for thesis of T. Rose"),
+     person(given = "Francesca",
+           family = "Balossi-Restelli",
+           role = c("ths")),
+           comment = "for thesis of T. Rose"),
+     person(given = "Peter",
+           family = "Fabian",
+           role = c("ths")),
+           comment = "for thesis of T. Rose"),
      person(given = "European Union",
            role = "fnd"))
 Author: Thomas Rose [aut, cre], Chiara Girotto [aut]
