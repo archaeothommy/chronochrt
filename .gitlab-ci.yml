@@ -26,6 +26,7 @@ testing:
     only:
         - master
     script:
+        - R -e "remotes::install_deps(dependencies = TRUE)"
         - Rscript -e 'install.packages("DT")'
         - Rscript -e 'covr::gitlab(quiet = FALSE)'
     artifacts:
