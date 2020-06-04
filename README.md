@@ -64,13 +64,28 @@ Is there a feature missing? Please let us know
 
 ## Funding
 
-<div style="width:150px">
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
 
-![EU
-flag](https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg)
+<tbody>
 
-</div>
+<tr>
+
+<td valign="top">
+
+<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200"><br>
+
+</td>
+
+<td valign="bottom" halign="left">
 
 This project has received funding from the European Union’s Horizon 2020
 research and innovation programme under the Marie Skłodowska-Curie grant
-agreement No 766311.
+agreement No 766311.<br>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
