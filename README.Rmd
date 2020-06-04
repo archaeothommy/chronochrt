@@ -69,9 +69,9 @@ Is there a feature missing? Please let us know [here](https://gitlab.com/roset/c
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
       <tbody>
         <tr>
-          <td valign="bottom"><img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200"><br>
+          <td valign="bottom"><img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200">
           </td>
-          <td valign="bottom" halign="left">This project has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No 766311.<br>
+          <td valign="bottom" halign="left">This project has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No 766311.
           </td>
         </tr>
       </tbody>

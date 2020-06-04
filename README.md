@@ -72,7 +72,7 @@ Is there a feature missing? Please let us know
 
 <td valign="bottom">
 
-<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200"><br>
+<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200">
 
 </td>
 
@@ -80,7 +80,7 @@ Is there a feature missing? Please let us know
 
 This project has received funding from the European Union’s Horizon 2020
 research and innovation programme under the Marie Skłodowska-Curie grant
-agreement No 766311.<br>
+agreement No 766311.
 
 </td>
 
