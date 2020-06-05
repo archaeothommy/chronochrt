@@ -85,7 +85,7 @@ add_chron <- function(data, region, name, start, end, level = 1,
         end <- as.character(end)
       }
 
-      data <- tibble::add_row(data, region , name, start, end, level, add, ...)
+      data <- tibble::add_row(data, region, name, start, end, level, add, ...)
       } else {
         stop("The argument `data` must be provided or `new_table` must be TRUE.")
         }

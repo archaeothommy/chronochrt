@@ -70,7 +70,7 @@
 #'   dimensions 5 x 5 cm. If unspecified, the standard values of the respective
 #'   graphic device are used.
 #' @param font_size_chrons Font size of the names of the chronological units in
-#'   mm. The default is \code{6} mm.
+#'   mm and all other text elements except the text labels. The default is \code{6} mm.
 #' @param font_size_labels Font size of the text labels  in mm. The default is
 #'   \code{4} mm.
 #' @param line_break Line length of the section labels in characters. Text will
@@ -248,9 +248,6 @@ plot_chronochrt <- function(data, labels_text,
       stop("Wrong input format: chron_name_y must be numeric or a character string.")
     }
   }
-
-
-
 
   if (is.numeric(chron_name_angle)) {data <- dplyr::mutate(data, chron_name_angle = chron_name_angle)}
 

@@ -3,8 +3,8 @@
 ^ChronochRt\.Rproj$
 ^Example_data$
 ^README\.Rmd$
-^Cheatsheet\.ai$
 ^.gitlab-ci\.yml$
 ^codecov\.yml$
 ^Public$
 ^Public/\.gitkeep$
+^inst/Cheatsheet$
