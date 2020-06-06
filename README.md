@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # ChronochRt
@@ -59,7 +58,7 @@ Is there a feature missing? Please let us know
 
 ## Getting started
 
-  - Cheatsheet
+  - [Cheatsheet](https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)
   - [Vignettes](https://gitlab.com/roset/chronochrt/-/tree/master/vignettes)
 
 ## Funding
