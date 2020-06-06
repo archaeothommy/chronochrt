@@ -11,7 +11,7 @@ building:
     - R -e "remotes::install_deps(dependencies = TRUE)"
     - R -e 'devtools::check(error_on = "error")'
   after_script:
-    - R -e "print(covr::codecov(token = 'mytoken'))"
+    - R -e "covr::package_coverage()"
 
 # To have the coverage percentage appear as a gitlab badge follow these
 # instructions:
