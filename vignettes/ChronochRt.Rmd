@@ -13,9 +13,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(ChronochRt)
+#library(ChronochRt)
 library(knitr)
-#devtools::load_all()
+devtools::load_all()
 ```
 
 To execute the examples shown in this vignette, the package must loaded:  
@@ -50,7 +50,7 @@ After we learned, how a chronological data set is structured, lets create an ins
 
 ```{r plot_structure_data, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 chrons <- add_chron(
-  region = c(region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "A", region = "B", region = "B", region = "B"),
+  region = c("region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = B", "region = B", "region = B"),
   name = c("level = 1\nadd =\nFALSE", "level = 2\nadd =\nFALSE", "level = 3\nadd =\nFALSE", "level = 4\nadd =\nFALSE", "level = 5\nadd =\nFALSE","level = 1\nadd =\nTRUE","level = 2\nadd =\nTRUE","level = 2\nadd =\nTRUE", "add =\nTRUE", "level = 3", "add = TRUE", "level = 4", "level = 1\nadd = FALSE", "level = 2\nadd = FALSE", "level = 3\nadd = FALSE"),  
   start = c(-500, -500, -500, -500, -500, -400, -400, 0, 0, 200, 200, "300/300", -500, -500, -500), 
   end = c(500, 500, 500, 500, 500, 400, -50, 400, 200, 400, "300/300", 400, 500, 500, 500), 
