@@ -3,7 +3,7 @@
 #' The function creates a tibble with text labels to be plotted in a
 #' chronological chart or adds them to an anlready existing tibble.
 #'
-#' If the input is in the same order like the arguments, the arguments does not
+#' If the input is in the same order like the arguments, the arguments do not
 #' need to be explicitly named. Values can be provided as one number or one
 #' character string, if they are the same for all other data. If not, they must
 #' be provided as vectors with equal lengths.
@@ -30,7 +30,7 @@
 #'   passed to \code{\link[tibble]{tibble}} or
 #'   \code{\link[tibble]{add_row}}.
 #'
-#' @return A tibble with text labels ready-to-use for plotting with
+#' @return A tibble with text labels ready-to-use for plotting
 #'   \code{\link{plot_chronochrt}}.
 #'
 #' @export
@@ -63,7 +63,7 @@ add_label_text <- function(data, region, year, position = 0.9, label, new = FALS
 #' The function creates a tibble with path of image labels to be plotted in a
 #' chronological chart or adds them to an anlready existing tibble.
 #'
-#' If the input is in the same order like the arguments, the arguments does not
+#' If the input is in the same order like the arguments, the arguments do not
 #' need to be explicitly named. Values can be provided as one number or one
 #' character string, if they are the same for all other data. If not, they must
 #' be provided as vectors with equal lengths.

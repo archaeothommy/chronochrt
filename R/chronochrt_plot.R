@@ -2,7 +2,7 @@
 #'
 #' This function converts a chronological data set into a chronological chart.
 #' It provides basic features for the export of the plot and for its
-#' customaisation.
+#' customisation.
 #'
 #' The plot will use \code{\link{theme_chronochrt}} by default.
 #' Additional customisation of the plot can be done by adding additional layers
@@ -10,8 +10,8 @@
 #' specified or \code{\link[ggplot2]{ggsave}} must be called again at the end
 #' to save the final plot.
 #'
-#' It is assumed that most of the text labels will be located on the right side
-#' of each column. For this reason they are right aligned to prevent them from
+#' It is assumed that the majority of the text labels will be placed on the right side
+#' of each column. Therefore they are right aligned to prevent them from
 #' running outside the plotting area. Vertically, it will be placed centered on
 #' the \code{year} given. Text in labels can be wrapped by inserting \code{"\n"}
 #' (without blanks).
@@ -74,7 +74,7 @@
 #' @param font_size_labels Font size of the text labels  in mm. The default is
 #'   \code{4} mm.
 #' @param line_break Line length of the section labels in characters. Text will
-#'   be Wrapped at the blank closest to the specified number of characters.
+#'   be wrapped at the blank closest to the specified number of characters.
 #'   Default is \code{8} characters.
 #' @param color_fill Fill colour of the chronological units. The default is
 #'   \code{"white"}. See the color specification section of \code{par()} for how
