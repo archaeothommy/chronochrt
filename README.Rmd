@@ -60,6 +60,22 @@ In development for the CRAN release:
 
 Is there a feature missing? Please let us know [here](https://gitlab.com/roset/chronochrt/issues).
 
+## Example
+
+```r
+library(ChronochRt)
+
+data <- add_chron(region = "A",
+                  name = c("A", "A1", "A2", "B"),
+                  start = c(-200, -200, 0, -100),
+                  end = c(200, 0, 200, 100),
+                  level = c(1,2,2,1),
+                  add = FALSE,
+                  new_table = TRUE)
+
+plot_chronochrt(data)
+```
+
 ## Getting started
 
 * [Cheatsheet](https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)

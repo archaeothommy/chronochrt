@@ -30,7 +30,7 @@
 #'   passed to \code{\link[tibble]{tibble}} or
 #'   \code{\link[tibble]{add_row}}.
 #'
-#' @return A tibble with text labels ready-to-use for plotting
+#' @return A tibble with text labels ready-to-use in
 #'   \code{\link{plot_chronochrt}}.
 #'
 #' @export

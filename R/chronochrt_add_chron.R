@@ -16,9 +16,8 @@
 #'
 #' If \code{start} and \code{end} dates are not certain or the change between
 #' chronological units is regarded a period, dates must be given as character
-#' string in the format \code{"1000/2000"}. The order does not matter. Consistency
-#' is required for matching \code{start} and \code{end} dates to avoid unclean
-#' borders in the plot.
+#' string in the format \code{"1000/2000"}. Consistency is required for matching
+#' \code{start} and \code{end} dates to avoid unclean borders in the plot.
 #'
 #' The \code{level} indicates the position of the chronological unit.
 #' \code{level = 1} denotes a top chronological unit (e.g. Ha), a sub-unit (e.g.

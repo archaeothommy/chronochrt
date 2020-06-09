@@ -25,7 +25,7 @@ library(ChronochRt)
 ```
 
 ## The data set 
-Chronological data are stored in a table. Each row repersents a _chron_ (a chronological unit of any kind). The columns store the information of these chrons. The basic information of a _chron_ is:  
+Chronological data are stored in a table. Each row represents a _chron_ (a chronological unit of any kind). The columns store the information of these chrons. The basic information of a _chron_ is:  
 
 * Which `region` is the _chron_ defined for? (This must not necessarily be a geographical region but can also be e.g. a reference or any other kind of overarching category)
 * What is its `name`? 
@@ -36,7 +36,7 @@ Chronological data are stored in a table. Each row repersents a _chron_ (a chron
 
 The parameter `add` is required for plotting the chart. ChronochRt offers the option to plot an `add`itional chronological column for each region to include e.g. long and short chronologies of regions, or competing chronological systems. Setting the variable `add` of a _chron_ to `TRUE` signals ChronochRt to plot this _chron_ in the additional column of the same region.  
 
-These six variables are essential for the package and therefore cannot be renamed. However, when you import or convert a data set, you will have to indicate the corresponding columns as their original name is not evaluated during import/creation or conversion. It is possible to store additional variables in the chrons, such as information to change e.g. the position and angle of the _chron_'s names or additional information, useful for further work with the data set.
+These six variables are essential for the package and therefore cannot be renamed. When you import or convert a data set, you will have to indicate their corresponding columns in the data set. It is possible to store additional variables in the chrons, such as information to change e.g. the position and angle of the _chron_'s names or additional information, useful for further work with the data set.
 
 ### BCE and AD
 Years BCE are indicated by negative `start` and `end` dates, e.g. `-100` corresponds to 100 BCE and 100 to 100 A.D., respectivly. The package can handle the year 0.  
@@ -73,7 +73,7 @@ plot_chronochrt(chrons, font_size_chrons = 4, line_break = 20) +
 Admittedly, the `name`s of the _chrons_ are not pretty but they are intended to show that the information of each _chron_ is directly mirrored in the plot and can reconstructed from it.  
 
 ### How does it work? 
-Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled according to the maximum `level`, e.g. in region A and the `add = TRUE`-column is 5, hence, all _chrons_ will be 1/5 wide. Similarly in region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide. This essentially transform the x-axis into percentages, allowing to easily add additional labels or customise the the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-cloumn are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
+Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled according to the maximum `level`, e.g. in region A in the `add = FALSE`-column the maximum `level` is 5, hence, all _chrons_ will be 1/5 wide. Similarly in region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide. This essentially transform the x-axis into percentages, allowing to easily add additional labels or customise the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-cloumn are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
 If not all _chrons_ are further subdivided, empty space is filled by the rightmost _chrons_. However, by default the names of _chrons_ from the same level will be placed on the same x-value. In complex charts this increases readability and ensures appropriate space for addtional labels, even if it can produce odd looking empty space in small plots (see above). 
 
 ### Unclear `start` and `end` dates
