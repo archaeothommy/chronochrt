@@ -65,35 +65,49 @@ plot_chronochrt(atlantis, year = "Jahr",
 
 # urnfield culture example
 
-UK_Chronologie <- import_chron(path = "Example_data/ex_urnfield_periods.xlsx",
+# Data from St. Knöpke, Der urnenfelderzeitliche Männerfriedhof von Neckarsulm. Konrad Theiss Verlag (Stuttgart 2009), page 15.
+UC_chronology <- import_chron(path = "Example_data/ex_urnfield_periods.xlsx",
                                "Region", "Name", "Start", "End", "Level")
 
 images <- add_image_label(images, region = "Süddeutschland (Reinecke 1911)",
-                          year = -730, position = 0.85,
-                          image_path = "Example_data/Fibel_HaD3_Süddeutschland.jpg",
+                          year = -950, position = 0.85,
+                          image_path = "Example_data/UC_sword_ex.jpg",
                           add = FALSE)
+# Image taken from https://commons.wikimedia.org/wiki/File:Urnenfelder_panoply.png, public domain [18.06.2020, cropped]
 
-plot_chronochrt(UK_Chronologie,
+plot_chronochrt(UC_chronology,
                 year = "Jahre", years_major = 50,
                 labels_image = images,
                 font_size_chrons = 4,
-                path = "UK-Chronologie.png",
+                path = "UC-Chronology.png",
                 width = 15, height = 10, units = "cm")
 
 # London example
 
-London_Friedhöfe <- import_chron(path = "Example_data/ex_London_cem.xlsx", "Region", "Name", "Start", "End", "Level")
+London_cemeteries <- import_chron(path = "Example_data/ex_London_cem.xlsx", "Region", "Name", "Start", "End", "Level")
 
-London_labels <- add_text_label(labels,
+London_labels <-
+                add_text_label(labels,
+                               region = "low socio- economic status",
+                                year = 1665,
+                                annotation = "12.04.1665:\n The \"Great Plague of London\"\n begins",
+                                position = 1.98) %>%
+
+               add_text_label(.,
                          region = "urban",
                          year = c(1559, 1666),
                          annotation = c("1559: Coronation of Elizabeth I ", "1666: Great Fire of London"),
                          position = 1.98,
-                         add =  FALSE) %>%
-  add_text_label(., region = "low socio- economic status",
-                 year = 1665,
-                 annotation = "12.04.1665:\n The \"Great Plague of London\"\n begins",
-                 position = 1.98)
+                         add =  FALSE)
 
-plot_chronochrt(data = London_Friedhöfe, year = "Years", labels_text = London_labels, font_size_chrons = 3, font_size_labels = 2, years_major = 25, path = "London-Friedhöfe.png", width = 20, height = 10, units = "cm")
+
+plot_chronochrt(
+                data = London_cemeteries,
+                year = "Years",
+                labels_text = London_labels,
+                font_size_chrons = 3,
+                font_size_labels = 2,
+                years_major = 50,
+                path = "London-Friedhöfe.png",
+                width = 20, height = 10, units = "cm")
 
