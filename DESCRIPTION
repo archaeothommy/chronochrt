@@ -30,7 +30,7 @@ Authors@R:
 Author: Thomas Rose [aut, cre], Chiara Girotto [aut]
 Maintainer: Thomas Rose <thomas.rose@daad-alumni.de>
 Description: ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an environment suitable for persons new to R.
-License: GPL-3
+License: GPL-3 + file LICENSE
 URL: https://gitlab.com/roset/chronochrt
 BugReports: https://gitlab.com/roset/chronochrt/issues/
 Imports:
