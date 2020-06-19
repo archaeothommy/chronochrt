@@ -20,11 +20,11 @@ knitr::opts_chunk$set(
 [![coverage report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
 <!-- badges: end -->
 
-ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an environment suitable for persons new to R. 
+ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an intuitive environment for anyone new to R. 
 
 ## Installation
 
-ChronochRt is currently in the state of beta testing. You can install it from gitlab with: 
+ChronochRt is currently in the state of beta testing. You can install it from gitlab by: 
 ``` {r, include = FALSE}
 # You can install the released version of ChronochRt from [CRAN](https://CRAN.R-project.org) with:
 
@@ -36,7 +36,7 @@ ChronochRt is currently in the state of beta testing. You can install it from gi
 ``` r
  devtools::install_gitlab("roset/chronochrt")
 ```
-Please help us to improve ChronochRt by please file an issue [here](https://gitlab.com/roset/chronochrt/issues).
+Please help us to improve ChronochRt by filing observed bugs as an issue [here](https://gitlab.com/roset/chronochrt/issues).
 
 ## Features
 
