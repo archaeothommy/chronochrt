@@ -31,7 +31,7 @@ passed to \code{\link[tibble]{tibble}} or
 \code{\link[tibble]{add_row}}.}
 }
 \value{
-A tibble with text labels ready-to-use for plotting with
+A tibble with text labels ready-to-use in
   \code{\link{plot_chronochrt}}.
 }
 \description{
@@ -39,7 +39,7 @@ The function creates a tibble with text labels to be plotted in a
 chronological chart or adds them to an anlready existing tibble.
 }
 \details{
-If the input is in the same order like the arguments, the arguments does not
+If the input is in the same order like the arguments, the arguments do not
 need to be explicitly named. Values can be provided as one number or one
 character string, if they are the same for all other data. If not, they must
 be provided as vectors with equal lengths.

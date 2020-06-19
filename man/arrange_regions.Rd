@@ -18,5 +18,5 @@ A tibble with chronological data ready-to-use for plotting with
 }
 \description{
 This function ensures that the regions/sections of a chronological chart are
-arranged different from an alphabetal order.
+arranged in the desired order, not necessarily in an aphabethical one.
 }
