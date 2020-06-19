@@ -231,19 +231,19 @@ London_labels <-add_label_text(region = "low socio-economic status",
                                position = 1.98, 
                                new = TRUE) %>%
                add_label_text(region = "urban",
-                              year = c(1559, 1664, 1666),
+                              year = c(1559, 1660, 1670),
                               label = c("1559: Coronation of Elizabeth I ", "1664: Sighting of a bright comet", "1666: Great Fire of London"),
                               position = 1.98,
-                              new =  FALSE) 
-              add_label_text(region = "Plague death toll",
+                              new =  FALSE) %>% 
+              add_label_text(region = "plague death toll",
                               year = c(1350, 1563, 1593, 1603, 1625, 1636, 1647, 1665),
                               label = c( "1346-1353: ~62,000","1563-1564: 20 136" , "1593: 15 003","1603: 33 347", "1625: 41,313", "1636: 10 000", "1647: 3,597" ,"1665: 68 596"),
-                              position = 1.98,
+                              position = 0.75,
                               new =  FALSE) 
 ```
 
 And the graph:
-```{r Example_London_plot, echo=TRUE, fig.align='center', fig.width=10, fig.height=5, message=FALSE, out.width="100%"}
+```{r Example_London_plot, echo=TRUE, fig.align='center', fig.width=10, fig.height=6, message=FALSE, out.width="100%"}
 plot_chronochrt(data = London_cemeteries, 
                 labels_text = London_labels, 
                 font_size_chrons = 3, font_size_labels = 2, 
