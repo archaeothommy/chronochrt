@@ -36,6 +36,11 @@ ChronochRt is currently in the state of beta testing. You can install it from gi
 ``` r
  devtools::install_gitlab("roset/chronochrt")
 ```
+and to include the vignette
+``` r
+ devtools::install_gitlab("roset/chronochrt", build_vignettes = TRUE)
+```
+
 Please help us to improve ChronochRt by filing observed bugs as an issue [here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Features
