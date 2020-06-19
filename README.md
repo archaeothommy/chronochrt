@@ -24,7 +24,7 @@ from gitlab by:
 ```
 
 Please help us to improve ChronochRt by filing observed bugs as an issue
-[here](https://gitlab.com/roset/chronochrt/issues).
+[here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Features
 
@@ -55,7 +55,7 @@ In development for the CRAN release:
     developments
 
 Is there a feature missing? Please let us know
-[here](https://gitlab.com/roset/chronochrt/issues).
+[here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Example
 

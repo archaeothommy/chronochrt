@@ -36,7 +36,7 @@ ChronochRt is currently in the state of beta testing. You can install it from gi
 ``` r
  devtools::install_gitlab("roset/chronochrt")
 ```
-Please help us to improve ChronochRt by filing observed bugs as an issue [here](https://gitlab.com/roset/chronochrt/issues).
+Please help us to improve ChronochRt by filing observed bugs as an issue [here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Features
 
@@ -58,7 +58,7 @@ In development for the CRAN release:
 * geom_chronochRt for full flexibility within ggplot2
 * Image labels to e.g. display key finds or show typological developments
 
-Is there a feature missing? Please let us know [here](https://gitlab.com/roset/chronochrt/issues).
+Is there a feature missing? Please let us know [here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Example
 
