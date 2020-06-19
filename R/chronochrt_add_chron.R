@@ -65,8 +65,31 @@
 #' @export
 #'
 #' @examples
+#' data1 <- add_chron(
+#'                    region = c("region = A", "region = A", "region = A", "region = B", "region = B", "region = B", "region = B"),
+#'                    name = c("1", "2", "1a", "1", "2", "1a","1b"),
+#'                    start = c(-100, "50/100", -100", -100, "50/100", -100, 0)
+#'                    end = c("50/100", 200, 0, "50/100", 200, 0, "100/50"),
+#'                    level = c(1, 1, 2, 1, 1, 2, 2),
+#'                    add = c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
+#'                    new_table = TRUE)
 #'
+#' data2 <- add_chron(region = "A",
+#'                  name = c("1", "2", "1a"),
+#'                  start = c(-100, "50/100", -100),
+#'                  end = c("50/100", 200, 0),
+#'                  level = c(1, 1, 2),
+#'                  add = FALSE,
+#'                  new_table = TRUE) %>%
+#'        add_chron(region = "B",
+#'                  name = c("1", "2", "1a", "1b"),
+#'                  start = c(-100, "50/100", -100, 0),
+#'                  end = c("50/100", 200, 0, "100/50"),
+#'                  level = c(1, 1, 2, 2),
+#'                  add = FALSE,
+#'                  new_table = FALSE)
 #'
+
 
 add_chron <- function(data, region, name, start, end, level = 1,
                       add = FALSE, new_table = FALSE, ...)

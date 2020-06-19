@@ -26,6 +26,8 @@
 #' @export
 #'
 #' @examples
+#' data <-  import_chron(
+#'                       path = "data.xlsx", "Region", "Name", "Start", "End", "Level")
 
 convert_to_chron <- function(data, region, name, start, end, level, add)
 {

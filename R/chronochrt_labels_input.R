@@ -91,6 +91,12 @@ add_label_text <- function(data, region, year, position = 0.9, label, new = FALS
 #' @noRd
 #'
 #' @examples
+#' data_label <- add_label_text(
+#'                              region = "A",
+#'                              year = 50,
+#'                              position = 0.95,
+#'                              label = "Hello",
+#'                              new = TRUE)
 
 # add_label_image <- function (data, region, year, position = 0.9, image_path, new = FALSE, ...)
 # {

@@ -13,6 +13,23 @@
 #' @export
 #'
 #' @examples
+#' data <- add_chron(region = "A",
+#'                  name = c("1", "2", "1a"),
+#'                  start = c(-100, "50/100", -100),
+#'                  end = c("50/100", 200, 0),
+#'                  level = c(1, 1, 2),
+#'                  add = FALSE,
+#'                  new_table = TRUE) %>%
+#'        add_chron(region = "mixed",
+#'                  name = c("1", "2", "1a", "1b"),
+#'                  start = c(-100, "50/100", -100, 0),
+#'                  end = c("50/100", 200, 0, "100/50"),
+#'                  level = c(1, 1, 2, 2),
+#'                  add = FALSE,
+#'                  new_table = FALSE) %>%
+#'       arrange_regions(order = c("mixed", "A"))
+
+
 
 arrange_regions <- function(data, order)
 {
