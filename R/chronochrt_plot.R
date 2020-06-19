@@ -278,6 +278,7 @@ plot_chronochrt <- function(data, labels_text,
     #              end2 = lubridate::ymd("0000-01-01") + lubridate::years(.data$end2)) %>%
     #dplyr::mutate(interval = lubridate::interval(.data$start + lubridate::days(1), .data$end - lubridate::days(1))) %>%
 
+    dplyr::arrange(.data$level, .data$start) %>%
     dplyr::group_by(.data$region, .data$add) %>%
     dplyr::mutate(xmin = (.data$level - 1) / max(.data$level),
                   xmax = .data$level / max(.data$level)) %>%
