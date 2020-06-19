@@ -28,7 +28,7 @@ ChronochRt is currently in the state of beta testing. You can install it from gi
 ``` {r, include = FALSE}
 # You can install the released version of ChronochRt from [CRAN](https://CRAN.R-project.org) with:
 
-# install.packages("ChronochRt") - the package will be on CRAN soon
+# install.packages("ChronochRt") - the package will be on CRAN soon 
 
 # or install the development version with the newest bugfixes and features from gitlab with:
 ```
