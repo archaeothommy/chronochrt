@@ -26,8 +26,25 @@
 #' @export
 #'
 #' @examples
-#' data <-  import_chron(
-#'                       path = "data.xlsx", "Region", "Name", "Start", "End", "Level")
+#' # Create example data set
+#'
+#' data <- data.frame(Location = c("A", "B"),
+#'                    Dynasty = c("a", "a"),
+#'                    Begin = -100,
+#'                    End = c(200, 150),
+#'                    Subunit = 1,
+#'                    Parallel = FALSE)
+#'
+#' # Convert to chronological data set
+#'
+#' chrons <- convert_to_chron(data = data,
+#'                            region = "Location",
+#'                            name = "Dynasty",
+#'                            start = "Begin",
+#'                            end = "End",
+#'                            level = "Subunit",
+#'                            add = "Parallel")
+#'
 
 convert_to_chron <- function(data, region, name, start, end, level, add)
 {

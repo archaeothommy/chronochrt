@@ -50,5 +50,20 @@ placed centered on the \code{year} given. Text in labels can be wrapped by
 inserting \code{\\n} (without blanks around it).
 }
 \examples{
+# Create new label data set
 
+labels <- add_label_text(region = "A",
+                          year = -50,
+                          position = 0.5,
+                          label = "Flood",
+                          new = TRUE)
+
+# Add labels to existing data set
+
+labels <- add_label_text(data = labels,
+                         region = "B",
+                         year = 50,
+                         position = 0.9,
+                         label = "Earthquake",
+                         new = FALSE)
 }

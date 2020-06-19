@@ -37,11 +37,50 @@
 #'
 #' @return A tibble containing the desired chronological information.
 #'
-#' @examples
-#'
 #' @export
 
-# UK_chronology <- import_chron(path = "Example_data/ex_urnfield_periods.xlsx", "Region", "Name", "Start", "End", "Level")
+#' @examples
+#' \dontrun{
+#'
+#' # Import of Excel files
+#'
+#' chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
+#'                        region = "Region",
+#'                        name = "Name",
+#'                        start = "Start",
+#'                        end = "End",
+#'                        level = "Level",
+#'                        add = "Add")
+#'
+#' # Import of delimited tabular data
+#'
+#' chrons <- import_chron(path = "ex_urnfield_periods.csv",
+#'                        region = "Region",
+#'                        name = "Name",
+#'                        start = "Start",
+#'                        end = "End",
+#'                        add = "Add",
+#'                        delim = ",")
+#'
+#' chrons <- import_chron(path = "ex_urnfield_periods.txt",
+#'                        region = "Region",
+#'                        name = "Name",
+#'                        start = "Start",
+#'                        end = "End",
+#'                        add = "Add",
+#'                        delim = "\t")
+#'
+#' # Include additional parameters of the import function
+#'
+#' chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
+#'                        region = "Region",
+#'                        name = "Name",
+#'                        start = "Start",
+#'                        end = "End",
+#'                        level = "Level"
+#'                        add = "Add",
+#'                        sheet = "data")
+#' }
 
 import_chron <- function(path, region, name, start, end, level, add, delim, ...)
 {

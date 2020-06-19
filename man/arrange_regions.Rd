@@ -20,3 +20,20 @@ A tibble with chronological data ready-to-use for plotting with
 This function ensures that the regions/sections of a chronological chart are
 arranged in the desired order, not necessarily in an aphabethical one.
 }
+\examples{
+# Create example data set
+
+chrons <- add_chron(region = c("A", "B"),
+                    name = c("a", "a"),
+                    start = -100,
+                    end = c(200, 150),
+                    level = c(1, 1),
+                    add = FALSE,
+                    new_table = TRUE)
+
+# Arrange regions
+
+chrons <- arrange_regions(data = chrons, order = c("B", "A"))
+
+
+}

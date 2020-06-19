@@ -88,6 +88,35 @@ Additional columns might be useful to e.g.  specify the x and y position of
 the names of the chronological units to place them at an arbitrary spot.
 }
 \examples{
+# Create new data set
 
+chrons <- add_chron(region = c("A", "B"),
+                    name = c("a", "a"),
+                    start = -100,
+                    end = c(200, 150),
+                    level = c(1, 1),
+                    add = FALSE,
+                    new_table = TRUE)
 
+# Add chrons to an existing data set
+
+chrons2 <- add_chron(data = chrons,
+                     region = "A",
+                     name = c("1", "2"),
+                     start = c(-100, 100),
+                     end = c(100, 200),
+                     level = 2,
+                     add = FALSE,
+                     new_table = FALSE)
+
+# Include chrons with unclear start/end data
+
+chrons <- add_chron(data = chrons,
+                    region = "B",
+                    name = c("1", "2"),
+                    start = c(-100, "0/50"),
+                    end = c("0/50", 150),
+                    level = 2,
+                    add = FALSE,
+                    new_table = FALSE)
 }

@@ -65,30 +65,37 @@
 #' @export
 #'
 #' @examples
-#' data1 <- add_chron(
-#'                    region = c("region = A", "region = A", "region = A", "region = B", "region = B", "region = B", "region = B"),
-#'                    name = c("1", "2", "1a", "1", "2", "1a","1b"),
-#'                    start = c(-100, "50/100", -100", -100, "50/100", -100, 0)
-#'                    end = c("50/100", 200, 0, "50/100", 200, 0, "100/50"),
-#'                    level = c(1, 1, 2, 1, 1, 2, 2),
-#'                    add = c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
-#'                    new_table = TRUE)
+#' # Create new data set
 #'
-#' data2 <- add_chron(region = "A",
-#'                  name = c("1", "2", "1a"),
-#'                  start = c(-100, "50/100", -100),
-#'                  end = c("50/100", 200, 0),
-#'                  level = c(1, 1, 2),
-#'                  add = FALSE,
-#'                  new_table = TRUE) %>%
-#'        add_chron(region = "B",
-#'                  name = c("1", "2", "1a", "1b"),
-#'                  start = c(-100, "50/100", -100, 0),
-#'                  end = c("50/100", 200, 0, "100/50"),
-#'                  level = c(1, 1, 2, 2),
-#'                  add = FALSE,
-#'                  new_table = FALSE)
+#' chrons <- add_chron(region = c("A", "B"),
+#'                     name = c("a", "a"),
+#'                     start = -100,
+#'                     end = c(200, 150),
+#'                     level = c(1, 1),
+#'                     add = FALSE,
+#'                     new_table = TRUE)
 #'
+#' # Add chrons to an existing data set
+#'
+#' chrons2 <- add_chron(data = chrons,
+#'                      region = "A",
+#'                      name = c("1", "2"),
+#'                      start = c(-100, 100),
+#'                      end = c(100, 200),
+#'                      level = 2,
+#'                      add = FALSE,
+#'                      new_table = FALSE)
+#'
+#' # Include chrons with unclear start/end data
+#'
+#' chrons <- add_chron(data = chrons,
+#'                     region = "B",
+#'                     name = c("1", "2"),
+#'                     start = c(-100, "0/50"),
+#'                     end = c("0/50", 150),
+#'                     level = 2,
+#'                     add = FALSE,
+#'                     new_table = FALSE)
 
 
 add_chron <- function(data, region, name, start, end, level = 1,

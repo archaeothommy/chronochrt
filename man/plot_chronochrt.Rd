@@ -145,5 +145,55 @@ incompatible: \code{axis_title}, \code{font_size_chrons},
 \code{color_line}, \code{size_line}, \code{line_break}.
 }
 \examples{
+# Create example data set
+
+chrons <- add_chron(region = c("A", "B"),
+                    name = c("a", "a"),
+                    start = -100,
+                    end = c(200, 150),
+                    level = c(1, 1),
+                    add = FALSE,
+                    new_table = TRUE)
+
+# Plot
+
+plot_chronochrt(chrons)
+
+# Include labels
+
+labels <- add_label_text(region = "A",
+                          year = -50,
+                          position = 0.5,
+                          label = "Flood",
+                          new = TRUE)
+
+plot_chronochrt(chrons, labels_text = labels)
+
+\dontrun{
+
+# Export plot
+
+plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"))
+
+# Export plot with additional parameters
+
+plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"), dpi = 300)
+}
+
+# Modify apprearance of the plot
+
+plot_chronochrt(chrons,
+                axis_title = "BCE/AD",
+                years_major = 10,
+                color_fill = "black",
+                background = c("white", "solid"))
+
+# Customization of the plot with e.g. ggplot2
+
+library(ggplot2)
+
+plot_chronochrt(chrons) +
+  geom_point(aes(x = 0.5, y = 0), size = 5) +
+  theme_bw()
 
 }

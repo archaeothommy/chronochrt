@@ -10,8 +10,7 @@
 #'
 #' @return A ggplot-theme
 #' @export
-#'
-#' @examples
+
 
 #  Hier auch was mit theme(), z. b. um Hintergrundfarbe zu ändern
 

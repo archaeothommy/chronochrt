@@ -51,5 +51,45 @@ these might be e.g. columns specifying the x and y position of the names to
 place them at an arbitrary spot.
 }
 \examples{
+\dontrun{
 
+# Import of Excel files
+
+chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
+                       region = "Region",
+                       name = "Name",
+                       start = "Start",
+                       end = "End",
+                       level = "Level",
+                       add = "Add")
+
+# Import of delimited tabular data
+
+chrons <- import_chron(path = "ex_urnfield_periods.csv",
+                       region = "Region",
+                       name = "Name",
+                       start = "Start",
+                       end = "End",
+                       add = "Add",
+                       delim = ",")
+
+chrons <- import_chron(path = "ex_urnfield_periods.txt",
+                       region = "Region",
+                       name = "Name",
+                       start = "Start",
+                       end = "End",
+                       add = "Add",
+                       delim = "\t")
+
+# Include additional parameters of the import function
+
+chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
+                       region = "Region",
+                       name = "Name",
+                       start = "Start",
+                       end = "End",
+                       level = "Level"
+                       add = "Add",
+                       sheet = "data")
+}
 }

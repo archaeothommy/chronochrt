@@ -36,9 +36,22 @@
 #' @export
 #'
 #' @examples
+#' # Create new label data set
 #'
-
-# new TRUE/FALSE, Vector vs. single string
+#' labels <- add_label_text(region = "A",
+#'                           year = -50,
+#'                           position = 0.5,
+#'                           label = "Flood",
+#'                           new = TRUE)
+#'
+#' # Add labels to existing data set
+#'
+#' labels <- add_label_text(data = labels,
+#'                          region = "B",
+#'                          year = 50,
+#'                          position = 0.9,
+#'                          label = "Earthquake",
+#'                          new = FALSE)
 
 add_label_text <- function(data, region, year, position = 0.9, label, new = FALSE, ...)
 {
