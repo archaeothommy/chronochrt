@@ -1,4 +1,4 @@
-# ChronochRt 0.1,0 (under development)
+# ChronochRt 0.1.0 (under development)
 
 * 
 
