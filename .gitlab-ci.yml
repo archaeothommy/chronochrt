@@ -8,6 +8,7 @@ stages:
 building:
   stage: build
   script:
+    - sudo apt-get -y install libmagick++-dev
     - R -e "remotes::install_deps(dependencies = TRUE)"
     - R -e 'devtools::check(error_on = "error")'
   after_script:
