@@ -29,6 +29,8 @@ testing:
     only:
         - master
     script:
+        - apt-get update
+        - apt-get install -y libmagick++-dev
         - R -e "remotes::install_deps(dependencies = TRUE)"
         - Rscript -e 'install.packages("DT")'
         - Rscript -e 'covr::gitlab(quiet = FALSE)'
