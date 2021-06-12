@@ -16,6 +16,14 @@ test_reference2 <- tibble(
   level = c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 3, 3, 1),
   add = c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE))
 
+test_reference3 <- tibble(
+  region = "Atlantis",
+  name = c("Atlas", "II", "Poseidon", "I", "a", "b", "c", "d", "Zeus", "Thanos", "a1", "a2", "Gaia"),
+  start = c("-2500/-2000", -750, -1500, -1500, -400, -350, -150, 100, -200, -400, -1500, -1000, 100),
+  end = c(-1500, -200, -200, -750, -350, -250, 100, 300, 500, 300, -1000, -750, "0/100"),
+  level = c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 3, 3, 1),
+  add = c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE))
+
 test_labels_reference <- tibble(
   region = c("Atlantis", "Sargassosee"),
   year = c(-1650, 250),
@@ -27,6 +35,18 @@ test_labels_reference2 <- tibble(
   year = c(-1650, 250, 275),
   position = c(1, 0.99, 2),
   label = c("Krieg mit Ägypten ", "Geburt von Aquaman", "starkes Erdbeben"))
+
+test_images_reference <- tibble(
+  region = c("Atlantis", "Sargassosee"),
+  year = c(-1650, 250),
+  position = c(1, 0.99),
+  image_path = "https://www.r-project.org/logo/Rlogo.png")
+
+test_images_reference2 <- tibble(
+  region = c("Atlantis", "Sargassosee", "Atlantis"),
+  year = c(-1650, 250, 275),
+  position = c(1, 0.99, 2),
+  image_path = "https://www.r-project.org/logo/Rlogo.png")
 
 test_arranged_reference <- test_reference
 
@@ -85,6 +105,23 @@ test_labels_err2 <- tibble(
   position = c(1, 0.99),
   label = c("Krieg mit Ägypten ", "Geburt von Aquaman"))
 
+test_images_err1 <- tibble(
+  region = c("Atlantis", "Sargassosee"),
+  year = c(-1650, 250),
+  position = c(1, "0.99"),
+  image_path = "https://www.r-project.org/logo/Rlogo.png")
+
+test_images_err2 <- tibble(
+  region = c("Atlantis", "Sargassosee"),
+  year = c("-1650", 250),
+  position = c(1, 0.99),
+  image_path = "https://www.r-project.org/logo/Rlogo.png")
+
+test_images_err3 <- tibble(
+  area = c("Atlantis", "Sargassosee"),
+  year = c("-1650", 250),
+  position = c(1, 0.99),
+  image_path = "https://www.r-project.org/logo/Rlogo.png")
 
 test_arranged_err <- tibble(
   Area = "Atlantis",
@@ -114,9 +151,8 @@ test_plot_err_level <- tibble(region = "Atlantis",
 
 # for Tests not run in RCMD check (because it references to its own package)
 
-p <- plot_chronochrt(test_reference, font_size_chrons = "b", font_size_labels = "b", years_major = c(1,2), years_minor = "w", chron_name_align = "left", chron_name_x = 0.5, chron_name_y = 0, size_line = "b", line_break = "b", color_fill = c("black", "white"), color_line = c(2,3))
-
 p1 <- plot_chronochrt(test_reference, axis_title = "Jahre")
 
-p2 <- plot_chronochrt(data = test_plot_reference, labels_text = test_labels_reference, chron_name_align = "left", chron_name_x = "x_label", chron_name_y = "y_label", chron_name_angle = "angle_label", axis_title = "BC/AD", years_major = 250, years_minor = 200, filename = "Test_that.jpg", plot_dim = c(3, 3, "mm"), font_size_chrons = 4, font_size_labels = 2, line_break = 10, color_fill = "red", color_line = "green", size_line = 5, background = c("white", "dashed"), dpi = 1200)
+p2 <- plot_chronochrt(data = test_plot_reference, labels_text = test_labels_reference, labels_image = test_images_reference, axis_title = "BC/AD", year_lim = c(-1500, 100), filename = "Test_that.jpg", height_image = 5, plot_dim = c(3, 3, "mm"),
+                      line_break = 10, fill_chron = "red", color_chron = "green", size_line = 5, background = c("white", "dashed"), dpi = 1200, minimal = TRUE, color_label = "orange", size_text = 5)
 print(p2)

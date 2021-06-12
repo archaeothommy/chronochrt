@@ -17,6 +17,15 @@ test_that("Creating and adding", {
                                   add = FALSE,
                                   new_table = FALSE),
                expected = test_reference2)
+  expect_equal(object = add_chron(test_reference,
+                                  region = "Atlantis",
+                                  name = "Gaia",
+                                  start = 100,
+                                  end = "0/100",
+                                  level = 1,
+                                  add = FALSE,
+                                  new_table = FALSE),
+               expected = test_reference3)
   expect_error(object = add_chron(not_existent,
                                   region = "Atlantis",
                                   name = c("Atlas", "II", "Poseidon", "I", "a", "b", "c", "d", "Zeus", "Thanos", "a1", "a2"),

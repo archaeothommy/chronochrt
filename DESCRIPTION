@@ -1,7 +1,7 @@
 Package: ChronochRt
 Title: Creating chronological charts with R
-Version: 0.1.0.9000
-Date: "2020-05-30"
+Version: 0.0.9
+Date: "2021-06-12"
 Authors@R: 
     c(person(given = "Thomas",
            family = "Rose",
@@ -12,21 +12,7 @@ Authors@R:
            family = "Girotto",
            role = c("aut"),
            email = "chiara.girotto@web.de",
-           comment = c(ORCID = "0000-0001-6412-342X")),
-     person(given = "Yuval",
-           family = "Goren",
-           role = c("ths"), 
-           comment = "for thesis of T. Rose"),
-     person(given = "Francesca",
-           family = "Balossi-Restelli",
-           role = c("ths"),
-           comment = "for thesis of T. Rose"),
-     person(given = "Peter",
-           family = "Fabian",
-           role = c("ths"),
-           comment = "for thesis of T. Rose"),
-     person(given = "European Union",
-           role = "fnd"))
+           comment = c(ORCID = "0000-0001-6412-342X")))
 Author: Thomas Rose [aut, cre], Chiara Girotto [aut]
 Maintainer: Thomas Rose <thomas.rose@daad-alumni.de>
 Description: ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an intuitive environment for anyone new to R.
@@ -36,6 +22,8 @@ BugReports: https://gitlab.com/roset/chronochrt/issues/
 Imports:
     dplyr (>= 1.0.0),
     ggplot2,
+    grid,
+    magick,
     readr,
     tibble,
     tidyr,
@@ -47,8 +35,9 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    vdiffr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

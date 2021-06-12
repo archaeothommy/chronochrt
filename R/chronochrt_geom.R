@@ -1,0 +1,301 @@
+#' A chronological chart
+#'
+#' Computes and draws a chronological chart.
+#'
+#' This geom is special in the sense that no x and y coordinates are directly
+#' provided in the input. Therefore, the following aesthetics must be provided
+#' only in the \code{\link[ggplot2]{aes}} function: \code{region}, \code{level},
+#' \code{start}, \code{end}, \code{add} (i.e. all required aesthetics).
+#' \itemize{ \item \code{region} The title(s) of the section(s) the
+#' chronological chart is subdivided into \item \code{name} The name(s) of the
+#' chronological unit(s). To maintain compatibility with other geom, the
+#' aesthetic \code{label} can also be used. \item \code{start, end} The start
+#' and end date of a chronological unit, respectively. \item \code{level} The
+#' levels of the chronological units. \item \code{add} Logical value indicating
+#' whether chronological units within a \code{region} should be plotted in an
+#' \emph{add}itional column.}
+#'
+#' Usually, the names of the chronological units are placed in their middle.
+#' They can be arbitrarily placed by the aesthetics \code{name_x, name_y}:
+#' \itemize{ \item \code{name_x} The horizontal position within an chronological
+#' column, i.e. a value between 0 and 1 if \code{add = FALSE} and between 1 and
+#' 2 if \code{add = TRUE}. \item \code{name_y} The vertical position given as a
+#' year.}
+#'
+#' See \code{vignette("ChronochRt")} for further details.
+#'
+#' The geom aims to preserve access to as much of the underlying aesthetics as
+#' possible. To achieve this aim, ambiguous names had to be resolved (e.g.
+#' \code{size} to \code{size_line} and \code{size_text}).
+#'
+#' @inheritParams ggplot2::layer
+#' @param year_lim A numeric vector of length 2 to define the lower and upper
+#'   limit of the chronological chart.
+#' @param minimal Should chrons be optically separated by vertical lines? If
+#'   \code{TRUE} only vertical lines between around the chronological columns
+#'   will be drawn.
+#' @param ... Other arguments passed on to \code{\link[ggplot2]{layer}}. These
+#'   are often aesthetics, used to set an aesthetic to a fixed value, like
+#'   \code{hjust = 0.1}.
+#'
+#' @section Aesthetics: \code{geom_ChronochRt()} understands the following
+#'   aesthetics (required aesthetics are in bold): \itemize{ \item
+#'   \strong{\code{region}} \item \strong{\code{level}} \item
+#'   \strong{\code{end}} \item \strong{\code{start}} \item \strong{\code{add}}
+#'   \item \code{alpha} \item \code{angle} \item \code{colour} \item
+#'   \code{family} \item \code{fill} \item \code{fontface} \item \code{group}
+#'   \item \code{hjust} \item \code{lineheight} \item \code{name|label} \item
+#'   \code{name_x} \item \code{name_y} \item \code{size_line} \item
+#'   \code{size_text} \item \code{vjust} } See Details for how aesthetics
+#'   specific for this geom work and learn more about setting aesthetics in
+#'   \code{vignette("ggplot2-specs")}.
+#'
+#' @export
+#'
+#' @examples
+#'
+#' # Create example data
+#' library(ggplot2)
+#'
+#' chrons <- data.frame(region = c("A", "B", "B", "B"),
+#'                      name = c("a", "a", "1", "2"),
+#'                      start = c(-100, -100, -100, "0/50"),
+#'                      end = c(200, 150, "0/50", 150),
+#'                      level = c(1, 1, 2, 2),
+#'                      add = FALSE)
+#'
+#' ggplot(chrons) +
+#' geom_chronochRt(aes(name = name, region = region, level = level,
+#'                     start = start, end = end, add = add))
+#'
+#' ggplot(chrons, aes(name = name, region = region, level = level,
+#'                    start = start, end = end, add = add)) +
+#'    geom_chronochRt()
+#'
+#' # If more than one region should be plotted, they must be separated with facet_grid:
+#' ggplot(chrons) +
+#'    geom_chronochRt(aes(name = name, region = region, level = level,
+#'                        start = start, end = end, add = add)) +
+#'    facet_grid(cols = vars(region), scales = "free_x", space = "free_x")
+#'
+#' # Adjust upper and lower end of a chronological chart with year_lim:
+#' q <- ggplot(chrons, aes(name = name, region = region, level = level,
+#'                         start = start, end = end, add = add)) +
+#'    facet_grid(cols = vars(region), scales = "free_x", space = "free_x")
+#'
+#' q + geom_chronochRt(year_lim = c(-50, 100))
+#'
+#' # Change aesthetics of the plot:
+#' q + geom_chronochRt(fill = "black", colour = "white")
+#' q + geom_chronochRt(aes(fill = level, size_line = 3))
+#'
+#' # Change position of the names:
+#' q + geom_chronochRt(aes(name_x = 0.75))
+#'
+#' # To remove vertical lines within a chronological column:
+#' q + geom_chronochRt(minimal = TRUE)
+
+
+geom_chronochRt <- function(mapping = NULL, data = NULL, inherit.aes = TRUE, year_lim = NULL, minimal = FALSE, ...) {
+  ggplot2::layer(
+    geom = GeomChronochRt,
+    mapping = mapping,
+    data = data,
+    stat = "identity",
+    position = "identity",
+    show.legend = FALSE,
+    inherit.aes = inherit.aes,
+    params = list(
+      minimal = minimal,
+      year_lim = year_lim,
+      ...)
+  )
+}
+
+GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
+
+ handle_na = function(self, data, params) {
+   data
+ },
+ setup_data = function(self, data, params) {
+    data <- ggplot2:::ggproto_parent(ggplot2:::Geom, self)$setup_data(data, params)
+
+    data <- data %>%
+       tidyr::separate(.data$start, c("start", "start2"), sep = "/", fill = "right") %>%
+       tidyr::separate(.data$end, c("end", "end2"), sep = "/", fill = "right") %>%
+       dplyr::mutate(dplyr::across(tidyselect::starts_with("start") | tidyselect::starts_with("end"), as.numeric)) %>%
+       dplyr::mutate(type_boundary = dplyr::case_when(
+          !is.na(.data$start2) & !is.na(.data$end2) ~ "unsec_both",
+          !is.na(.data$start2) ~ "unsec_start",
+          !is.na(.data$end2) ~ "unsec_end",
+          TRUE ~ "sec"))
+
+    if (!is.null(params$year_lim)) {
+       if (!is.numeric(params$year_lim) || length(params$year_lim) != 2) {
+          stop("Error in 'geom_chronochRt': 'year_min' must be a numeric vector of length 2.")
+       }
+
+       year_min <- min(params$year_lim, na.rm = TRUE)
+       year_max <- max(params$year_lim, na.rm = TRUE)
+
+       data <- data %>%
+          dplyr::filter(!(.data$start >= year_max & .data$start2 >= year_max)) %>%
+          dplyr::filter(!(.data$end <= year_min & .data$end2 <= year_min)) %>%
+          dplyr::mutate(start = dplyr::if_else(start < year_min, year_min, start),
+                        start2 = dplyr::if_else(start2 < year_min, year_min, start2),
+                        end = dplyr::if_else(end > year_max, year_max, end),
+                        end2 = dplyr::if_else(end2 > year_max, year_max, end2))
+    }
+
+    data <- data %>%
+       dplyr::arrange(.data$level, .data$start) %>%
+       dplyr::group_by(.data$region, .data$add) %>%
+       dplyr::mutate(xmin = (.data$level - 1) / max(.data$level),
+                     xmax = .data$level / max(.data$level)) %>%
+       dplyr::mutate(x = .data$xmin + ((.data$xmax - .data$xmin) / 2),
+                     y = .data$start + ((.data$end - .data$start) / 2)) %>%
+       dplyr::mutate(xmax_uncorr = corr_xmax(.data$start, .data$end, .data$xmax)) %>%
+       dplyr::mutate(xmax = dplyr::if_else(.data$xmax == .data$xmax_uncorr, 1, .data$xmax)) %>%
+       dplyr::ungroup() %>%
+       dplyr::select(-.data$xmax_uncorr) %>%
+       dplyr::mutate(xmax = dplyr::if_else(.data$add == TRUE, .data$xmax + 1, .data$xmax),
+                     xmin = dplyr::if_else(.data$add == TRUE, .data$xmin + 1, .data$xmin),
+                     x = dplyr::if_else(.data$add == TRUE, .data$x + 1, .data$x)) %>%
+       dplyr::mutate(ymin = min(.data$start, .data$start2, na.rm = TRUE),
+                     ymax = max(.data$end, .data$end2, na.rm = TRUE))
+
+    if (!"name" %in% names(data)) {
+       if ("label" %in% names(data)) {data <- dplyr::rename(data, name = label)
+       } else {
+          data$name <- ""
+       }
+    }
+
+    data
+ },
+ draw_panel = function(data, panel_params, coord, minimal, year_lim) {
+
+    data <- data %>%
+       dplyr::mutate(x = if("name_x" %in% names(.)) {.data$name_x} else {.data$x},
+                     y = if("name_y" %in% names(.)) {.data$name_y} else {.data$y})
+
+    data_line_h <- data %>%
+       tidyr::pivot_longer(c("start", "start2", "end", "end2"), names_to = "type", values_to = "yend") %>%
+       tidyr::drop_na(yend) %>%
+       dplyr::mutate(linetype = dplyr::case_when(
+          .data$type_boundary == "unsec_both" ~ "dashed",
+          .data$type_boundary == "unsec_end" & .data$type %in% c("end", "end2") ~ "dashed",
+          .data$type_boundary == "unsec_start" & .data$type %in% c("start", "start2") ~ "dashed",
+          TRUE ~ "solid")) %>%
+       dplyr::distinct(yend, xmax, linetype, .keep_all = TRUE)
+
+    data_line_v <- data %>%
+       tidyr::pivot_longer(c("xmin", "xmax"), names_to = "trash", values_to = "xend") %>%
+       tidyr::drop_na(xend) %>%
+       dplyr::distinct(xend, end, .keep_all = TRUE) %>%
+       dplyr::mutate(linetype = "solid")
+
+    if (minimal == TRUE) {
+       data_line_v <- dplyr::filter(data_line_v, xend %in% c(0, 1, 2))
+    }
+
+    rect_df <- ggplot2:::new_data_frame(c(list(
+       xmin = data$xmin,
+       xmax = data$xmax,
+       ymin = data$start,
+       ymax = data$end,
+       group = data$group,
+       colour = NA,
+       fill = data$fill,
+       alpha = data$alpha,
+       linetype = "blank",
+       size = 0
+    ))
+    )
+
+    line_df_h <- ggplot2:::new_data_frame(c(list(
+       x = data_line_h$xmin,
+       y = data_line_h$yend,
+       xend = data_line_h$xmax,
+       yend = data_line_h$yend,
+       alpha = data_line_h$alpha,
+       colour = data_line_h$colour,
+       group = data_line_h$group,
+       linetype = data_line_h$linetype,
+       size = data_line_h$size_line
+    ))
+    )
+
+    line_df_v <- ggplot2:::new_data_frame(c(list(
+       x = data_line_v$xend,
+       y = data_line_v$start,
+       xend = data_line_v$xend,
+       yend = data_line_v$end,
+       alpha = data_line_v$alpha,
+       colour = data_line_v$colour,
+       group = data_line_v$group,
+       linetype = data_line_v$linetype,
+       size = data_line_v$size_line
+    ))
+    )
+
+    text_df <- ggplot2:::new_data_frame(c(list(
+       label = data$name,
+       x = data$x,
+       y = data$y,
+       angle = data$angle,
+       alpha = data$alpha,
+       colour = data$colour,
+       family = data$family,
+       fontface = data$fontface,
+       group = data$group,
+       lineheight = data$lineheight,
+       size = data$size_text,
+       hjust = data$hjust,
+       vjust = data$vjust
+    ))
+    )
+
+   ggplot2:::ggname("geom_chronochRt",
+                    grid::grobTree(
+                      ggplot2::GeomRect$draw_panel(data = rect_df, panel_params = panel_params, coord = coord),
+                      ggplot2::GeomSegment$draw_panel(data = line_df_h, panel_params = panel_params, coord = coord),
+                      ggplot2::GeomSegment$draw_panel(data = line_df_v, panel_params = panel_params, coord = coord),
+                      ggplot2::GeomText$draw_panel(data = text_df, panel_params = panel_params, coord = coord)
+                    )
+   )
+ },
+ required_aes = c("region", "level", "end", "start", "add"),
+
+ default_aes = ggplot2::aes(name = NULL, label = NULL, name_x = NULL, name_y = NULL, angle = 0, colour = "black", fill = "white", alpha = NA,
+                            size_line = 0.5, size_text = 3.88, hjust = 0.5, vjust = 0.5, family = "", fontface = 1, lineheight = 1.2)
+)
+
+#' Determine maximum x value of parallel chrons
+#'
+#' This function determines the maximum x value of parallel chrons
+#'
+#' @param start,end Start and end of the chrons.
+#' @param xmax The upper x value of the chrons.
+#'
+#' @return A vector
+#'
+#' @keywords internal
+#' @export
+
+corr_xmax <- function(start, end, xmax)
+{
+   data <- xmax
+
+   for(i in 1:length(start))
+   {
+      for(j in i:length(start))
+      {
+         if (start[i] + 1  >= start[j] && start[i] + 1 <= end[j]){
+            data[i] <- max(xmax[i], xmax[j])
+            data[j] <- max(xmax[i], xmax[j])
+         }
+      }
+   }
+   data
+}

@@ -1,9 +1,10 @@
 #' Arranging the regions (sections) of a chronological chart
 #'
 #' This function ensures that the regions/sections of a chronological chart are
-#' arranged in the desired order, not necessarily in an aphabethical one.
+#' arranged in the desired order, not necessarily in an alphabetical one (the
+#' default plotting order).
 #'
-#' @param data A data set with chronological data and a cloumn named "region".
+#' @param data A data set with chronological data and a column named "region".
 #' @param order A character vector with desired order of the region/section
 #'   titles. Each title must be given only once.
 #'

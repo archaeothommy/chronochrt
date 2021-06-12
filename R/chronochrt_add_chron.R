@@ -47,7 +47,7 @@
 #'   ...) with the level(s) of the chronological unit(s). The default is
 #'   \code{1}, i.e. the top unit.
 #' @param add  A logical value (\code{TRUE} or \code{FALSE}) or a logical vector
-#'   signaling whether the chronological units within a georaphical area should
+#'   signaling whether the chronological units within a geographical area should
 #'   be drawn separately (\code{TRUE}) or not (\code{FLASE}, the default).
 #' @param new_table Logical operator. If \code{TRUE}, a new data set will be
 #'   created. If \code{FALSE}, the default, the input will be added to an
@@ -76,7 +76,6 @@
 #'                     new_table = TRUE)
 #'
 #' # Add chrons to an existing data set
-#'
 #' chrons2 <- add_chron(data = chrons,
 #'                      region = "A",
 #'                      name = c("1", "2"),
@@ -87,7 +86,6 @@
 #'                      new_table = FALSE)
 #'
 #' # Include chrons with unclear start/end data
-#'
 #' chrons <- add_chron(data = chrons,
 #'                     region = "B",
 #'                     name = c("1", "2"),
@@ -96,6 +94,24 @@
 #'                     level = 2,
 #'                     add = FALSE,
 #'                     new_table = FALSE)
+#'
+#' # They can be linked using the pipe operator \code{%>%}:
+#' library(magrittr)
+#'
+#' chrons <- add_chron(region = c("A", "B"),
+#'                     name = c("a", "a"),
+#'                     start = -100,
+#'                     end = c(200, 150),
+#'                     level = c(1, 1),
+#'                     add = FALSE,
+#'                     new_table = TRUE) %>%
+#'           add_chron(region = "B",
+#'                     name = c("1", "2"),
+#'                     start = c(-100, "0/50"),
+#'                     end = c("0/50", 150),
+#'                     level = 2,
+#'                     add = FALSE)
+#'
 
 
 add_chron <- function(data, region, name, start, end, level = 1,

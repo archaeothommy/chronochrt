@@ -2,27 +2,25 @@
 % Please edit documentation in R/chronochrt_plot.R
 \name{plot_chronochrt}
 \alias{plot_chronochrt}
-\title{Plot a chronological charts}
+\title{Plot a chronological chart}
 \usage{
 plot_chronochrt(
   data,
-  labels_text,
-  chron_name_align = "center",
-  chron_name_x,
-  chron_name_y,
-  chron_name_angle = 0,
+  labels_text = NULL,
+  labels_image = NULL,
+  year_lim = NULL,
   axis_title = "Years",
-  years_major = 100,
-  years_minor,
-  filename,
-  plot_dim,
-  font_size_chrons = 6,
-  font_size_labels = 4,
-  line_break = 8,
-  color_fill = "white",
-  color_line = "black",
+  minimal = FALSE,
+  size_text = 6,
+  height_image = 2,
   size_line = 0.5,
-  background,
+  fill_chron = "white",
+  color_chron = "black",
+  color_label = "black",
+  line_break = 10,
+  filename = NULL,
+  plot_dim,
+  background = NULL,
   ...
 )
 }
@@ -31,53 +29,49 @@ plot_chronochrt(
 
 \item{labels_text}{A data set containing the text labels.}
 
-\item{chron_name_align}{One of the two character strings: \code{"left"} or
-\code{"center"}, the default. They determine the alignment of the
-chronological unit's names relativ to its border. \itemize{ \item
-\code{"center"}: Text alignment of the names will be centered. The text
-will be placed in a larger distance from the left border of its
-chronological unit. \item \code{"left"}: The names will be left-aligned
-next to the left borders of their chronological unit.} In both cases, the
-horizontal position of the chronological units' names will be identical and
-their vertical position always the middle of their chronological units.}
+\item{labels_image}{A data set containing the image labels.}
 
-\item{chron_name_x, chron_name_y}{Specifies the horizontal and vertical
-position of the chronological units' names. They can be: \itemize{ \item a
-character string with the name of the respective column in \code{data},
-\item a number. Then all names will plot at this position, \item a numeric
-vector specifiying the position of each name; \item it must not be
-specified if a column with the name "chron_name_x" already exists in
-\code{data}; \item if not specified and not present in \code{data}, names
-are placed in the centers of the chonological units. }}
-
-\item{chron_name_angle}{Specifies the angle of the chronological unit's
-names. It can be: \itemize{ \item a character string with the name of the
-respective column in \code{data}, \item a number. Then all names are placed
-in the same angle, \item a numeric vector specifiying the angle of each
-name; \item it must not be specified if a column with the name
-"chron_name_angle" already exists in \code{data}; \item if not specified
-and not present in \code{data}, the default value \code{0} is used, i.e.
-horzontal. }}
+\item{year_lim}{A numeric vector of length 2 to define the lower and upper
+limit of the chronological chart.}
 
 \item{axis_title}{A character string with the axis label of the vertical
 axis. Default is \code{"Years"}.}
 
-\item{years_major}{A number in years giving the interval axis labels should
-be drawn on the vertical axis. Default is \code{100}.}
+\item{minimal}{Should chrons be optically separated by vertical lines? If
+\code{TRUE} only vertical lines between around the chronological columns
+will be drawn.}
 
-\item{years_minor}{An optional number in years giving the interval additional
-lines should be drawn to ease orientation in the plot. If not defined they
-will be drawn in the middle between the axis labels. If they should not be
-plotted, set this argument to the same value like \code{years_major}.}
+\item{size_text}{Font size of the names of the chronological units in mm. All
+other text elements will be scaled accordingly. The default is \code{6} mm.}
+
+\item{height_image}{The absolute height of the image labels in cm. The
+default is  \code{2} cm.}
+
+\item{size_line}{Thickness of the line in mm. The default is \code{0.5} mm.}
+
+\item{fill_chron}{Fill colour of the chronological units. The default is
+\code{"white"}. See the colour specification section of
+\code{\link[graphics]{par}} for how to specify colours in R.}
+
+\item{color_chron}{Line (border) colour of the chronological units. The
+default is \code{"black"}. See the colour specification section of
+\code{\link[graphics]{par}} for how to specify colours in R.}
+
+\item{color_label}{Colour of the text labels. The default is \code{"black"}.
+See the colour specification section of \code{\link[graphics]{par}} for
+how to specify colours in R.}
+
+\item{line_break}{Line length of the section labels in characters. Text will
+be wrapped at the blank closest to the specified number of characters.
+Default is \code{10} characters.}
 
 \item{filename}{A character string with the filename or path. If specified,
 the plot will be saved on the given location. The file format is
 automatically recognised from the file extension. The most common file
 types are supported, e.g. \code{.tiff}, \code{.png}, \code{.jpg},
 \code{.eps}, and \code{.pdf}. To export as \code{.svg} installation of the
-package \pkg{svglite} is required. See
-\code{\link[ggplot2]{ggsave}} for more details about the supported file
-formats.}
+package \pkg{svglite} is required. See \code{\link[ggplot2]{ggsave}} for
+more details about the supported file formats.}
 
 \item{plot_dim}{Dimensions of the plot as a vector in the format
 \code{c(width, height, units)}. Supported units are "cm", "mm", in". For
@@ -85,41 +79,21 @@ example, \code{plot_dim = c(5,5,"cm")} will produce a plot of the
 dimensions 5 x 5 cm. If unspecified, the standard values of the respective
 graphic device are used.}
 
-\item{font_size_chrons}{Font size of the names of the chronological units in
-mm and all other text elements except the text labels. The default is \code{6} mm.}
-
-\item{font_size_labels}{Font size of the text labels  in mm. The default is
-\code{4} mm.}
-
-\item{line_break}{Line length of the section labels in characters. Text will
-be wrapped at the blank closest to the specified number of characters.
-Default is \code{8} characters.}
-
-\item{color_fill}{Fill colour of the chronological units. The default is
-\code{"white"}. See the color specification section of \code{par()} for how
-to specify colors in R.}
-
-\item{color_line}{Line (border) colour of the chronological units. The
-default is \code{"black"}. See the color specification section of
-\code{par()} for how to specify colors in R.}
-
-\item{size_line}{Thickness of the line in mm. The default is \code{0.5} mm.}
-
 \item{background}{Optional specifications for the background of the
-chronological chart as vector in the format \code{c(background color,
+chronological chart as vector in the format \code{c(background colour,
 linetype of grid lines)} to overwrite the default behaviour of
-\code{\link{theme_chronochrt}}. Any valis color and linetype specifications
-are accepted, e.g. \code{c("grey90", "dotted")} (these are the default
-values of \code{\link{theme_chronochrt}}. See the sections "color
-specification" and "line type specification" in \code{par()} for how to
-specify colors and line types in R.}
+\code{\link{theme_chronochrt}}. Any valid colour and linetype
+specifications are accepted, e.g. \code{c("grey90", "dotted")} (these are
+the default values of \code{\link{theme_chronochrt}}. See the sections
+"colour specification" and "line type specification" in \code{\link[graphics]{par}} for
+how to specify colours and line types in R.}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 enhance the saved plot like \code{dpi} to specify its resolution. See
 \code{\link[ggplot2]{ggsave}} for detailed information.}
 }
 \value{
-A chronological chart
+A ggplot2 object with the chronological chart.
 }
 \description{
 This function converts a chronological data set into a chronological chart.
@@ -127,73 +101,57 @@ It provides basic features for the export of the plot and for its
 customisation.
 }
 \details{
-The plot will use \code{\link{theme_chronochrt}} by default.
-Additional customisation of the plot can be done by adding additional layers
-to the plot (see Examples). In this case \code{filename} must not be
-specified or \code{\link[ggplot2]{ggsave}} must be called again at the end
-to save the final plot.
+This function is wrapper around various functions for an quick and convenient
+way to draw chronological charts. It therefore relies on the common data
+structure of ChronochRt (see \code{vignette("ChronochRt")} for details). For
+full customisation use the respective geoms to build your own plot.
 
-It is assumed that the majority of the text labels will be placed on the right side
-of each column. Therefore they are right aligned to prevent them from
-running outside the plotting area. Vertically, it will be placed centered on
-the \code{year} given. Text in labels can be wrapped by inserting \code{"\n"}
-(without blanks).
-
-The following arguments will silently use the default values, if the input is
-incompatible: \code{axis_title}, \code{font_size_chrons},
-\code{font_size_labels}, \code{years_major}, \code{color_fill},
-\code{color_line}, \code{size_line}, \code{line_break}.
+It is assumed that the majority of the text labels will be placed on the
+right side of each column. Therefore they are right aligned to prevent them
+from running outside the plotting area. Vertically, it will be placed
+centered on the \code{year} given. Text in labels can be wrapped by inserting
+\code{"\n"} (without blanks).
 }
 \examples{
-# Create example data set
 
-chrons <- add_chron(region = c("A", "B"),
-                    name = c("a", "a"),
-                    start = -100,
-                    end = c(200, 150),
-                    level = c(1, 1),
-                    add = FALSE,
-                    new_table = TRUE)
+# Create Example data
+chrons <- data.frame(region = c("A", "B", "B", "B"),
+                     name = c("a", "a", "1", "2"),
+                     start = c(-100, -100, -100, "0/50"),
+                     end = c(200, 150, "0/50", 150),
+                     level = c(1, 1, 2, 2),
+                     add = FALSE)
 
-# Plot
-
+# Plot with default options
 plot_chronochrt(chrons)
 
-# Include labels
+# Add labels
+labels <- data.frame(region = "A",
+                     year = -50,
+                     position = 0.5,
+                     label = "Event")
 
-labels <- add_label_text(region = "A",
-                          year = -50,
-                          position = 0.5,
-                          label = "Flood",
-                          new = TRUE)
+images <- data.frame(region = "B",
+                     year = 100,
+                     position = 0.5,
+                     image_path = "https://www.r-project.org/logo/Rlogo.png")
 
-plot_chronochrt(chrons, labels_text = labels)
+plot_chronochrt(chrons, labels, images)
 
-\dontrun{
+# Customise plot
+plot_chronochrt(chrons, axis_title = "BC/AD", year_lim = c(-50,100),
+                fill_chron = "black", color_chron = "white", size_line = 5)
+plot_chronochrt(chrons, labels, images, color_label = "red", size_text = 5, height_image = 4)
 
 # Export plot
+\dontrun{
+  plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"))
 
-plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"))
+  # with additional parameters
+  plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"), dpi = 300)
 
-# Export plot with additional parameters
-
-plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"), dpi = 300)
 }
 
-# Modify apprearance of the plot
-
-plot_chronochrt(chrons,
-                axis_title = "BCE/AD",
-                years_major = 10,
-                color_fill = "black",
-                background = c("white", "solid"))
-
-# Customization of the plot with e.g. ggplot2
-
-library(ggplot2)
-
-plot_chronochrt(chrons) +
-  geom_point(aes(x = 0.5, y = 0), size = 5) +
-  theme_bw()
-
+# Additional customisation with ggplot2
+plot_chronochrt(chrons) + ggplot2::theme_bw()
 }

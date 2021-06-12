@@ -7,7 +7,7 @@
 arrange_regions(data, order)
 }
 \arguments{
-\item{data}{A data set with chronological data and a cloumn named "region".}
+\item{data}{A data set with chronological data and a column named "region".}
 
 \item{order}{A character vector with desired order of the region/section
 titles. Each title must be given only once.}
@@ -18,7 +18,8 @@ A tibble with chronological data ready-to-use for plotting with
 }
 \description{
 This function ensures that the regions/sections of a chronological chart are
-arranged in the desired order, not necessarily in an aphabethical one.
+arranged in the desired order, not necessarily in an alphabetical one (the
+default plotting order).
 }
 \examples{
 # Create example data set

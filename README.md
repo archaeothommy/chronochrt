@@ -34,31 +34,28 @@ Please help us to improve ChronochRt by filing observed bugs as an issue
 
 ## Features
 
-  - Slim and intuitive chronological data set
-  - Import tabular data files and
-  - Import Excel files (requires the package
+-   Slim and intuitive chronological data set
+-   Import tabular data files
+-   Import Excel files (requires the package
     [readxl](https://readxl.tidyverse.org/))
-  - Possibility to display up to 2 chronological systems within the same
+-   Possibility to display up to 2 chronological systems within the same
     region (e.g. long and short chronologies)
-  - Layout of the chronological chart optimised for easy readability and
+-   Layout of the chronological chart optimised for easy readability and
     comprehensibility
-  - Years in BCE must be negative - that’s all you need to care about
+-   Years in BCE must be negative - that’s all you need to care about
     dates
-  - Handling of unsecured dates
-  - Handling of gaps, e.g. abandonment phases of sites
-  - Optional text labels
-  - Export of the chronological chart in various file formats (raster
-    and vector graphics)
-  - Easy customisation of the chronological chart
-  - Based on the [tidyverse](https://www.tidyverse.org/): Seamless
-    integration in pipes, enhanced customsation with
-    [ggplot2](https://ggplot2.tidyverse.org/)
-
-In development for the CRAN release:
-
-  - geom\_chronochRt for full flexibility within ggplot2
-  - Image labels to e.g. display key finds or show typological
+-   Handling of unsecure dates
+-   Handling of gaps, e.g. abandonment phases of sites
+-   Optional text labels
+-   Optional image labels to e.g. display key finds or show typological
     developments
+-   Geoms for the chronological chart and image labels
+-   Export of the chronological chart in various file formats (raster
+    and vector graphics)
+-   Easy customisation of the chronological chart
+-   Based on the [tidyverse](https://www.tidyverse.org/): Seamless
+    integration in pipes, enhanced customisation with
+    [ggplot2](https://ggplot2.tidyverse.org/)
 
 Is there a feature missing? Please let us know
 [here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
@@ -81,33 +78,22 @@ plot_chronochrt(data)
 
 ## Getting started
 
-  - [Cheatsheet](https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)
-  - [Vignettes](https://gitlab.com/roset/chronochrt/-/tree/master/vignettes)
+-   [Cheatsheet](https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)
+-   [Vignettes](https://gitlab.com/roset/chronochrt/-/tree/master/vignettes)
 
-## Funding
+## Funding for the development of ChronochRt 0.0.5
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
-
 <tbody>
-
 <tr>
-
 <td valign="bottom">
-
 <img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200">
-
 </td>
-
 <td valign="bottom" halign="left">
-
 This project has received funding from the European Union’s Horizon 2020
 research and innovation programme under the Marie Skłodowska-Curie grant
 agreement No 766311.
-
 </td>
-
 </tr>
-
 </tbody>
-
 </table>

@@ -12,7 +12,7 @@ theme_chronochrt(
 )
 }
 \arguments{
-\item{base_size}{base font size}
+\item{base_size}{base font size, given in pts.}
 
 \item{base_family}{base font family}
 
@@ -25,5 +25,5 @@ A ggplot-theme
 }
 \description{
 This is a theme to provide a ready-to-use layout of chronological charts. See
-Examples how to alter its appearance with \code{\link[ggplot2]{theme}}.
+\code{\link[ggplot2]{theme}} for how to modify selected elements of it.
 }

@@ -43,7 +43,6 @@
 #' \dontrun{
 #'
 #' # Import of Excel files
-#'
 #' chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
 #'                        region = "Region",
 #'                        name = "Name",
@@ -53,7 +52,6 @@
 #'                        add = "Add")
 #'
 #' # Import of delimited tabular data
-#'
 #' chrons <- import_chron(path = "ex_urnfield_periods.csv",
 #'                        region = "Region",
 #'                        name = "Name",
@@ -71,7 +69,6 @@
 #'                        delim = "\t")
 #'
 #' # Include additional parameters of the import function
-#'
 #' chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
 #'                        region = "Region",
 #'                        name = "Name",

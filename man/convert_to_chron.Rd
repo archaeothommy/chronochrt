@@ -9,24 +9,19 @@ convert_to_chron(data, region, name, start, end, level, add)
 \arguments{
 \item{data}{A data frame or tibble}
 
-\item{region}{A character string with the column name of the regions/sections
-in the plot.}
+\item{region}{The column name of the regions/sections in the plot.}
 
-\item{name}{A character string with the column name of the names of the
-chronological units. Must be a character string.}
+\item{name}{The column name of the names of the chronological units. Must be
+a character string.}
 
-\item{start}{A character string with the column name of the start dates of
-the chronological units.}
+\item{start}{The column name of the start dates of the chronological units.}
 
-\item{end}{A character string with the column name of the end date of the
-chronological units.}
+\item{end}{The column name of the end date of the chronological units.}
 
-\item{level}{A character string with the column name of the level of the
-chronological unit.}
+\item{level}{The column name of the level of the chronological unit.}
 
-\item{add}{A character string with the column name of the columns which
-signals whether the chronological units within a geographical area should
-be drawn separately.}
+\item{add}{The column name of the columns which signals whether the
+chronological units within a geographical area should be drawn separately.}
 }
 \value{
 A tibble with chronological data ready-to-use for plotting with
@@ -36,12 +31,10 @@ A tibble with chronological data ready-to-use for plotting with
 Convert an existing data set in a ready-to-plot data set.
 }
 \details{
-Additional columns useful for plotting might e.g. specify the x and y
-position of the names to place them at an arbitrary spot
+Additional columns if the data set are directly passed to the output.
 }
 \examples{
 # Create example data set
-
 data <- data.frame(Location = c("A", "B"),
                    Dynasty = c("a", "a"),
                    Begin = -100,
@@ -50,13 +43,11 @@ data <- data.frame(Location = c("A", "B"),
                    Parallel = FALSE)
 
 # Convert to chronological data set
-
 chrons <- convert_to_chron(data = data,
-                           region = "Location",
-                           name = "Dynasty",
-                           start = "Begin",
-                           end = "End",
-                           level = "Subunit",
-                           add = "Parallel")
-
+                           region = Location,
+                           name = Dynasty,
+                           start = Begin,
+                           end = End,
+                           level = Subunit,
+                           add = Parallel)
 }

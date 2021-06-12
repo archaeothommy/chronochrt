@@ -2,10 +2,13 @@
 
 export("%>%")
 export(add_chron)
+export(add_label_image)
 export(add_label_text)
 export(arrange_regions)
 export(convert_to_chron)
 export(corr_xmax)
+export(geom_ChronochRtImage)
+export(geom_chronochRt)
 export(import_chron)
 export(import_chron_csv)
 export(import_chron_delim)
