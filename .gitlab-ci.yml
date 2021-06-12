@@ -1,4 +1,4 @@
-image: rocker/tidyverse:4.1.0
+image: rocker/tidyverse:latest
 
 stages:
   - build
@@ -8,7 +8,8 @@ stages:
 building:
   stage: build
   script:
-    - sudo apt-get -y install libmagick++-dev
+    - apt-get update
+    - apt-get install -y libmagick++-dev
     - R -e "remotes::install_deps(dependencies = TRUE)"
     - R -e 'devtools::check(error_on = "error")'
   after_script:
