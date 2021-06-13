@@ -39,16 +39,16 @@
 #' q <- ggplot(data) + lims(x = c(0, 6), y = c(0, 6))
 #'
 #' # Without size specifications
-#' q + geom_ChronochRtImage(aes(image_path = image_path, x = x, y = y))
+#' q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y))
 #'
 #' # Scale images to individual heights/widths by specifying one of them:
-#' q + geom_ChronochRtImage(aes(image_path = image_path, x = x, y = y, height = height))
+#' q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = height))
 #'
 #' # Scale images to uniform height/width (i.e. independent of input data):
-#' q + geom_ChronochRtImage(aes(image_path = image_path, x = x, y = y, height = 1))
+#' q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = 1))
 #'
 #' # Specifying height and width might result in distorted images:
-#' q + geom_ChronochRtImage(aes(image_path = image_path, x = x, y = y, height = height, width = width))
+#' q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = height, width = width))
 
 geom_chronochRtImage <- function(mapping = NULL, data = NULL, inherit.aes = TRUE, ...) {
    ggplot2::layer(

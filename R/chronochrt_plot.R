@@ -206,7 +206,7 @@ plot_chronochrt <- function(data, labels_text = NULL, labels_image = NULL, year_
   }
 
   if (!is.null(labels_image)) {
-    plot <- plot + geom_ChronochRtImage(data = labels_image, ggplot2::aes(image_path = .data$image_path, x = .data$position, y = .data$year, height = height_image))
+    plot <- plot + geom_chronochRtImage(data = labels_image, ggplot2::aes(image_path = .data$image_path, x = .data$position, y = .data$year, height = height_image))
   }
 
   plot <- plot +
