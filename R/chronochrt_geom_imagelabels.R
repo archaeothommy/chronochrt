@@ -50,7 +50,7 @@
 #' # Specifying height and width might result in distorted images:
 #' q + geom_ChronochRtImage(aes(image_path = image_path, x = x, y = y, height = height, width = width))
 
-geom_ChronochRtImage <- function(mapping = NULL, data = NULL, inherit.aes = TRUE, ...) {
+geom_chronochRtImage <- function(mapping = NULL, data = NULL, inherit.aes = TRUE, ...) {
    ggplot2::layer(
       geom = GeomChronochRtImage,
       mapping = mapping,
