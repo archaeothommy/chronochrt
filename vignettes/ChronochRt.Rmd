@@ -64,8 +64,8 @@ print(chrons)
 
 ```{r plot_structure_plot, echo=FALSE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
-#plot_chronochrt(chrons, font_size_chrons = 4, line_break = 20) + 
-#  ggplot2::scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0)) 
+plot_chronochrt(chrons, size_text = 4, line_break = 20) + 
+  ggplot2::scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0)) 
 
 ```
 
@@ -126,13 +126,13 @@ Custom labels are recorded with the function `add_label_text()`. It needs to be 
 
 ```{r label, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
-data_label <- add_label_text(region = "earlier/later", 
+text <- add_label_text(region = "earlier/later", 
                              year = 50, 
                              position = 0.95, 
                              label = "This date in front of the /.", 
                              new = TRUE)
 
-data_label <- add_label_text(data = data_label, 
+text <- add_label_text(data = text, 
                              region = "later/earlier", 
                              year = 100, 
                              position = 0.9, 
@@ -140,17 +140,35 @@ data_label <- add_label_text(data = data_label,
                              new = FALSE) %>%
   add_label_text(region = "mixed", 
                  year = 75, 
-                 position = 0.48, 
+                 position = 0.75, 
                  label = "Both dates are\nin front of the /.", 
                  new = FALSE)
 
-data_label <- add_label_text(data = data_label, 
+text <- add_label_text(data = text, 
                              region = "same", 
-                             year = c(125, 175), 
-                             position = 0.9, 
+                             year = 100, 
+                             position = c(0.4, 0.9), 
                              label = "same", new = FALSE)
 
-plot_chronochrt(data, labels_text = data_label)
+plot_chronochrt(data, labels_text = text)
+```
+
+Likewise, image labels are recorded with `add_label_images()`. This function works exactly the same, with taking the path to the image (web address or path to a file on your computer) instead of the text (note that it handles raster and vector files): 
+
+```{r label2, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+
+image <- add_label_image(region = "earlier/later", 
+                              year = 50, 
+                              position = 0.5, 
+                              image_path = "https://www.r-project.org/logo/Rlogo.png", 
+                              new = TRUE) %>%
+  add_label_image(region = "same", 
+                  year = 0,
+                  position = 0.5,
+                  image_path = "https://www.r-project.org/logo/Rlogo.svg", 
+                  new = FALSE)
+
+plot_chronochrt(data, labels_image = image)
 ```
 
 ## Compatibility with the [tidyverse](https://www.tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
