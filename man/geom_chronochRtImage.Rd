@@ -81,5 +81,5 @@ q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = 1))
 q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = height, width = width))
 }
 \author{
-This geom is a modified version of the \code{\link[egg]{geom_custom}} from \href{https://github.com/baptiste}{Baptiste Auguié}'s \href{https://cran.r-project.org/package=egg}{egg package}.
+This geom is a modified version of the \code{geom_custom()} from \href{https://github.com/baptiste}{Baptiste Auguié}'s \href{https://cran.r-project.org/package=egg}{egg package}.
 }

@@ -225,8 +225,7 @@ plot_chronochrt <- function(data, labels_text = NULL, labels_image = NULL, year_
   }
 
   if(!is.null(filename)) {
-    plot <- plot +
-      ggplot2::ggsave(filename = filename, width = width, height = height, units = units, ...)
+    ggplot2::ggsave(plot = plot, filename = filename, width = width, height = height, units = units, ...)
   }
 
   plot
