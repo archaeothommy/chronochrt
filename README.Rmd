@@ -45,7 +45,7 @@ Please help us to improve ChronochRt by filing observed bugs as an issue [here](
 
 ## Features
 
-* Slim and intuitive chronological data set
+* Slim structure of chronological datasets
 * Import tabular data files 
 * Import Excel files (requires the package [readxl](https://readxl.tidyverse.org/))
 * Possibility to display up to 2 chronological systems within the same region (e.g. long and short chronologies)

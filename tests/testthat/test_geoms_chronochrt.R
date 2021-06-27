@@ -4,13 +4,13 @@ test_that("Test geom chronochrt", {
   data <- layer_data(geom_test)
 
   expect_equal(object = max(data$ymax),
-               expected = max(test_reference$end))
+               expected = 500)
   expect_equal(object = max(data$xmax),
                expected = 2)
   expect_equal(object = data$x[data$name == "Thanos"],
                expected = 1.25)
-  expect_equal(object = data$type_boundary[data$start2 == -2000][1],
-               expected = "unsec_start")
+  expect_equal(object = data$boundary_start[data$start2 == -2000][1],
+               expected = "unsec")
 })
 
 # Visual tests ------------------------------------------------------------

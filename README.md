@@ -34,7 +34,7 @@ Please help us to improve ChronochRt by filing observed bugs as an issue
 
 ## Features
 
--   Slim and intuitive chronological data set
+-   Slim structure of chronological datasets
 -   Import tabular data files
 -   Import Excel files (requires the package
     [readxl](https://readxl.tidyverse.org/))

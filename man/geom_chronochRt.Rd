@@ -74,7 +74,7 @@ column, i.e. a value between 0 and 1 if \code{add = FALSE} and between 1 and
 2 if \code{add = TRUE}. \item \code{name_y} The vertical position given as a
 year.}
 
-See \code{vignette("ChronochRt")} for further details.
+See \code{vignette("ChronochRt")} below for further details.
 
 The geom aims to preserve access to as much of the underlying aesthetics as
 possible. To achieve this aim, ambiguous names had to be resolved (e.g.
@@ -99,11 +99,11 @@ possible. To achieve this aim, ambiguous names had to be resolved (e.g.
 # Create example data
 library(ggplot2)
 
-chrons <- data.frame(region = c("A", "B", "B", "B"),
-                     name = c("a", "a", "1", "2"),
-                     start = c(-100, -100, -100, "0/50"),
-                     end = c(200, 150, "0/50", 150),
-                     level = c(1, 1, 2, 2),
+chrons <- data.frame(region = c("A", "B", "B", "B", "A"),
+                     name = c("a", "a", "1", "2", "b"),
+                     start = c(-100, -100, -100, "0/50", "50_100"),
+                     end = c("50_100", 150, "0/50", 150, 200),
+                     level = c(1, 1, 2, 2, 1),
                      add = FALSE)
 
 ggplot(chrons) +

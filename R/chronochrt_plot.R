@@ -12,7 +12,7 @@
 #' It is assumed that the majority of the text labels will be placed on the
 #' right side of each column. Therefore they are right aligned to prevent them
 #' from running outside the plotting area. Vertically, it will be placed
-#' centered on the \code{year} given. Text in labels can be wrapped by inserting
+#' centred on the \code{year} given. Text in labels can be wrapped by inserting
 #' \code{"\n"} (without blanks).
 #'
 #' @inheritParams geom_chronochRt
@@ -71,11 +71,11 @@
 #' @examples
 #'
 #' # Create Example data
-#' chrons <- data.frame(region = c("A", "B", "B", "B"),
-#'                      name = c("a", "a", "1", "2"),
-#'                      start = c(-100, -100, -100, "0/50"),
-#'                      end = c(200, 150, "0/50", 150),
-#'                      level = c(1, 1, 2, 2),
+#' chrons <- data.frame(region = c("A", "B", "B", "B", "A"),
+#'                      name = c("a", "a", "1", "2", "b"),
+#'                      start = c(-100, -100, -100, "0/50", "50_100"),
+#'                      end = c("50_100", 150, "0/50", 150, 200),
+#'                      level = c(1, 1, 2, 2, 1),
 #'                      add = FALSE)
 #'
 #' # Plot with default options
