@@ -8,8 +8,8 @@
 #' \code{start}, \code{end}, \code{add} (i.e. all required aesthetics).
 #' \itemize{ \item \code{region} The title(s) of the section(s) the
 #' chronological chart is subdivided into \item \code{name} The name(s) of the
-#' chronological unit(s). To maintain compatibility with other geom, the
-#' aesthetic \code{label} can also be used. \item \code{start, end} The start
+#' chronological unit(s). To maintain compatibility with other geoms, the
+#' aesthetic \code{label} can be used instead. \item \code{start, end} The start
 #' and end date of a chronological unit, respectively. \item \code{level} The
 #' levels of the chronological units. \item \code{add} Logical value indicating
 #' whether chronological units within a \code{region} should be plotted in an

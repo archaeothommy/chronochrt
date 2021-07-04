@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 )
 
 library(ChronochRt)
+library(ggplot2)
 library(knitr)
 ```
 
@@ -41,7 +42,7 @@ These six variables are essential for the package and therefore cannot be rename
 Years BCE are indicated by negative `start` and `end` dates, e.g. `-100` corresponds to 100 BCE and 100 to 100 A.D., respectivly. The package can handle the year 0.  
 
 ### Important note  
-In ChronochRt, each _chron_ is independently evaluated. Consequently, all parameters listed above need to be stored for every single _chron_. It is indispensable that start and end date are identical to the preceeding and subsequent _chron_ as well as subchrons starting or ending in the same year. Whilst it seens tedious, this feature allows the package to plot interruptions and hiatus in the chronological sequence, like the abandonment of settlements or entire regions (see example below). At the same time it simplifies the structure of the chronological data, as each _chron_ stands for itself.   
+In ChronochRt, each _chron_ is independently evaluated. Consequently, all parameters listed above need to be stored for every single _chron_. It is indispensable that start and end date are identical to the preceding and subsequent _chron_ as well as subchrons starting or ending in the same year. Whilst it seems tedious, this feature allows the package to plot interruptions and hiatus in the chronological sequence, like the abandonment of settlements or entire regions (see example below). At the same time it simplifies the structure of the chronological data, as each _chron_ stands for itself.   
 
 ## The chronological chart
 
@@ -51,8 +52,8 @@ This example highlights the structure of a chronological dataset, called `chrons
 chrons <- add_chron(
   region = c("region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = A", "region = B", "region = B", "region = B"),
   name = c("level = 1\nadd =\nFALSE", "level = 2\nadd =\nFALSE", "level = 3\nadd =\nFALSE", "level = 4\nadd =\nFALSE", "level = 5\nadd =\nFALSE","level = 1\nadd =\nTRUE","level = 2\nadd =\nTRUE","level = 2\nadd =\nTRUE", "add =\nTRUE", "level = 3", "add = TRUE", "level = 4", "level = 1\nadd = FALSE", "level = 2\nadd = FALSE", "level = 3\nadd = FALSE"),  
-  start = c(-500, -500, -500, -500, -500, -400, -400, 0, 0, 200, 200, "300/300", -500, -500, -500), 
-  end = c(500, 500, 500, 500, 500, 400, -50, 400, 200, 400, "300/300", 400, 500, 500, 500), 
+  start = c(-500, -500, -500, -500, -500, -400, -400, 0, 0, "200/200", "200/200", "275_325", -500, -500, -500), 
+  end = c(500, 500, 500, 500, 500, 400, -50, 400, "200/200", 400, "275_325", 400, 500, 500, 500), 
   level = c(1, 2, 3, 4, 5, 1, 2, 2, 3, 3, 4, 4, 1, 2, 3), 
   add = c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE), 
   new_table = TRUE) 
@@ -65,7 +66,9 @@ print(chrons)
 ```{r plot_structure_plot, echo=FALSE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
 plot_chronochrt(chrons, size_text = 4, line_break = 20) + 
-  ggplot2::scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0)) 
+  ggplot2::scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0)) + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(),
+        axis.ticks.x = ggplot2::element_line())
 
 ```
 
@@ -73,43 +76,44 @@ Admittedly, the `name`s of the _chrons_ are not pretty but they are intended to 
 
 ### How does it work? 
 Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled according to the maximum `level`, e.g. in region A in the `add = FALSE`-column the maximum `level` is 5, hence, all _chrons_ will be 1/5 wide. Similarly in region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide. This essentially transform the x-axis into percentages, allowing to easily add additional labels or customise the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-cloumn are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
-If not all _chrons_ are further subdivided, empty space is filled by the rightmost _chrons_. However, by default the names of _chrons_ from the same level will be placed on the same x-value. In complex charts this increases readability and ensures appropriate space for addtional labels, even if it can produce odd looking empty space in small plots (see above). 
+If not all _chrons_ are further subdivided, empty space is filled by the rightmost _chrons_. However, by default the names of _chrons_ from the same level will be placed on the same x-value. In complex charts this increases readability and ensures appropriate space for additional labels, even if it can produce odd looking empty space in small plots (see above). 
 
 ### Unclear `start` and `end` dates
-The dashed horizontal line between two _chrons_ appears when the respective `start` and/or `end` date of a _chron_ are coded as `"300/300"`, indicating that they canot be stated precisely. The reasons for unclear or vague transitions are manifold: the transition between two chronological units or strata are blurred, sites within a region yield different dates for the same transition, transitions are not always clearly expressed in the material record, or it is debated whether this transition exists, just to name a few.  
-ChronochRt will automatically draw dates given in the format `"year1/year2"` as dashed instead of solid lines. To indicate a transition period, its `start` and `end` date is given, e.g. `"50/100"`. For a disctinct date, the two years are the same.  
+Unclear `start` and `end` dates can be displayed in two ways: as dashed horizontal lines or as solid diagonal lines. 
+The dashed horizontal lines between two _chrons_ appears when the respective `start` and/or `end` date of a _chron_ are coded as `"300/300"`, indicating that they cannot be stated precisely. The diagonal lines are coded with as `"300_350"` and indicate a transition of a known duration between two periods. The reasons for unclear or vague transitions are manifold: the transition between two chronological units or strata are blurred, sites within a region yield different dates for the same transition, transitions are not always clearly expressed in the material record, or it is debated whether this transition exists, just to name a few.  
+To indicate a transition period, its `start` and `end` date is given, e.g. `"50/100"` or `"50_100"`. For a distinct date, the two years are the same. For example, `"100/100"` would result in a single horizontal dashed line.  
 Does the order of the dates matter? Lets play around by using a different `region` for the different combinations (using `arrange_regions()` to modify their default alphabetical order in the plot): 
 
 ```{r unclear, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
 data <- add_chron(region = "earlier/later", 
-          name = c("1", "2", "1a", "1b"), 
-          start = c(-100, "50/100", -100, 0), 
-          end = c("50/100", 200, 0, "50/100"), 
-          level = c(1, 1, 2, 2),
-          add = FALSE,
-          new_table = TRUE) %>%
+                  name = c("1", "2", "1a", "1b"), 
+                  start = c(-100, "50/100", -100, "-25_25"), 
+                  end = c("50/100", 200, "-25_25", "50/100"), 
+                  level = c(1, 1, 2, 2),
+                  add = FALSE,
+                  new_table = TRUE) %>%
   add_chron(region = "later/earlier", 
-          name = c("1", "2", "1a", "1b"), 
-          start = c(-100, "100/50", -100, 0), 
-          end = c("100/50", 200, 0, "100/50"), 
-          level = c(1, 1, 2, 2),
-          add = FALSE,
-          new_table = FALSE) %>%
+            name = c("1", "2", "1a", "1b"), 
+            start = c(-100, "100/50", -100, "25_-25"), 
+            end = c("100/50", 200, "25_-25", "100/50"), 
+            level = c(1, 1, 2, 2),
+            add = FALSE,
+            new_table = FALSE) %>%
   add_chron(region = "mixed", 
-          name = c("1", "2", "1a", "1b"), 
-          start = c(-100, "50/100", -100, 0), 
-          end = c("50/100", 200, 0, "100/50"), 
-          level = c(1, 1, 2, 2),
-          add = FALSE,
-          new_table = FALSE) %>%
-    add_chron(region = "same", 
-          name = c("1", "2", "1a", "1b"), 
-          start = c(-100, "100/100", -100, 0), 
-          end = c("100/100", 200, 0, "100/100"), 
-          level = c(1, 1, 2, 2),
-          add = FALSE,
-          new_table = FALSE) %>%
+            name = c("1", "2", "1a", "1b"), 
+            start = c(-100, "50/100", -100, "-25_25"), 
+            end = c("50/100", 200, "25_-25", "100/50"), 
+            level = c(1, 1, 2, 2),
+            add = FALSE,
+            new_table = FALSE) %>%
+  add_chron(region = "same", 
+            name = c("1", "2", "1a", "1b"), 
+            start = c(-100, "100/100", -100, "25_25"), 
+            end = c("100/100", 200, "25_25", "100/100"), 
+            level = c(1, 1, 2, 2),
+            add = FALSE,
+            new_table = FALSE) %>%
   arrange_regions(order = c("earlier/later", "later/earlier", "same", "mixed"))
 
 plot_chronochrt(data)
@@ -117,7 +121,7 @@ plot_chronochrt(data)
 ```
 
 
-Their order matters: In the first two columns the vertical lines are drawn to the date given before the "/", further the position of the _chron's_ name is calculated according to this date. The last column illustrate that constistency is required to get a valid chronological chart. 
+Indeed, their order matters: Diagonal lines are always drawn from the first to the second value and mixing the order will result in different orientations. Dashed lines do not seem to depend on the order that much. However, consistency matters here as well because mixed orders can result in a failure to recognize the true end of the period. Additionally, the vertical position of the labels are based on the first value.  
 
 ## Custom labels 
 Custom labels are optional and hence are stored in an independent data set. Custom text can be placed anywhere on the chronological chart to indicate e.g. special events. As indicated before, it is assumed that they will predominantly appear on the right side of a chronological column, therefore they are always right-aligned.  
@@ -127,17 +131,17 @@ Custom labels are recorded with the function `add_label_text()`. It needs to be 
 ```{r label, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
 text <- add_label_text(region = "earlier/later", 
-                             year = 50, 
-                             position = 0.95, 
-                             label = "This date in front of the /.", 
-                             new = TRUE)
+                       year = 50, 
+                       position = 0.95, 
+                       label = "This date in front of the /.", 
+                       new = TRUE)
 
 text <- add_label_text(data = text, 
-                             region = "later/earlier", 
-                             year = 100, 
-                             position = 0.9, 
-                             label = "This date in\nfront of the /.", 
-                             new = FALSE) %>%
+                       region = "later/earlier", 
+                       year = 100, 
+                       position = 0.9, 
+                       label = "This date in\nfront of the /.", 
+                       new = FALSE) %>%
   add_label_text(region = "mixed", 
                  year = 75, 
                  position = 0.75, 
@@ -145,10 +149,10 @@ text <- add_label_text(data = text,
                  new = FALSE)
 
 text <- add_label_text(data = text, 
-                             region = "same", 
-                             year = 100, 
-                             position = c(0.4, 0.9), 
-                             label = "same", new = FALSE)
+                       region = "same", 
+                       year = 100, 
+                       position = c(0.4, 0.9), 
+                       label = "same", new = FALSE)
 
 plot_chronochrt(data, labels_text = text)
 ```
@@ -158,10 +162,10 @@ Likewise, image labels are recorded with `add_label_images()`. This function wor
 ```{r label2, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
 image <- add_label_image(region = "earlier/later", 
-                              year = 50, 
-                              position = 0.5, 
-                              image_path = "https://www.r-project.org/logo/Rlogo.png", 
-                              new = TRUE) %>%
+                         year = 50, 
+                         position = 0.5, 
+                         image_path = "https://www.r-project.org/logo/Rlogo.png", 
+                         new = TRUE) %>%
   add_label_image(region = "same", 
                   year = 0,
                   position = 0.5,
@@ -174,96 +178,100 @@ plot_chronochrt(data, labels_image = image)
 ## Compatibility with the [tidyverse](https://www.tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
 
 ChronochRt builds upon the tidyverse environment. Hence its functions can be seamlessly integrated into e.g. pipes (as seen in some examples, look for the [pipe operator `%>%`](https://style.tidyverse.org/pipes.html)). Likewise, `plot_chronochrt()` returns a ggplot2-object, which can be easily enhanced afterwards by e.g. more complex designs using the `+` operator. As an example, the first plot in this vignette was created with the following code to display the usually omitted x-axis: 
-```{r , eval=FALSE}
+```{r , eval=FALSE, echo=TRUE}
 
-#plot_chronochrt(chrons, font_size_chrons = 4, line_break = 20) + 
-#  scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0))
+plot_chronochrt(chrons, size_chrons = 4, line_break = 20) + 
+  ggplot2::scale_x_continuous(name = NULL, breaks = seq(0, 2, 0.1), minor_breaks = NULL, expand = c(0,0)) + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(),
+        axis.ticks.x = ggplot2::element_line())
 
 ```
+
+However, it is strongly recommended to use the geoms provided by ChronochRt for the design of more complex design (see chapter "ChronochRt for advanced R users"). 
 
 ## Some explanation to the example code
 The examples shown in this vignette contain some "tricks", which might facilitate the usage of ChronochRt. They are not features of ChronochRt but of R and the packages ChronochRt builds upon (see above). 
 
-* Text wrapping in labels and names of _chrons_ can be easily implemented by typing `"\n"`instead of a space where the text should be wrapped (spaces at the end of lines will result in unclean text alignment). The chronological data is imported from an Excel file, text wrapping can be implemented in Excel by inserting line breaks with the combination `Alt + Return` (Windows) and `Control + Command + Enter` or `Control + Option + Enter` (Mac). 
-* If a value in a column is identical for all rows, it is sufficient to type it in once. It is not necessary to type it for every row (see the code to add the labels "same" in the last example). This facilitates not only coding but also ensures that e.g. the position or text of labels are identical and not erroneous because of typos. 
+* Text wrapping in labels and names of _chrons_ can be easily implemented by typing `"\n"`instead of a space where the text should be wrapped (spaces at the end of lines will result in unclean text alignment). If the chronological data is imported from an Excel file, text wrapping can be implemented in Excel by inserting line breaks with the combination `Alt + Return` (Windows) and `Control + Command + Enter` or `Control + Option + Enter` (Mac). 
+* If a value in a column is identical for all rows, it is sufficient to type it in once. It is not necessary to type it for every row (see the code to add the text labels "same"). This facilitates not only coding but also ensures that e.g. the position or text of labels are identical and not erroneous because of typos. 
 
-## Applied examples
+## ChronochRt for advanced R users
 
-The data sets used in the following examples are available for download  [here](https://gitlab.com/roset/chronochrt/tree/master/inst/extdata)
+Although `plot_chronochRt()` provides some basic options for the customisation and export of the generated graph, they might not always be sufficient and allows significantly less control how the different elements are placed in the chronological chart and how it is designed. For these reasons, ChronochRt provides two geoms. The `geom_chronochRt()` will convert the  and `geom_chronochRtImage()`. While `geom_chronochRt()` transforms a set of _chrons_ into a chronological chart, `geom_chronochRtImage()` is handling the placement of images. To create a chronological chart as shown in the examples above, they must be combined with a faceting function from and, for the text labels, with the `geom_text()`, all from the package [ggplot2](https://ggplot2.tidyverse.org/). Consequently, the general code will be similar to: 
 
-### Chonological table
-This example illustrates the main purpose of the package: facilitate the hasslefree drawing of chronological tables. 
-Many archaeological cultures have competing chronological systems or temporal shifts in their sub-groups or spatial distribution. This example highlights regional chronological differences of the Urnfield Culture and the phases are an extract of a table presented by St. Knöpke (2009, p. 15). 
+```{r eval=FALSE, include=FALSE}
+library(ggplot2)
+library(ChronochRt)
 
-The example data can be loaded by: 
-```{r Example_UK, echo=TRUE, eval=FALSE}
-# Data from St. Knöpke, Der urnenfelderzeitliche Männerfriedhof von Neckarsulm. 
-# Konrad Theiss Verlag (Stuttgart 2009), p. 15.
-UC_Chronology <- import_chron(path = "ex_urnfield_periods.xlsx",
-                               "Region", "Name", "Start", "End", "Level")
+ggplot() + 
+  geom_chronochRt(data = data, mapping = aes(region = region, name = name, start = start, end = end, level = level, add = add)) + 
+  geom_text(data = label, aes(x = position, y = year, label = label)) +
+  geom_chronochRtImage(data = image, aes(x = position, y = year, image_path = image_path)) + 
+  facet_grid(cols = vars(region), scales = "free_x", space = "free_x")
 ```
 
-```{r Example_UK_hidden, echo=FALSE}
-UC_Chronology <- import_chron(path = system.file("extdata/ex_urnfield_periods.xlsx", package = 'ChronochRt'),
-                               "Region", "Name", "Start", "End", "Level")
+Putting it into practice to reproduce the last example yields: 
+
+```{r advanced1, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+plot <- ggplot() + 
+  geom_chronochRt(data = data, mapping = aes(region = region, name = name, start = start, end = end, level = level, add = add)) + 
+  geom_text(data = text, aes(x = position, y = year, label = label)) +
+  geom_chronochRtImage(data = image, aes(x = position, y = year, image_path = image_path)) + 
+  facet_grid(cols = vars(region))
+
+plot
 ```
 
-The entire plot can then be generated by:
-```{r Example_UK_plot, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
-# plot_chronochrt(UC_Chronology,
-#                 axis_title = "BCE", 
-#                 years_major = 50,
-#                 font_size_chrons = 4, 
-#                 line_break = 26,
-#                 filename = "UC-Chronology.png", plot_dim = c(16, 10, "cm"))
-
-```
-This directly saves a file called "UC-Chronology.png" in the working directory with a specified size of 15x10 cm.
-
-### Occupation phases and other data
-
-Further, the package can be used to display any kind of temporal information. The following example ‒ whilst being very circumstantial in connections of the data ‒ highlights how different types of temporal data can be merged. This dataset is partially based on the cemetery data of the Wellcome Ostelogical Research Database (https://www.museumoflondon.org.uk/collections/other-collection-databases-and-libraries/centre-human-bioarchaeology/osteological-database) as well as general information for the labels.
-According to place of burial, some cemeteries were placed in groups (the _region_) according to the socioeconomic status linked to the burial ground and their occupation phases were entered through the _start_ and _end_ arguments. Further, the death numbers of major plague events were added as a separate region. 
-
-Import the data:
-```{r Example_London_hidden, echo=FALSE}
-London_cemeteries <- import_chron(path = system.file("extdata/ex_London_cem.xlsx", package = 'ChronochRt'),
-                                  "Region", "Name", "Start", "End", "Level")
+Set the general sedign with the `theme_chronochrt()`: 
+```{r advanced2, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+plot + theme_chronochrt()
 ```
 
-```{r Example_London, eval=FALSE, echo = TRUE}
-London_cemeteries <- import_chron(path = "ex_London_cem.xlsx", package = 'ChronochRt'),
-                                  "Region", "Name", "Start", "End", "Level")
+However, some fine tuning is still needed. By default, the axes are expanded. Additionally, the first example indicates, that the default facetting of ggplot2 is also not optimal: 
+
+```{r advanced3, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+ggplot() + 
+  geom_chronochRt(data = chrons, mapping = aes(region = region, name = name, start = start, end = end, level = level, add = add)) + 
+  facet_grid(cols = vars(region)) + 
+  theme_chronochrt()
 ```
 
-system.file('extdata', package = 'ChronochRt')
+Therefore, some additional arguments and functions must be provided to obtain the desired layout: 
 
-Add some labels, e.g. '12.04.1665 - The "Great Plague of London" begins' as well as some numbers from Londons plague mortality bills and other interesting facts via the following code in different parts of the plot:
-```{r Example_London_labels, echo=TRUE}
-London_labels <-add_label_text(region = "low socio-economic status",
-                               year = 1665,
-                               label = "12.04.1665:\n The \"Great Plague of London\"\n begins",
-                               position = 1.98, 
-                               new = TRUE) %>%
-               add_label_text(region = "urban",
-                              year = c(1559, 1660, 1670),
-                              label = c("1559: Coronation of Elizabeth I ", "1664: Sighting of a bright comet", "1666: Great Fire of London"),
-                              position = 1.98,
-                              new =  FALSE) %>% 
-              add_label_text(region = "plague death toll",
-                              year = c(1350, 1563, 1593, 1603, 1625, 1636, 1647, 1665),
-                              label = c( "1346-1353: ~62,000","1563-1564: 20 136" , "1593: 15 003","1603: 33 347", "1625: 41,313", "1636: 10 000", "1647: 3,597" ,"1665: 68 596"),
-                              position = 0.75,
-                              new =  FALSE) 
+```{r advanced4, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+ggplot() + 
+  geom_chronochRt(data = chrons, mapping = aes(region = region, name = name, start = start, end = end, level = level, add = add)) + 
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(name = "Year", expand = c(0,0)) +
+  facet_grid(cols = vars(region), scales = "free_x", space = "free_x") + 
+  theme_chronochrt()
 ```
 
-And the graph:
-```{r Example_London_plot, echo=TRUE, fig.align='center', fig.width=10, fig.height=6, message=FALSE, out.width="100%"}
-# plot_chronochrt(data = London_cemeteries, 
-#                 labels_text = London_labels, 
-#                 font_size_chrons = 3, font_size_labels = 2, 
-#                 line_break = 25, color_line = "grey55",
-#                 years_major = 50)
-
-
+And for the example with the image labels, the code now looks like: 
+```{r advanced5, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+ggplot() + 
+  geom_chronochRt(data = data, mapping = aes(region = region, name = name, start = start, end = end, level = level, add = add)) + 
+  geom_text(data = text, aes(x = position, y = year, label = label)) +
+  geom_chronochRtImage(data = image, aes(x = position, y = year, image_path = image_path)) + 
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(name = "Year", expand = c(0,0)) +
+  facet_grid(cols = vars(region), scales = "free_x", space = "free_x") + 
+  theme_chronochrt()
 ```
+
+Although this approach might seem cumbersome at first, it provides all the freedom for the construction and design of a chronological chart that a regular ggplot2 object offers, like adding other geoms and using other themes:
+
+```{r advanced6, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+points <- data.frame(x = seq(0, 2, 0.5), 
+                     y = seq(-500,-100, 100), 
+                     region = rep("region = A", 5))
+
+ggplot() + 
+  geom_chronochRt(data = chrons, aes(region = region, name = NULL, start = start, end = end, level = level, add = add)) + 
+  geom_point(data = points, aes(x = x, y = y), size = 5, colour = "red") + 
+  facet_grid(cols = vars(region), scales = "free_x", space = "free_x") + 
+  theme_void()
+```
+
+
+
