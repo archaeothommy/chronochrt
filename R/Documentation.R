@@ -20,7 +20,7 @@
 #'
 #' @section Getting started: \itemize{ \item
 #'   \href{https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
-#'    \item \href{../doc/ChronochRt.html}{Vignette} }
+#'    \item Vignettes
 #'
 #'
 #' @docType package

@@ -263,8 +263,7 @@ Although this approach might seem cumbersome at first, it provides all the freed
 
 ```{r advanced6, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 points <- data.frame(x = seq(0, 2, 0.5), 
-                     y = seq(-500,-100, 100), 
-                     region = rep("region = A", 5))
+                     y = seq(-500,-100, 100))
 
 ggplot() + 
   geom_chronochRt(data = chrons, aes(region = region, name = NULL, start = start, end = end, level = level, add = add)) + 
