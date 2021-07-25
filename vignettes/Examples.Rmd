@@ -26,13 +26,13 @@ library(ChronochRt)
 
 ## Examples
 
-This vignette will demonstrate will provide some examples with chronological datasets compiled from the literature. They are included in the package and the first example shows how to load them. Alternatively, the datasets are available for download [here](https://gitlab.com/roset/chronochrt/tree/master/inst/extdata). 
+This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://gitlab.com/roset/chronochrt/tree/master/inst/extdata). 
 
 ### Examples 1: Chonological table
-This example illustrates the main purpose of the package in the most basic way: facilitate the hasslefree drawing of chronological tables. 
-Many archaeological cultures have competing chronological systems or temporal shifts in their sub-groups or spatial distribution. This example highlights regional chronological differences of the Urnfield Culture and the phases are an extract of a table presented by St. Knöpke (2009, p. 15). 
+This example illustrates the main purpose of the package: facilitating the hassle free drawing of chronological tables. 
+Many archaeological cultures have competing chronological systems or temporal shifts in their sub-groups and/or spatial distributions. This example highlights regional chronological differences of the Urnfield Culture and the phases are an extract of a table presented by St. Knöpke (2009, p. 15). 
 
-First, we load the dataset. 
+First, loading of the data: 
 If the file is already in your current working directory, use
 ```{r Example_UK, echo=TRUE, eval=FALSE}
 # Data from St. Knöpke, Der urnenfelderzeitliche Männerfriedhof von Neckarsulm. 
@@ -47,7 +47,7 @@ UC_Chronology <- import_chron(path = system.file("extdata/ex_urnfield_periods.xl
                                "Region", "Name", "Start", "End", "Level")
 ```
 
-Then, we create the chronological chart: 
+Then, create the chronological chart by: 
 ```{r Example_UK_plot, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
  plot_chronochrt(UC_Chronology, 
                  axis_title = "BCE", 
@@ -57,12 +57,12 @@ Then, we create the chronological chart:
 
 ```
 
-And that's it! Because we provided a file name and the physical dimensions, we already saved as "UC-Chronology.png" in the working directory with a specified size of 15x10 cm.
+And that's it! Because a file name as wekk as physical dimensions were provided the chart is already saved as "UC-Chronology.png" in the working directory, with the specified size of 15x10 cm.
 
 ### Example 2: Occupation phases and other data
 
-The package can also be used to display any kind of temporal information. The following example ‒ whilst being very circumstantial in connections of the data ‒ highlights how different types of temporal data can be merged. This dataset is partially based on the cemetery data of the Wellcome Osteological Research Database (https://www.museumoflondon.org.uk/collections/other-collection-databases-and-libraries/centre-human-bioarchaeology/osteological-database) as well as general information for the labels.
-According to place of burial, some cemeteries were placed in groups (the _region_) according to the socio-economic status linked to the burial ground and their occupation phases were entered through the _start_ and _end_ arguments. Further, the death numbers of major plague events were added as a separate region. 
+Additionally, the package can be used to display any kind of temporal information. The following example ‒ whilst being very circumstantial in connections of the data ‒ highlights how different types of temporal data can be merged. This dataset is partially based on the cemetery data of the Wellcome Osteological Research Database (https://www.museumoflondon.org.uk/collections/other-collection-databases-and-libraries/centre-human-bioarchaeology/osteological-database) as well as general information for the labels.
+According to place of burial - during this time a partial indicator of socio-economic status - some cemeteries were placed in groups (the _region_). Their occupation phases were entered through the _start_ and _end_ arguments. Further, the death numbers of major plague events were added as a separate region. 
 
 Again, the first step is to load the chronological dataset:
 ```{r Example_London_hidden, echo=FALSE}
