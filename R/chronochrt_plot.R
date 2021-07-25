@@ -5,14 +5,14 @@
 #' customisation.
 #'
 #' This function is wrapper around various functions for an quick and convenient
-#' way to draw chronological charts. It therefore relies on the common data
+#' way to draw chronological charts. It relies on the common data
 #' structure of ChronochRt (see \code{vignette("ChronochRt")} for details). For
 #' full customisation use the respective geoms to build your own plot.
 #'
 #' It is assumed that the majority of the text labels will be placed on the
 #' right side of each column. Therefore they are right aligned to prevent them
 #' from running outside the plotting area. Vertically, it will be placed
-#' centred on the \code{year} given. Text in labels can be wrapped by inserting
+#' centered on the \code{year} given. Text in labels can be wrapped by inserting
 #' \code{"\n"} (without blanks).
 #'
 #' @inheritParams geom_chronochRt
@@ -39,7 +39,7 @@
 #'   be wrapped at the blank closest to the specified number of characters.
 #'   Default is \code{10} characters.
 #' @param filename A character string with the filename or path. If specified,
-#'   the plot will be saved on the given location. The file format is
+#'   the plot will be saved in the given location. The file format is
 #'   automatically recognised from the file extension. The most common file
 #'   types are supported, e.g. \code{.tiff}, \code{.png}, \code{.jpg},
 #'   \code{.eps}, and \code{.pdf}. To export as \code{.svg} installation of the

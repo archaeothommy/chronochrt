@@ -2,7 +2,7 @@
 #'
 #' Computes and draws a chronological chart.
 #'
-#' This geom is special in the sense that no x and y coordinates are directly
+#' This geom is special because no x and y coordinates are
 #' provided in the input. Therefore, the following aesthetics must be provided
 #' only in the \code{\link[ggplot2]{aes}} function: \code{region}, \code{level},
 #' \code{start}, \code{end}, \code{add} (i.e. all required aesthetics).
@@ -25,7 +25,7 @@
 #' See \code{vignette("ChronochRt")} below for further details.
 #'
 #' The geom aims to preserve access to as much of the underlying aesthetics as
-#' possible. To achieve this aim, ambiguous names had to be resolved (e.g.
+#' possible. To achieve this aim, ambiguous names were resolved (e.g.
 #' \code{size} to \code{size_line} and \code{size_text}).
 #'
 #' @inheritParams ggplot2::layer

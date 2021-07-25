@@ -8,7 +8,7 @@
 #' @param ... Additional arguments inherited from \code{\link[readxl]{read_excel}}.
 #'
 #'
-#' @return A tibble containing the desired chronological information.
+#' @return A tibble containing the chronological information.
 #'
 #' @export
 #' @keywords internal
