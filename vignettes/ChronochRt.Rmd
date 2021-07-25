@@ -25,7 +25,7 @@ library(ChronochRt)
 ```
 
 ## The data set 
-Chronological data are stored in a table. Each row represents a _chron_ (a chronological unit of any kind). The columns store the information of these chrons. The basic information of a _chron_ is:  
+Chronological data are stored in a table. Each row represents a _chron_ (a chronological unit of any kind). The columns store the information of the _chron_. The basic information of a _chron_ is:  
 
 * Which `region` is the _chron_ defined for? (This must not necessarily be a geographical region but can also be e.g. a reference or any other kind of overarching category)
 * What is its `name`? 
@@ -39,10 +39,10 @@ The parameter `add` is required for plotting the chart. ChronochRt offers the op
 These six variables are essential for the package and therefore cannot be renamed. When you import or convert a data set, you will have to indicate their corresponding columns in the data set. It is possible to store additional variables in the chrons, such as information to change e.g. the position and angle of the _chron_'s names or additional information, useful for further work with the data set.
 
 ### BCE and AD
-Years BCE are indicated by negative `start` and `end` dates, e.g. `-100` corresponds to 100 BCE and 100 to 100 A.D., respectivly. The package can handle the year 0.  
+Years BCE are indicated by negative `start` and `end` dates, e.g. `-100` corresponds to 100 BCE and 100 to 100 A.D., respectively. The package can handle the year 0.  
 
 ### Important note  
-In ChronochRt, each _chron_ is independently evaluated. Consequently, all parameters listed above need to be stored for every single _chron_. It is indispensable that start and end date are identical to the preceding and subsequent _chron_ as well as subchrons starting or ending in the same year. Whilst it seems tedious, this feature allows the package to plot interruptions and hiatus in the chronological sequence, like the abandonment of settlements or entire regions (see example below). At the same time it simplifies the structure of the chronological data, as each _chron_ stands for itself.   
+In ChronochRt, each _chron_ is independently evaluated. Consequently, all parameters listed above need to be stored for every single _chron_. It is indispensable that start and end date are identical to the preceding and subsequent _chron_ as well as subchrons starting or ending in the same year. This feature allows the package to plot interruptions and hiatus in the chronological sequence, like the abandonment of settlements or entire regions (see example below). At the same time it simplifies the structure of the chronological data, as each _chron_ stands for itself.   
 
 ## The chronological chart
 
@@ -72,7 +72,7 @@ plot_chronochrt(chrons, size_text = 4, line_break = 20) +
 
 ```
 
-Admittedly, the `name`s of the _chrons_ are not pretty but they are intended to show that the information of each _chron_ is directly mirrored in the plot and can reconstructed from it.  
+Admittedly, the `name`s of the _chrons_ are not pretty but they are intended to show that the information of each _chron_ is directly mirrored in the plot and can be reconstructed from it.  
 
 ### How does it work? 
 Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled according to the maximum `level`, e.g. in region A in the `add = FALSE`-column the maximum `level` is 5, hence, all _chrons_ will be 1/5 wide. Similarly in region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide. This essentially transform the x-axis into percentages, allowing to easily add additional labels or customise the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-cloumn are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
@@ -80,8 +80,8 @@ If not all _chrons_ are further subdivided, empty space is filled by the rightmo
 
 ### Unclear `start` and `end` dates
 Unclear `start` and `end` dates can be displayed in two ways: as dashed horizontal lines or as solid diagonal lines. 
-The dashed horizontal lines between two _chrons_ appears when the respective `start` and/or `end` date of a _chron_ are coded as `"300/300"`, indicating that they cannot be stated precisely. The diagonal lines are coded with as `"300_350"` and indicate a transition of a known duration between two periods. The reasons for unclear or vague transitions are manifold: the transition between two chronological units or strata are blurred, sites within a region yield different dates for the same transition, transitions are not always clearly expressed in the material record, or it is debated whether this transition exists, just to name a few.  
-To indicate a transition period, its `start` and `end` date is given, e.g. `"50/100"` or `"50_100"`. For a distinct date, the two years are the same. For example, `"100/100"` would result in a single horizontal dashed line.  
+The dashed horizontal lines between two _chrons_ appears when the respective `start` and/or `end` date of a _chron_ are coded as `"300/300"`, indicating that they cannot be stated precisely. The diagonal lines are coded with as `"300_350"` and indicate a transition of a known duration between two periods. The reasons for unclear or vague transitions are manifold. To name a few: the transition between two chronological units or strata are blurred, sites within a region yield different dates for the same transition, transitions are not always clearly expressed in the material record, or it is debated whether this transition exists.  
+To indicate a transition period, its `start` and `end` date are given, e.g. `"50/100"` or `"50_100"`. For a distinct date, the both years are the same. For example, `"100/100"` would result in a single horizontal dashed line.  
 Does the order of the dates matter? Lets play around by using a different `region` for the different combinations (using `arrange_regions()` to modify their default alphabetical order in the plot): 
 
 ```{r unclear, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
@@ -121,10 +121,10 @@ plot_chronochrt(data)
 ```
 
 
-Indeed, their order matters: Diagonal lines are always drawn from the first to the second value and mixing the order will result in different orientations. Dashed lines do not seem to depend on the order that much. However, consistency matters here as well because mixed orders can result in a failure to recognize the true end of the period. Additionally, the vertical position of the labels are based on the first value.  
+Their order matters: Diagonal lines are always drawn from the first to the second value and changing the order will result in a different orientation. Dashed lines do not depend on the order that much. However, consistency matters because mixed orders can result in a failure to recognize the true end of the period. Additionally, the vertical position of the labels are based on the first value.  
 
 ## Custom labels 
-Custom labels are optional and hence are stored in an independent data set. Custom text can be placed anywhere on the chronological chart to indicate e.g. special events. As indicated before, it is assumed that they will predominantly appear on the right side of a chronological column, therefore they are always right-aligned.  
+Custom labels are optional and hence are stored in an independent data set. Custom text can be placed anywhere on the chronological chart to indicate e.g. special events. As indicated before, it is assumed that they will predominantly appear on the right side of a chronological column, therefore they are right-aligned by default.  
 
 Custom labels are recorded with the function `add_label_text()`. It needs to be specified in which `region` it should be plotted, the `year` it should be placed, its `position` on the x-axis and the `label`'s text. As the axis scaled from 0 to 1, the value needs to be between 0 and 1 (or 2 if both columns are used):   
 
@@ -157,7 +157,7 @@ text <- add_label_text(data = text,
 plot_chronochrt(data, labels_text = text)
 ```
 
-Likewise, image labels are recorded with `add_label_images()`. This function works exactly the same, with taking the path to the image (web address or path to a file on your computer) instead of the text (note that it handles raster and vector files): 
+Likewise, image labels are added by `add_label_images()`. This function works exactly the same, with taking the path to the image (web address or path to a file on your computer) instead of the text. It can handle raster and vector files: 
 
 ```{r label2, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 
@@ -187,7 +187,7 @@ plot_chronochrt(chrons, size_chrons = 4, line_break = 20) +
 
 ```
 
-However, it is strongly recommended to use the geoms provided by ChronochRt for the design of more complex design (see chapter "ChronochRt for advanced R users"). 
+However, it is strongly recommended to use the geoms provided by ChronochRt for the compliation of more complex design (see chapter "ChronochRt for advanced R users"). 
 
 ## Some explanation to the example code
 The examples shown in this vignette contain some "tricks", which might facilitate the usage of ChronochRt. They are not features of ChronochRt but of R and the packages ChronochRt builds upon (see above). 
@@ -222,12 +222,12 @@ plot <- ggplot() +
 plot
 ```
 
-Set the general sedign with the `theme_chronochrt()`: 
+Set the general design with the `theme_chronochrt()`: 
 ```{r advanced2, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 plot + theme_chronochrt()
 ```
 
-However, some fine tuning is still needed. By default, the axes are expanded. Additionally, the first example indicates, that the default facetting of ggplot2 is also not optimal: 
+However, some fine tuning is still required. By default, the axes are expanded. Additionally, the first example indicates, that the default facetting of ggplot2 is not optimal: 
 
 ```{r advanced3, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 ggplot() + 
