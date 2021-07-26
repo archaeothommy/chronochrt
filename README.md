@@ -44,13 +44,13 @@ Please help us to improve ChronochRt by filing observed bugs as an issue
     comprehensibility
 -   Years in BCE must be negative - that’s all you need to care about
     dates
--   Handling of unsecure dates
+-   Handling of insecure dates
 -   Handling of gaps, e.g. abandonment phases of sites
 -   Optional text labels
 -   Optional image labels to e.g. display key finds or show typological
     developments
 -   Geoms for the chronological chart and image labels
--   Export of the chronological chart in various file formats (raster
+-   Export of the chronological chart in different file formats (raster
     and vector graphics)
 -   Easy customisation of the chronological chart
 -   Based on the [tidyverse](https://www.tidyverse.org/): Seamless
