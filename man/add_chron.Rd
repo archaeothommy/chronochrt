@@ -59,21 +59,20 @@ This function either creates a data set with chronological data which can be
 directly used for plotting or it adds chronological data to such a data set.
 }
 \details{
-If the input is in the same order like the arguments, the arguments do not
+If the input is in the same order as the arguments, the arguments do not
 need to be explicitly named. Values can be provided as one number or one
 character string, if they are the same for all other data. If not, they must
 be provided as vectors with equal lengths.
 
-\code{start} and \code{end} of neighbouring chronological units must be the same
-to get a good plotting results, as well as the start date of e.g. the top
-chronological unit and its respective oldest sub-units. Dates in BCE must
+\code{start} and \code{end} of neighbouring chronological units as well as respective
+oldest sub-units must be the same to achieve good plotting results. Dates in BCE must
 provided as negative data. Currently, only years can be handled (i.e. 2020
-but not 20.10.2020).
+but not 20.10.2020).The package can handle the year 0.
 
 If \code{start} and \code{end} dates are not certain or the change between
 chronological units is regarded a period, dates must be given as character
 string in the format \code{"1000/2000"}. Consistency is required for matching
-\code{start} and \code{end} dates to avoid unclean borders in the plot.
+\code{start} and \code{end} dates to avoid unclean or chaotic border orientation in the plot.
 
 The \code{level} indicates the position of the chronological unit.
 \code{level = 1} denotes a top chronological unit (e.g. Ha), a sub-unit (e.g.

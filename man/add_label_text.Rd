@@ -39,7 +39,7 @@ The function creates a tibble with text labels to be plotted in a
 chronological chart or adds them to an an already existing tibble.
 }
 \details{
-If the input is in the same order like the arguments, the arguments do not
+If the input is in the same order as the arguments, the arguments do not
 need to be explicitly named. Values can be provided as one number or one
 character string, if they are the same for all other data. If not, they must
 be provided as vectors with equal lengths.

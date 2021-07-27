@@ -47,7 +47,7 @@ The function creates a tibble with the paths of the image labels to be plotted i
 chronological chart or adds them to an already existing tibble.
 }
 \details{
-If the input is in the same order like the arguments, the arguments do not
+If the input is in the same order as the arguments, the arguments do not
 need to be explicitly named. Values can be provided as a number or
 character string, if they are the same for all other data. If not, they must
 be provided as vectors with equal lengths.

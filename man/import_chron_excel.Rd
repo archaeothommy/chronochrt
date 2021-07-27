@@ -7,12 +7,12 @@
 import_chron_excel(path, ...)
 }
 \arguments{
-\item{path}{A characer string with the path of the file to be imported.}
+\item{path}{A character string with the path of the file to be imported.}
 
 \item{...}{Additional arguments inherited from \code{\link[readxl]{read_excel}}.}
 }
 \value{
-A tibble containing the desired chronological information.
+A tibble containing the chronological information.
 }
 \description{
 This function imports and converts chronological information saved in

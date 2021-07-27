@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![coverage report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
 <!-- badges: end -->
 
-ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an intuitive environment for anyone new to R. 
+ChronochRt offers an easy way to draw chronological charts from tables. It aims to provide an intuitive environment for anyone new to R and includes [ggplot2](https://ggplot2.tidyverse.org/) geoms and theme for chronological charts. 
 
 ## Installation
 

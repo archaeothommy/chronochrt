@@ -4,7 +4,7 @@
 #' \code{.xls} or \code{.xslx} into a ready-to-plot data set. Missing values
 #' will be substituted by "!".
 #'
-#' @param path A characer string with the path of the file to be imported.
+#' @param path A character string with the path of the file to be imported.
 #' @param ... Additional arguments inherited from \code{\link[readxl]{read_excel}}.
 #'
 #'
