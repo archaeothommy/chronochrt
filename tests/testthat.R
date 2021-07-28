@@ -2,7 +2,7 @@ library(testthat)
 library(tibble)
 library(ggplot2)
 library(vdiffr)
-library(ChronochRt)
+library(chronochrt)
 
 
-test_check("ChronochRt")
+test_check("chronochrt")

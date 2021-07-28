@@ -12,7 +12,7 @@ report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https:/
 <!-- badges: end -->
 
 ChronochRt offers an easy way to draw chronological charts from tables.
-It aims to provide an intuitive environment for anyone new to R and
+It aims to provide an intuitive environment for anyone new to kR and
 includes [ggplot2](https://ggplot2.tidyverse.org/) geoms and theme for
 chronological charts.
 

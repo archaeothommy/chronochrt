@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(ChronochRt)
+library(chronochrt)
 library(ggplot2)
 library(knitr)
 ```
@@ -21,7 +21,7 @@ library(knitr)
 To execute the examples shown in this vignette, load the package:  
 
 ```{r setup, eval=FALSE}
-library(ChronochRt)
+library(rhronochrt)
 ```
 
 ## The data set 
@@ -75,7 +75,7 @@ plot_chronochrt(chrons, size_text = 4, line_break = 20) +
 Admittedly, the `name`s of the _chrons_ are not pretty but they are intended to show that the information of each _chron_ is directly mirrored in the plot and can be reconstructed from it.  
 
 ### How does it work? 
-Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled according to the maximum `level`, e.g. in region A in the `add = FALSE`-column the maximum `level` is 5, hence, all _chrons_ will be 1/5 wide. Similarly in region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide. This essentially transform the x-axis into percentages, allowing to easily add additional labels or customise the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-cloumn are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
+Each region is plotted independently. Within a region, all _chrons_ with `add = FALSE` will be evenly scaled according to the maximum `level`, e.g. in region A in the `add = FALSE`-column the maximum `level` is 5, hence, all _chrons_ will be 1/5 wide. Similarly in region B, the maximum `level`is 3, consequently all _chrons_ are 1/3 wide. This essentially transform the x-axis into percentages, allowing to easily add additional labels or customise the position and angle of the _chrons'_ names. Likewise, all _chrons_ in the `add = TRUE`-column are displayed with their x-value shifted by 1, i.e. they are plotted between 1 and 2.  
 If not all _chrons_ are further subdivided, empty space is filled by the rightmost _chrons_. However, by default the names of _chrons_ from the same level will be placed on the same x-value. In complex charts this increases readability and ensures appropriate space for additional labels, even if it can produce odd looking empty space in small plots (see above). 
 
 ### Unclear `start` and `end` dates
@@ -187,7 +187,7 @@ plot_chronochrt(chrons, size_chrons = 4, line_break = 20) +
 
 ```
 
-However, it is strongly recommended to use the geoms provided by ChronochRt for the compliation of more complex design (see chapter "ChronochRt for advanced R users"). 
+However, it is strongly recommended to use the geoms provided by ChronochRt for the compilation of more complex design (see chapter "ChronochRt for advanced R users"). 
 
 ## Some explanation to the example code
 The examples shown in this vignette contain some "tricks", which might facilitate the usage of ChronochRt. They are not features of ChronochRt but of R and the packages ChronochRt builds upon (see above). 
@@ -227,7 +227,7 @@ Set the general design with the `theme_chronochrt()`:
 plot + theme_chronochrt()
 ```
 
-However, some fine tuning is still required. By default, the axes are expanded. Additionally, the first example indicates, that the default facetting of ggplot2 is not optimal: 
+However, some fine tuning is still required. By default, the axes are expanded. Additionally, the first example indicates, that the default faceting of ggplot2 is not optimal: 
 
 ```{r advanced3, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
 ggplot() + 

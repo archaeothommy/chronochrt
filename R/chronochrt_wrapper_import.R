@@ -11,7 +11,7 @@
 #' these might be e.g. columns specifying the x and y position of the names to
 #' place them at an arbitrary spot.
 #'
-#' @param path A character string with either the path or a weblink to the file
+#' @param path A character string with either the path or a URL to the file
 #'   to be imported.
 #' @param region,name,start,end,level,add Character string (case sensitive) with the column names of:
 #'    \itemize{

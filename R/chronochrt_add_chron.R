@@ -38,15 +38,15 @@
 #'   chronological unit(s).
 #' @param start A number or a vector with the start date(s) of the chronological
 #'   unit(s). Use negative values for BCE dates. See Details how to handle
-#'   unsecure start dates.
+#'   insecure start dates.
 #' @param end A number or a vector with the end date(s) of the chronological
 #'   unit(s). Use negative values for BCE dates. See Details how to handle
-#'   unsecure end dates.
+#'   insecure end dates.
 #' @param level A whole number or numeric vector of whole numbers (i.e. 1, 2, 3,
 #'   ...) with the level(s) of the chronological unit(s). The default is
 #'   \code{1}, i.e. the top unit.
 #' @param add  A logical value (\code{TRUE} or \code{FALSE}) or a logical vector
-#'   signaling whether the chronological units within a geographical area should
+#'   signalling whether the chronological units within a geographical area should
 #'   be drawn separately (\code{TRUE}) or not (\code{FLASE}, the default).
 #' @param new_table Logical operator. If \code{TRUE}, a new data set will be
 #'   created. If \code{FALSE}, the default, the input will be added to an

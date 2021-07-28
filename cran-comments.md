@@ -1,13 +1,15 @@
 ## Test environments
-* ubuntu 21.04 (on gitlab-runner CI), R 4.1.0
-* windows (devel and release)
+* ubuntu 20.04 LTS (on gitlab-runner CI and r), R 4.1.0
+* Fedora Linux, R-devel
+* windows 8.1 (R-devel and R-release)
+* Windows Server 2008 R2 SP1, R-devel
 
 ## R CMD check results
-There were no ERRORs and no WARNINGs. 
+There were no ERRORs, no WARNINGs and 1 NOTE.
 
-There will be 1 NOTE: 
+NOTE: 
 
-* submission of a new package.
+* new submission 
 
 
 

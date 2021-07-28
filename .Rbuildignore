@@ -7,5 +7,4 @@
 ^Public/\.gitkeep$
 ^inst/Cheatsheet$
 ^inst/Cheatsheet\.pdf$
-^NEWS\.md$
 ^cran-comments\.md$

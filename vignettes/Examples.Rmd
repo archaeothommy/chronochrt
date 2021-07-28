@@ -14,14 +14,14 @@ knitr::opts_chunk$set(
 )
 options(rmarkdown.html_vignette.check_title = FALSE)
 
-library(ChronochRt)
+library(chronochrt)
 library(knitr)
 ```
 
 To execute the examples shown in this vignette, load the package:  
 
 ```{r setup, eval=FALSE}
-library(ChronochRt)
+library(chronochrt)
 ```
 
 ## Examples
@@ -43,7 +43,7 @@ UC_Chronology <- import_chron(path = "ex_urnfield_periods.xlsx",
 
 To access it directly from the package, use 
 ```{r Example_UK_hidden, echo=TRUE}
-UC_Chronology <- import_chron(path = system.file("extdata/ex_urnfield_periods.xlsx", package = 'ChronochRt'),
+UC_Chronology <- import_chron(path = system.file("extdata/ex_urnfield_periods.xlsx", package = 'chronochrt'),
                                "Region", "Name", "Start", "End", "Level")
 ```
 
@@ -57,7 +57,7 @@ Then, create the chronological chart by:
 
 ```
 
-And that's it! Because a file name as wekk as physical dimensions were provided the chart is already saved as "UC-Chronology.png" in the working directory, with the specified size of 15x10 cm.
+And that's it! Because a file name as well as physical dimensions were provided the chart is already saved as "UC-Chronology.png" in the working directory, with the specified size of 15x10 cm.
 
 ### Example 2: Occupation phases and other data
 
@@ -66,7 +66,7 @@ According to place of burial - during this time a partial indicator of socio-eco
 
 Again, the first step is to load the chronological dataset:
 ```{r Example_London_hidden, echo=FALSE}
-London_cemeteries <- import_chron(path = system.file("extdata/ex_London_cem.xlsx", package = 'ChronochRt'),
+London_cemeteries <- import_chron(path = system.file("extdata/ex_London_cem.xlsx", package = 'chronochrt'),
                                   "Region", "Name", "Start", "End", "Level")
 ```
 

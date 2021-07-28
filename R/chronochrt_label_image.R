@@ -17,7 +17,7 @@
 #' @param position A number or a numeric vector with the horizontal position(s)
 #'   of the label. See Details for explanation.
 #' @param image_path A character string or character vector with the file
-#'   path(s) or weblink(s) to the image files.
+#'   path(s) or URL(s) to the image files.
 #' @param new Logical operator. If \code{TRUE}, a new data set will be created.
 #'   If \code{FALSE}, the default, the input will be added to an existing data
 #'   set.
