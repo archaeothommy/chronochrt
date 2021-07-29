@@ -15,7 +15,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-6412-342X")))
 Description: Easy way to draw chronological charts from tables, aiming to include an intuitive environment for anyone new to R. Includes 'ggplot2' geoms and theme for chronological charts. 
 Language: en-GB
-License: GPL-3 + file LICENSE
+License: GPL-3
 URL: https://gitlab.com/roset/chronochrt
 BugReports: https://gitlab.com/roset/chronochrt/-/issues
 Imports:

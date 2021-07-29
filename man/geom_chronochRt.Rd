@@ -50,6 +50,9 @@ will be drawn.}
 are often aesthetics, used to set an aesthetic to a fixed value, like
 \code{hjust = 0.1}.}
 }
+\value{
+Layer of a ggplot2 object.
+}
 \description{
 Computes and draws a chronological chart.
 }

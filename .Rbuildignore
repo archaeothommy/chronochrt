@@ -8,3 +8,5 @@
 ^inst/Cheatsheet$
 ^inst/Cheatsheet\.pdf$
 ^cran-comments\.md$
+^CRAN-RELEASE$
+^LICENSE$

@@ -50,6 +50,8 @@
 #'   specific for this geom work and learn more about setting aesthetics in
 #'   \code{vignette("ggplot2-specs")}.
 #'
+#' @return Layer of a ggplot2 object.
+#'
 #' @export
 #'
 #' @examples

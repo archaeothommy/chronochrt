@@ -82,7 +82,7 @@ graphic device are used.}
 \item{background}{Optional specifications for the background of the
 chronological chart as vector in the format \code{c(background colour,
 linetype of grid lines)} to overwrite the default behaviour of
-\code{\link{theme_chronochrt}}. Any valid colour and linetype
+\code{\link{theme_chronochrt}}. Any valid colour and line type
 specifications are accepted, e.g. \code{c("grey90", "dotted")} (these are
 the default values of \code{\link{theme_chronochrt}}. See the sections
 "colour specification" and "line type specification" in \code{\link[graphics]{par}} for
@@ -109,7 +109,7 @@ full customisation use the respective geoms to build your own plot.
 It is assumed that the majority of the text labels will be placed on the
 right side of each column. Therefore they are right aligned to prevent them
 from running outside the plotting area. Vertically, it will be placed
-centered on the \code{year} given. Text in labels can be wrapped by inserting
+centred on the \code{year} given. Text in labels can be wrapped by inserting
 \code{"\n"} (without blanks).
 }
 \examples{

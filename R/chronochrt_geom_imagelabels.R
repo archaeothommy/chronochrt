@@ -22,6 +22,8 @@
 #'   \item \code{group} \item \code{height} \item \code{width} } See Details
 #'   for how these aesthetics work.
 #'
+#' @return Layer of a ggplot2 object.
+#'
 #' @author
 #' This geom is a modified version of the \code{geom_custom()} from \href{https://github.com/baptiste}{Baptiste Auguié}'s \href{https://cran.r-project.org/package=egg}{egg package}.
 #'

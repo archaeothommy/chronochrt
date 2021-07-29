@@ -7,7 +7,7 @@
 import_chron(path, region, name, start, end, level, add, delim, ...)
 }
 \arguments{
-\item{path}{A character string with either the path or a weblink to the file
+\item{path}{A character string with either the path or a URL to the file
 to be imported.}
 
 \item{region, name, start, end, level, add}{Character string (case sensitive) with the column names of:

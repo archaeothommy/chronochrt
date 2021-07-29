@@ -34,6 +34,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2]{layer}}. These are often aesthetics, used to set an aesthetic to a fixed value, like \code{height = 1}.}
 }
+\value{
+Layer of a ggplot2 object.
+}
 \description{
 Plot images in a ggplot2 object. Supported file types are: \code{.png},
 \code{.jpg}, \code{.tif}, \code{.bmp.}, \code{.svg} (see
