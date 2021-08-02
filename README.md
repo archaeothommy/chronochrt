@@ -9,6 +9,8 @@
 status](https://gitlab.com/roset/chronochrt/badges/master/pipeline.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
 [![coverage
 report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5154019.svg)](https://doi.org/10.5281/zenodo.5154019)
 <!-- badges: end -->
 
 ChronochRt offers an easy way to draw chronological charts from tables.

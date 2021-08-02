@@ -21,7 +21,7 @@ library(knitr)
 To execute the examples shown in this vignette, load the package:  
 
 ```{r setup, eval=FALSE}
-library(rhronochrt)
+library(chronochrt)
 ```
 
 ## The data set 
