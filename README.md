@@ -20,17 +20,18 @@ chronological charts.
 
 ## Installation
 
-ChronochRt is currently in the state of beta testing. You can install it
-from gitlab by:
+You can install the released version of ChronochRt from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("chronochrt")
+```
+
+or install the development version with the newest bugfixes and features
+from gitlab with:
 
 ``` r
  devtools::install_gitlab("roset/chronochrt")
-```
-
-and to include the vignette
-
-``` r
- devtools::install_gitlab("roset/chronochrt", build_vignettes = TRUE)
 ```
 
 Please help us to improve ChronochRt by filing observed bugs as an issue
