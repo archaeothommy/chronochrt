@@ -10,6 +10,7 @@ status](https://gitlab.com/roset/chronochrt/badges/master/pipeline.svg)](https:/
 [![coverage
 report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
+[![CRAN\_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5154019.svg)](https://doi.org/10.5281/zenodo.5154019)
 <!-- badges: end -->
 
