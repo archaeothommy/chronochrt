@@ -10,7 +10,7 @@ status](https://gitlab.com/roset/chronochrt/badges/master/pipeline.svg)](https:/
 [![coverage
 report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
-[![CRAN\_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)
+[![CRAN\_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5154019.svg)](https://doi.org/10.5281/zenodo.5154019)
 <!-- badges: end -->
 
@@ -93,7 +93,7 @@ plot_chronochrt(data)
 <tbody>
 <tr>
 <td valign="bottom">
-<img src="https://europa.eu/european-union/sites/europaeu/files/docs/body/flag_yellow_low.jpg"  width="200">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"  width="200">
 </td>
 <td valign="bottom" halign="left">
 This project has received funding from the European Union’s Horizon 2020
