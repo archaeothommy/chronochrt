@@ -141,7 +141,7 @@ plot_chronochrt <- function(data, labels_text = NULL, labels_image = NULL, year_
       if (!("label" %in% names(labels_text))) {stop("Wrong input format: The column `label` in ", substitute(labels_text), " does not exist.")}
       if (!("position" %in% names(labels_text))) {stop("Wrong input format: The column `position` in ", substitute(labels_text), " does not exist.")}
 
-      if (!all(is.character(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
+      if (!all(is.character(labels_text$region) | is.factor(labels_text$region), is.numeric(labels_text$year), is.character(labels_text$label), is.numeric(labels_text$position))) {
         stop("One or more columns of the text label data contain incompatible data. Data must be strings (region, label) and numeric (year, position).")
       }
     } else {
@@ -156,7 +156,7 @@ plot_chronochrt <- function(data, labels_text = NULL, labels_image = NULL, year_
       if (!("year" %in% names(labels_image))) {stop("Wrong input format: The column `year` in ", substitute(labels_image), " does not exist.")}
       if (!("position" %in% names(labels_image))) {stop("Wrong input format: The column `position` in ", substitute(labels_image), " does not exist.")}
 
-      if (!all(is.character(labels_image$region), is.numeric(labels_image$year), is.character(labels_image$image_path), is.numeric(labels_image$position))) {
+      if (!all(is.character(labels_image$region) | is.factor(labels_image$region), is.numeric(labels_image$year), is.character(labels_image$image_path), is.numeric(labels_image$position))) {
         stop("One or more columns of the image label data contain incompatible data. Data must be strings (region, label, image_path) and numeric (year, position).")
       }
     } else {

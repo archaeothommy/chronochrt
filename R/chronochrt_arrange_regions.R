@@ -1,14 +1,14 @@
 #' Arranging the regions (sections) of a chronological chart
 #'
-#' This function ensures that the regions/sections of a chronological chart are
-#' arranged in the desired order, not necessarily in an alphabetical one (the
-#' default plotting order).
+#' This function ensures that the regions/sections of a chronological chart and
+#' of the accompanying labels are arranged in the desired order, not necessarily
+#' in an alphabetical one (the default plotting order).
 #'
-#' @param data A data set with chronological data and a column named "region".
-#' @param order A character vector with desired order of the region/section
+#' @param data A data set with a column named "region".
+#' @param order A character vector with the desired order of the region/section
 #'   titles. Each title must be given only once.
 #'
-#' @return A tibble with chronological data ready-to-use for plotting with
+#' @return A tibble with data ready-to-use for plotting with
 #'   \code{\link{plot_chronochrt}}.
 #'
 #' @export

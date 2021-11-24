@@ -1,6 +1,13 @@
 #ChronochRt 0.1.0.9000
 
-* 
+## Improvements
+
+* The documentation of `arrange_regions()` was updated to emphasize that is works also with datasets for labels.
+
+## Bug fixes
+
+* `plot_chronochrt()` now also accepts datasets for text and images labels with arranged regions (i. e. factors and not only characters). 
+
 
 # ChronochRt 0.1.0
 
