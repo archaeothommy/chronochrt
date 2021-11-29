@@ -16,8 +16,8 @@ Authors@R:
 Description: Easy way to draw chronological charts from tables, aiming to include an intuitive environment for anyone new to R. Includes 'ggplot2' geoms and theme for chronological charts. 
 Language: en-GB
 License: GPL-3
-URL: https://gitlab.com/roset/chronochrt
-BugReports: https://gitlab.com/roset/chronochrt/-/issues
+URL: https://gitlab.com/archaeothommy/chronochrt
+BugReports: https://gitlab.com/archaeothommy/chronochrt/-/issues
 Imports:
     dplyr (>= 1.0.0),
     ggplot2,
