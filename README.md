@@ -6,11 +6,11 @@
 <!-- badges: start -->
 
 [![pipeline
-status](https://gitlab.com/roset/chronochrt/badges/master/pipeline.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
+status](https://gitlab.com/archaeothommy/chronochrt/badges/master/pipeline.svg)](https://gitlab.com/archaeothommy/chronochrt/-/commits/master)
 [![coverage
-report](https://gitlab.com/roset/chronochrt/badges/master/coverage.svg)](https://gitlab.com/roset/chronochrt/-/commits/master)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
-[![CRAN\_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
+report](https://gitlab.com/archaeothommy/chronochrt/badges/master/coverage.svg)](https://gitlab.com/archaeothommy/chronochrt/-/commits/master)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
+[![CRAN_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cran.r-project.org/web/packages/chronochrt/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5154019.svg)](https://doi.org/10.5281/zenodo.5154019)
 <!-- badges: end -->
 
@@ -32,11 +32,11 @@ or install the development version with the newest bugfixes and features
 from gitlab with:
 
 ``` r
- devtools::install_gitlab("roset/chronochrt")
+ devtools::install_gitlab("archaeothommy/chronochrt")
 ```
 
 Please help us to improve ChronochRt by filing observed bugs as an issue
-[here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
+[here](mailto:incoming+archaeothommy-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Features
 
@@ -64,7 +64,7 @@ Please help us to improve ChronochRt by filing observed bugs as an issue
     [ggplot2](https://ggplot2.tidyverse.org/)
 
 Is there a feature missing? Please let us know
-[here](mailto:incoming+roset-chronochrt-13993341-issue-@incoming.gitlab.com).
+[here](mailto:incoming+archaeothommy-chronochrt-13993341-issue-@incoming.gitlab.com).
 
 ## Example
 
@@ -84,8 +84,8 @@ plot_chronochrt(data)
 
 ## Getting started
 
--   [Cheatsheet](https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)
--   [Vignettes](https://gitlab.com/roset/chronochrt/-/tree/master/vignettes)
+-   [Cheatsheet](https://gitlab.com/archaeothommy/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)
+-   [Vignettes](https://gitlab.com/archaeothommy/chronochrt/-/tree/master/vignettes)
 
 ## Funding for the development of ChronochRt 0.0.5
 
