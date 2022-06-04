@@ -27,7 +27,7 @@ aims to provide an intuitive environment for anyone new to R.
 
 \section{Getting started}{
  \itemize{ \item
-  \href{https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
+  \href{https://gitlab.com/archaeothommy/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
    \item Vignettes}
 }
 

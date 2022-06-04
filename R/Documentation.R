@@ -19,7 +19,7 @@
 #'   integration in pipes, enhanced customisation with \pkg{ggplot2}}
 #'
 #' @section Getting started: \itemize{ \item
-#'   \href{https://gitlab.com/roset/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
+#'   \href{https://gitlab.com/archaeothommy/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
 #'    \item Vignettes}
 #'
 #'
