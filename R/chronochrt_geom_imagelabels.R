@@ -79,7 +79,17 @@ GeomChronochRtImage <- ggplot2::ggproto("GeomChronochRtImage", ggplot2:::Geom,
 
      data <- data[file.exists(data$image_path) | grepl("http", data$image_path, fixed = TRUE), ]
 
-     data$image <- lapply(data$image_path, function(x) magick::image_read(x))
+     # Let magick::image_read fail gracefully if source is not available
+     image_exist <- function (x) {
+       return(tryCatch(magick::image_read(x),
+                       error=function(e) {
+                         message(conditionMessage(e))
+                         NA
+                         }
+       ))
+       }
+
+     data$image <- lapply(data$image_path, function(x) image_exist(x))
 
      if (any(grepl("height", names(data)))) {data$height <- grid::unit(data$height, "cm")}
      if (any(grepl("width", names(data)))) {data$width <- grid::unit(data$width, "cm")}

@@ -1,7 +1,7 @@
 Package: chronochrt
 Title: Creating Chronological Charts with R
-Version: 0.1.0.9000
-Date: 2021-08-02
+Version: 0.1.1
+Date: 2022-06-04
 Authors@R: 
     c(person(given = "Thomas",
            family = "Rose",
@@ -38,5 +38,5 @@ Suggests:
     vdiffr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr
