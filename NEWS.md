@@ -1,4 +1,12 @@
-#ChronochRt 0.1.1.
+# ChronochRt 0.1.1.900
+
+## Improvements
+
+
+## Bug fixes
+
+
+# ChronochRt 0.1.1.
 
 ## Improvements
 
@@ -6,7 +14,7 @@
 
 ## Bug fixes
 
-* `plot_chronochrt()` now also accepts datasets for text and images labels with arranged regions (i. e. factors and not only characters). 
+* `plot_chronochrt()` now also accepts datasets for text and image labels with arranged regions (i. e. factors and not only characters). 
 * `geom_chronochRtImage()` now fails gracefully if the file does not exist. 
 
 
