@@ -100,11 +100,10 @@
 #' plot_chronochrt(chrons, labels, images, color_label = "red", size_text = 5, height_image = 4)
 #'
 #' # Export plot
-#' \dontrun{
-#'   plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"))
+#'   plot_chronochrt(chrons, filename = file.exists(tempdir(), "chronology.jpg"), plot_dim = c(10, 15, "cm"))
 #'
 #'   # with additional parameters
-#'   plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"), dpi = 300)
+#'   plot_chronochrt(chrons, filename = "file.exists(tempdir(), "chronology.jpg"), plot_dim = c(10, 15, "cm"), dpi = 300)
 #'
 #' }
 #'

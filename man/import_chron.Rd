@@ -85,7 +85,7 @@ chrons <- import_chron(path = "ex_urnfield_periods.xlsx",
                        name = "Name",
                        start = "Start",
                        end = "End",
-                       level = "Level"
+                       level = "Level",
                        add = "Add",
                        sheet = "data")
 }
