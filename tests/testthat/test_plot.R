@@ -10,8 +10,8 @@ test_that("Plotting", {
                    expected = TRUE)
   expect_identical(object = p1$plot_env$axis_title,
                    expected = "Jahre")
-  expect_equal(object = file.exists("Test_that.jpg"),
-               expected = file.exists("Test_that.jpg"))
+  expect_equal(object = file.exists(file.path(tempdir(), "Test_that.jpg")),
+               expected = file.exists(file.path(tempdir(), "Test_that.jpg")))
   expect_error(object = plot_chronochrt(not_existent),
                regexp = "object*")
   expect_error(object = plot_chronochrt(test_reference, labels_text = not_existent),

@@ -26,7 +26,7 @@ library(chronochrt)
 
 ## Examples
 
-This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://gitlab.com/roset/chronochrt/tree/master/inst/extdata). 
+This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://gitlab.com/archaeothommy/chronochrt/tree/master/inst/extdata). 
 
 ### Examples 1: Chonological table
 This example illustrates the main purpose of the package: facilitating the hassle free drawing of chronological tables. 
@@ -42,13 +42,13 @@ UC_Chronology <- import_chron(path = "ex_urnfield_periods.xlsx",
 ```
 
 To access it directly from the package, use 
-```{r Example_UK_hidden, echo=TRUE}
+```{r Example_UK_hidden, echo=TRUE, message=FALSE}
 UC_Chronology <- import_chron(path = system.file("extdata/ex_urnfield_periods.xlsx", package = 'chronochrt'),
                                "Region", "Name", "Start", "End", "Level")
 ```
 
 Then, create the chronological chart by: 
-```{r Example_UK_plot, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+```{r Example_UK_plot, eval=FALSE, echo=TRUE}
  plot_chronochrt(UC_Chronology, 
                  axis_title = "BCE", 
                  size_text = 4, 
@@ -57,7 +57,15 @@ Then, create the chronological chart by:
 
 ```
 
-And that's it! Because a file name as well as physical dimensions were provided the chart is already saved as "UC-Chronology.png" in the working directory, with the specified size of 15x10 cm.
+And that's it! Because a file name as well as physical dimensions were provided, the chart would be saved right away as "UC-Chronology.png" in your working directory, with the specified size of 16x10 cm when running the code. It would look like this: 
+
+```{r Example_UK_plot2, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+ plot_chronochrt(UC_Chronology, 
+                 axis_title = "BCE", 
+                 size_text = 4, 
+                 line_break = 22)
+
+```
 
 ### Example 2: Occupation phases and other data
 

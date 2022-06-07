@@ -154,6 +154,6 @@ test_plot_err_level <- tibble(region = "Atlantis",
 
 p1 <- plot_chronochrt(test_reference, axis_title = "Jahre")
 
-p2 <- plot_chronochrt(data = test_plot_reference, labels_text = test_labels_reference, labels_image = test_images_reference, axis_title = "BC/AD", year_lim = c(-1500, 100), filename = "Test_that.jpg", height_image = 5, plot_dim = c(3, 3, "mm"),
+p2 <- plot_chronochrt(data = test_plot_reference, labels_text = test_labels_reference, labels_image = test_images_reference, axis_title = "BC/AD", year_lim = c(-1500, 100), filename = file.path(tempdir(), "Test_that.jpg"), height_image = 5, plot_dim = c(3, 3, "mm"),
                       line_break = 10, fill_chron = "red", color_chron = "green", size_line = 5, background = c("white", "dashed"), dpi = 1200, minimal = TRUE, color_label = "orange", size_text = 5)
 print(p2)

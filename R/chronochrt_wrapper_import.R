@@ -74,7 +74,7 @@
 #'                        name = "Name",
 #'                        start = "Start",
 #'                        end = "End",
-#'                        level = "Level"
+#'                        level = "Level",
 #'                        add = "Add",
 #'                        sheet = "data")
 #' }
