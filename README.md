@@ -11,7 +11,7 @@ status](https://gitlab.com/archaeothommy/chronochrt/badges/master/pipeline.svg)]
 report](https://gitlab.com/archaeothommy/chronochrt/badges/master/coverage.svg)](https://gitlab.com/archaeothommy/chronochrt/-/commits/master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/package=chronochrt)
 [![CRAN_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cran.r-project.org/package=chronochrt)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5154019.svg)](https://doi.org/10.5281/zenodo.5154019)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6819552.svg)](https://doi.org/10.5281/zenodo.6819552)
 <!-- badges: end -->
 
 ChronochRt offers an easy way to draw chronological charts from tables.
