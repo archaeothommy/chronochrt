@@ -20,7 +20,7 @@ URL: https://gitlab.com/archaeothommy/chronochrt
 BugReports: https://gitlab.com/archaeothommy/chronochrt/-/issues
 Imports:
     dplyr (>= 1.0.0),
-    ggplot2,
+    ggplot2 (>= 3.4.0),
     grid,
     magick,
     magrittr, 
