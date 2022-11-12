@@ -11,29 +11,30 @@
 #' these might be e.g. columns specifying the x and y position of the names to
 #' place them at an arbitrary spot.
 #'
-#' @param path A character string with either the path or a URL to the file
-#'   to be imported.
-#' @param region,name,start,end,level,add Character string (case sensitive) with the column names of:
-#'    \itemize{
-#'    \item the region/sections,
-#'    \item the names of the chronological units,
-#'    \item their start dates,
-#'    \item their end dates,
-#'    \item their level,
-#'    \item the information whether the chronological units within a
-#'    region/section should be drawn separately or not.
-#'    }
+#' @param path A character string with either the path or a URL to the file to
+#'   be imported.
+#' @param region Character string (case sensitive) with the column name of the
+#'   region/section, default to \code{"region"}.
+#' @param name Character string (case sensitive) with the column name of the
+#'   chronological units' names, default to \code{"name"}.
+#' @param start Character string (case sensitive) with the column name of the
+#'   chronological units' start dates, default to \code{"start"}.
+#' @param end Character string (case sensitive) with the column name of the
+#'   chronological units' end dates, default to \code{"end"}.
+#' @param level Character string (case sensitive) with the column name of the
+#'   chronological units' levels, default to \code{"level"}.
+#' @param add Character string (case sensitive) with the column name of the
+#'   information whether the chronological units within a region/section should
+#'   be drawn separately or not, default to \code{"add"}.
 #' @param delim A character string with the separator for tabular data. Use
 #'   \code{delim = "\t"} for tab-separated data. Must be provided for all file
 #'   types except \code{.xlsx} or \code{.xls}.
 #' @param ... Additional arguments passed to the respective import functions.
-#'   See their documentation for details:
-#'   \itemize{
-#'     \item \code{\link[readxl]{read_excel}} for file formats \code{.xlsx}
-#'     and \code{.xls},
-#'   \item \code{\link[readr]{read_csv}} for the file format \code{.csv},
-#'   \item \code{\link[readr]{read_delim}} for all other file formats.
-#'   }
+#'   See their documentation for details: \itemize{ \item
+#'   \code{\link[readxl]{read_excel}} for file formats \code{.xlsx} and
+#'   \code{.xls}, \item \code{\link[readr]{read_csv}} for the file format
+#'   \code{.csv}, \item \code{\link[readr]{read_delim}} for all other file
+#'   formats. }
 #'
 #' @return A tibble containing the desired chronological information.
 #'
@@ -79,7 +80,7 @@
 #'                        sheet = "data")
 #' }
 
-import_chron <- function(path, region, name, start, end, level, add, delim, ...)
+import_chron <- function(path, region = "region", name = "name", start = "start", end = "end", level = "level", add = "add", delim, ...)
 {
   if (!file.exists(path)) {
     stop("The file path is not correct or the file does not exist.")
@@ -110,8 +111,7 @@ import_chron <- function(path, region, name, start, end, level, add, delim, ...)
         }
       }
 
-  pos <- tidyselect::eval_rename(rlang::expr(c(region = region, name = name, start = start, end = end, level = level, add = add)), data)
-  names(data)[pos] <- names(pos)
+  data <- dplyr::rename(data, tidyselect::all_of(c(region = region, name = name, start = start, end = end, level = level, add = add)))
 
   data$add <- as.logical(data$add)
 

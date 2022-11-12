@@ -5,14 +5,14 @@
 #' customisation.
 #'
 #' This function is wrapper around various functions for an quick and convenient
-#' way to draw chronological charts. It relies on the common data
-#' structure of ChronochRt (see \code{vignette("ChronochRt")} for details). For
-#' full customisation use the respective geoms to build your own plot.
+#' way to draw chronological charts. It relies on the common data structure of
+#' ChronochRt (see \code{vignette("ChronochRt")} for details). For full
+#' customisation use the respective geoms to build your own plot.
 #'
 #' It is assumed that the majority of the text labels will be placed on the
 #' right side of each column. Therefore they are right aligned to prevent them
-#' from running outside the plotting area. Vertically, it will be placed
-#' centred on the \code{year} given. Text in labels can be wrapped by inserting
+#' from running outside the plotting area. Vertically, it will be placed centred
+#' on the \code{year} given. Text in labels can be wrapped by inserting
 #' \code{"\n"} (without blanks).
 #'
 #' @inheritParams geom_chronochRt
@@ -33,8 +33,8 @@
 #'   default is \code{"black"}. See the colour specification section of
 #'   \code{\link[graphics]{par}} for how to specify colours in R.
 #' @param color_label Colour of the text labels. The default is \code{"black"}.
-#'   See the colour specification section of \code{\link[graphics]{par}} for
-#'   how to specify colours in R.
+#'   See the colour specification section of \code{\link[graphics]{par}} for how
+#'   to specify colours in R.
 #' @param line_break Line length of the section labels in characters. Text will
 #'   be wrapped at the blank closest to the specified number of characters.
 #'   Default is \code{10} characters.
@@ -56,8 +56,8 @@
 #'   \code{\link{theme_chronochrt}}. Any valid colour and line type
 #'   specifications are accepted, e.g. \code{c("grey90", "dotted")} (these are
 #'   the default values of \code{\link{theme_chronochrt}}. See the sections
-#'   "colour specification" and "line type specification" in \code{\link[graphics]{par}} for
-#'   how to specify colours and line types in R.
+#'   "colour specification" and "line type specification" in
+#'   \code{\link[graphics]{par}} for how to specify colours and line types in R.
 #' @param ... Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 #'   enhance the saved plot like \code{dpi} to specify its resolution. See
 #'   \code{\link[ggplot2]{ggsave}} for detailed information.
@@ -100,12 +100,17 @@
 #' plot_chronochrt(chrons, labels, images, color_label = "red", size_text = 5, height_image = 4)
 #'
 #' # Export plot
-#'   plot_chronochrt(chrons, filename = file.exists(tempdir(), "chronology.jpg"), plot_dim = c(10, 15, "cm"))
+#'
+#' file <- tempfile(fileext = ".jpg")
+#'
+#' plot_chronochrt(chrons, filename = tempfile(fileext = ".jpg"),
+#'   plot_dim = c(10, 15, "cm"))
 #'
 #'   # with additional parameters
-#'   plot_chronochrt(chrons, filename = "file.exists(tempdir(), "chronology.jpg"), plot_dim = c(10, 15, "cm"), dpi = 300)
+#'   plot_chronochrt(chrons, filename = tempfile(fileext = ".jpg"),
+#'     plot_dim = c(10, 15, "cm"), dpi = 300)
 #'
-#' }
+#' unlink(file)
 #'
 #' # Additional customisation with ggplot2
 #' plot_chronochrt(chrons) + ggplot2::theme_bw()

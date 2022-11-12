@@ -58,8 +58,8 @@ default is \code{"black"}. See the colour specification section of
 \code{\link[graphics]{par}} for how to specify colours in R.}
 
 \item{color_label}{Colour of the text labels. The default is \code{"black"}.
-See the colour specification section of \code{\link[graphics]{par}} for
-how to specify colours in R.}
+See the colour specification section of \code{\link[graphics]{par}} for how
+to specify colours in R.}
 
 \item{line_break}{Line length of the section labels in characters. Text will
 be wrapped at the blank closest to the specified number of characters.
@@ -85,8 +85,8 @@ linetype of grid lines)} to overwrite the default behaviour of
 \code{\link{theme_chronochrt}}. Any valid colour and line type
 specifications are accepted, e.g. \code{c("grey90", "dotted")} (these are
 the default values of \code{\link{theme_chronochrt}}. See the sections
-"colour specification" and "line type specification" in \code{\link[graphics]{par}} for
-how to specify colours and line types in R.}
+"colour specification" and "line type specification" in
+\code{\link[graphics]{par}} for how to specify colours and line types in R.}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2]{ggsave}} to
 enhance the saved plot like \code{dpi} to specify its resolution. See
@@ -102,14 +102,14 @@ customisation.
 }
 \details{
 This function is wrapper around various functions for an quick and convenient
-way to draw chronological charts. It relies on the common data
-structure of ChronochRt (see \code{vignette("ChronochRt")} for details). For
-full customisation use the respective geoms to build your own plot.
+way to draw chronological charts. It relies on the common data structure of
+ChronochRt (see \code{vignette("ChronochRt")} for details). For full
+customisation use the respective geoms to build your own plot.
 
 It is assumed that the majority of the text labels will be placed on the
 right side of each column. Therefore they are right aligned to prevent them
-from running outside the plotting area. Vertically, it will be placed
-centred on the \code{year} given. Text in labels can be wrapped by inserting
+from running outside the plotting area. Vertically, it will be placed centred
+on the \code{year} given. Text in labels can be wrapped by inserting
 \code{"\n"} (without blanks).
 }
 \examples{
@@ -144,13 +144,17 @@ plot_chronochrt(chrons, axis_title = "BC/AD", year_lim = c(-50,100),
 plot_chronochrt(chrons, labels, images, color_label = "red", size_text = 5, height_image = 4)
 
 # Export plot
-\dontrun{
-  plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"))
+
+file <- tempfile(fileext = ".jpg")
+
+plot_chronochrt(chrons, filename = tempfile(fileext = ".jpg"),
+  plot_dim = c(10, 15, "cm"))
 
   # with additional parameters
-  plot_chronochrt(chrons, filename = "chronology.jpg", plot_dim = c(10, 15, "cm"), dpi = 300)
+  plot_chronochrt(chrons, filename = tempfile(fileext = ".jpg"),
+    plot_dim = c(10, 15, "cm"), dpi = 300)
 
-}
+unlink(file)
 
 # Additional customisation with ggplot2
 plot_chronochrt(chrons) + ggplot2::theme_bw()

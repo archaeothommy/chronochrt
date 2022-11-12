@@ -4,35 +4,51 @@
 \alias{import_chron}
 \title{Import data for Chronological chart}
 \usage{
-import_chron(path, region, name, start, end, level, add, delim, ...)
+import_chron(
+  path,
+  region = "region",
+  name = "name",
+  start = "start",
+  end = "end",
+  level = "level",
+  add = "add",
+  delim,
+  ...
+)
 }
 \arguments{
-\item{path}{A character string with either the path or a URL to the file
-to be imported.}
+\item{path}{A character string with either the path or a URL to the file to
+be imported.}
 
-\item{region, name, start, end, level, add}{Character string (case sensitive) with the column names of:
-\itemize{
-\item the region/sections,
-\item the names of the chronological units,
-\item their start dates,
-\item their end dates,
-\item their level,
-\item the information whether the chronological units within a
-region/section should be drawn separately or not.
-}}
+\item{region}{Character string (case sensitive) with the column name of the
+region/section, default to \code{"region"}.}
+
+\item{name}{Character string (case sensitive) with the column name of the
+chronological units' names, default to \code{"name"}.}
+
+\item{start}{Character string (case sensitive) with the column name of the
+chronological units' start dates, default to \code{"start"}.}
+
+\item{end}{Character string (case sensitive) with the column name of the
+chronological units' end dates, default to \code{"end"}.}
+
+\item{level}{Character string (case sensitive) with the column name of the
+chronological units' levels, default to \code{"level"}.}
+
+\item{add}{Character string (case sensitive) with the column name of the
+information whether the chronological units within a region/section should
+be drawn separately or not, default to \code{"add"}.}
 
 \item{delim}{A character string with the separator for tabular data. Use
 \code{delim = "\t"} for tab-separated data. Must be provided for all file
 types except \code{.xlsx} or \code{.xls}.}
 
 \item{...}{Additional arguments passed to the respective import functions.
-See their documentation for details:
-\itemize{
-  \item \code{\link[readxl]{read_excel}} for file formats \code{.xlsx}
-  and \code{.xls},
-\item \code{\link[readr]{read_csv}} for the file format \code{.csv},
-\item \code{\link[readr]{read_delim}} for all other file formats.
-}}
+See their documentation for details: \itemize{ \item
+\code{\link[readxl]{read_excel}} for file formats \code{.xlsx} and
+\code{.xls}, \item \code{\link[readr]{read_csv}} for the file format
+\code{.csv}, \item \code{\link[readr]{read_delim}} for all other file
+formats. }}
 }
 \value{
 A tibble containing the desired chronological information.

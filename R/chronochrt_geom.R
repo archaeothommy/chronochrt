@@ -124,15 +124,15 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
 
     data <- data %>%
       dplyr::mutate(boundary_start = dplyr::case_when(
-        grepl("/", .data$start) ~ "unsec",
-        grepl("_", .data$start) ~ "trans",
+        grepl("/", start) ~ "unsec",
+        grepl("_", start) ~ "trans",
         TRUE ~ "sec")) %>%
       dplyr::mutate(boundary_end = dplyr::case_when(
-        grepl("/", .data$end) ~ "unsec",
-        grepl("_", .data$end) ~ "trans",
+        grepl("/", end) ~ "unsec",
+        grepl("_", end) ~ "trans",
         TRUE ~ "sec")) %>%
-      tidyr::separate(.data$start, c("start", "start2"), sep = "/|_", fill = "right") %>%
-      tidyr::separate(.data$end, c("end", "end2"), sep = "/|_", fill = "right") %>%
+      tidyr::separate(start, c("start", "start2"), sep = "/|_", fill = "right") %>%
+      tidyr::separate(end, c("end", "end2"), sep = "/|_", fill = "right") %>%
       dplyr::mutate(dplyr::across(tidyselect::starts_with("start") | tidyselect::starts_with("end"), as.numeric))
 
 
@@ -145,8 +145,8 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
       year_max <- max(params$year_lim, na.rm = TRUE)
 
       data <- data %>%
-        dplyr::filter(!(.data$start >= year_max & .data$start2 >= year_max)) %>%
-        dplyr::filter(!(.data$end <= year_min & .data$end2 <= year_min)) %>%
+        dplyr::filter(!(start >= year_max & start2 >= year_max)) %>%
+        dplyr::filter(!(end <= year_min & end2 <= year_min)) %>%
         dplyr::mutate(start = dplyr::if_else(start < year_min, year_min, start),
                       start2 = dplyr::if_else(start2 < year_min, year_min, start2),
                       end = dplyr::if_else(end > year_max, year_max, end),
@@ -154,22 +154,22 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
     }
 
     data <- data %>%
-      dplyr::arrange(.data$level, .data$start) %>%
-      dplyr::group_by(.data$region, .data$add) %>%
-      dplyr::mutate(level = .data$level - min(.data$level) + 1) %>%
-      dplyr::mutate(xmin = (.data$level - 1) / max(.data$level),
-                    xmax = .data$level / max(.data$level)) %>%
-      dplyr::mutate(x = .data$xmin + ((.data$xmax - .data$xmin) / 2),
-                    y = .data$start + ((.data$end - .data$start) / 2)) %>%
-      dplyr::mutate(xmax_uncorr = corr_xmax(.data$start, .data$end, .data$xmax)) %>%
-      dplyr::mutate(xmax = dplyr::if_else(.data$xmax == .data$xmax_uncorr, 1, .data$xmax)) %>%
+      dplyr::arrange(level, start) %>%
+      dplyr::group_by(region, add) %>%
+      dplyr::mutate(level = level - min(level) + 1) %>%
+      dplyr::mutate(xmin = (level - 1) / max(level),
+                    xmax = level / max(level)) %>%
+      dplyr::mutate(x = xmin + ((xmax - xmin) / 2),
+                    y = start + ((end - start) / 2)) %>%
+      dplyr::mutate(xmax_uncorr = corr_xmax(start, end, xmax)) %>%
+      dplyr::mutate(xmax = dplyr::if_else(xmax == xmax_uncorr, 1, xmax)) %>%
       dplyr::ungroup() %>%
-      dplyr::select(-.data$xmax_uncorr) %>%
-      dplyr::mutate(xmax = dplyr::if_else(.data$add == TRUE, .data$xmax + 1, .data$xmax),
-                    xmin = dplyr::if_else(.data$add == TRUE, .data$xmin + 1, .data$xmin),
-                    x = dplyr::if_else(.data$add == TRUE, .data$x + 1, .data$x)) %>%
-      dplyr::mutate(ymin = min(.data$start, .data$start2, na.rm = TRUE),
-                    ymax = max(.data$end, .data$end2, na.rm = TRUE))
+      dplyr::select(-xmax_uncorr) %>%
+      dplyr::mutate(xmax = dplyr::if_else(add == TRUE, xmax + 1, xmax),
+                    xmin = dplyr::if_else(add == TRUE, xmin + 1, xmin),
+                    x = dplyr::if_else(add == TRUE, x + 1, x)) %>%
+      dplyr::mutate(ymin = min(start, start2, na.rm = TRUE),
+                    ymax = max(end, end2, na.rm = TRUE))
 
     if (!"name" %in% names(data)) {
       if ("label" %in% names(data)) {data <- dplyr::rename(data, name = label)
@@ -182,27 +182,27 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
  draw_panel = function(data, panel_params, coord, minimal, year_lim) {
 
    data <- data %>%
-     dplyr::mutate(x = if("name_x" %in% names(.)) {.data$name_x} else {.data$x},
-                   y = if("name_y" %in% names(.)) {.data$name_y} else {.data$y})
+     dplyr::mutate(x = if("name_x" %in% names(.)) {name_x} else {x},
+                   y = if("name_y" %in% names(.)) {name_y} else {y})
 
    if ("trans" %in% data$boundary_start | "trans" %in% data$boundary_end) {
 
    data_line_d <- data %>%
       dplyr::select(-tidyselect::contains("2")) %>%
-      dplyr::mutate(end = ifelse(boundary_end != "trans", NA, .data$end),
-                    start = ifelse(boundary_start != "trans", NA, .data$start)) %>%
+      dplyr::mutate(end = ifelse(boundary_end != "trans", NA, end),
+                    start = ifelse(boundary_start != "trans", NA, start)) %>%
       tidyr::pivot_longer(c("start", "end"), names_to = "side", values_to = "ystart", values_drop_na = TRUE) %>%
       dplyr::left_join(
          data %>%
-            dplyr::select(-.data$start, -.data$end) %>%
-            dplyr::mutate(end2 = ifelse(boundary_end != "trans", NA, .data$end2),
-                          start2 = ifelse(boundary_start != "trans", NA, .data$start2)) %>%
+            dplyr::select(-start, -end) %>%
+            dplyr::mutate(end2 = ifelse(boundary_end != "trans", NA, end2),
+                          start2 = ifelse(boundary_start != "trans", NA, start2)) %>%
             tidyr::pivot_longer(c("start2", "end2"), names_to = "side", values_to = "yend", values_drop_na = TRUE) %>%
-            dplyr::mutate(side = gsub("2", "", .data$side)),
+            dplyr::mutate(side = gsub("2", "", side)),
          by = c("region", "name", "level", "add", "PANEL", "group", "boundary_start", "boundary_end", "xmin", "xmax", "x", "y", "ymin", "ymax", "angle", "colour", "fill", "alpha", "size_line", "size_text", "hjust", "vjust", "family", "fontface", "lineheight", "side")
       ) %>%
       dplyr::group_by(region, level) %>%
-      dplyr::mutate(xmax = min(.data$xmax)) %>%
+      dplyr::mutate(xmax = min(xmax)) %>%
       dplyr::ungroup() %>%
       dplyr::distinct(ystart, yend, xmin, xmax, .keep_all = TRUE) %>%
       dplyr::mutate(linetype = "solid")
@@ -211,23 +211,23 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
    data_line_h <- data %>%
       dplyr::select(-tidyselect::contains("end")) %>%
       tidyr::pivot_longer(c("start", "start2"), names_to = "type", values_to = "yend") %>%
-      dplyr::rename(type_boundary = .data$boundary_start) %>%
+      dplyr::rename(type_boundary = boundary_start) %>%
       dplyr::bind_rows(
          data %>%
             dplyr::select(-tidyselect::contains("start")) %>%
             tidyr::pivot_longer(c("end", "end2"), names_to = "type", values_to = "yend") %>%
-            dplyr::rename(type_boundary = .data$boundary_end)
+            dplyr::rename(type_boundary = boundary_end)
       ) %>%
       tidyr::drop_na(yend) %>%
       dplyr::filter(type_boundary != "trans") %>%
-      dplyr::mutate(linetype = dplyr::if_else(.data$type_boundary == "unsec", "dashed", "solid")) %>%
+      dplyr::mutate(linetype = dplyr::if_else(type_boundary == "unsec", "dashed", "solid")) %>%
       dplyr::distinct(yend, xmax, linetype, .keep_all = TRUE)
 
    data_line_v <- data %>%
       tidyr::pivot_longer(c("xmin", "xmax"), names_to = "trash", values_to = "xend") %>%
       tidyr::drop_na(xend) %>%
-      dplyr::mutate(end = pmax(.data$end, .data$end2, na.rm = TRUE),
-                    start = pmin(.data$start, .data$start2, na.rm = TRUE)) %>%
+      dplyr::mutate(end = pmax(end, end2, na.rm = TRUE),
+                    start = pmin(start, start2, na.rm = TRUE)) %>%
       dplyr::distinct(xend, end, .keep_all = TRUE) %>%
       dplyr::mutate(linetype = "solid")
 
@@ -235,7 +235,7 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
      data_line_v <- dplyr::filter(data_line_v, xend %in% c(0, 1, 2))
    }
 
-   rect_df <- ggplot2:::new_data_frame(c(list(
+   rect_df <- ggplot2:::data_frame0(
      xmin = data$xmin,
      xmax = data$xmax,
      ymin = data$start,
@@ -245,11 +245,10 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
      fill = data$fill,
      alpha = data$alpha,
      linetype = "blank",
-     size = 0
-   ))
+     linewidth = 0
    )
 
-   line_df_h <- ggplot2:::new_data_frame(c(list(
+   line_df_h <- ggplot2:::data_frame0(
      x = data_line_h$xmin,
      y = data_line_h$yend,
      xend = data_line_h$xmax,
@@ -258,11 +257,10 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
      colour = data_line_h$colour,
      group = data_line_h$group,
      linetype = data_line_h$linetype,
-     size = data_line_h$size_line
-   ))
+     linewidth = data_line_h$size_line
    )
 
-   line_df_v <- ggplot2:::new_data_frame(c(list(
+   line_df_v <- ggplot2:::data_frame0(
      x = data_line_v$xend,
      y = data_line_v$start,
      xend = data_line_v$xend,
@@ -271,11 +269,10 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
      colour = data_line_v$colour,
      group = data_line_v$group,
      linetype = data_line_v$linetype,
-     size = data_line_v$size_line
-   ))
+     linewidth = data_line_v$size_line
    )
 
-   line_df_d <- ggplot2:::new_data_frame(c(list(
+   line_df_d <- ggplot2:::data_frame0(
      x = data_line_d$xmin,
      y = data_line_d$ystart,
      xend = data_line_d$xmax,
@@ -284,11 +281,10 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
      colour = data_line_d$colour,
      group = data_line_d$group,
      linetype = data_line_d$linetype,
-     size = data_line_d$size_line
-   ))
+     linewidth = data_line_d$size_line
    )
 
-   text_df <- ggplot2:::new_data_frame(c(list(
+   text_df <- ggplot2:::data_frame0(
      label = data$name,
      x = data$x,
      y = data$y,
@@ -302,7 +298,6 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom,
      size = data$size_text,
      hjust = data$hjust,
      vjust = data$vjust
-   ))
    )
 
    ggplot2:::ggname("geom_chronochRt",

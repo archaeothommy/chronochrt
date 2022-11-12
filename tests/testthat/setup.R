@@ -1,3 +1,7 @@
+library(tibble)
+library(ggplot2)
+library(vdiffr)
+
 # reference data sets
 
 test_reference <- tibble(

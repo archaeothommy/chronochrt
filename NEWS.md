@@ -1,10 +1,7 @@
-# ChronochRt 0.1.1.900
+# ChronochRt 0.1.2.
 
-## Improvements
-
-
-## Bug fixes
-
+* Update to maintain compatibility with newer versions of packages ChronochRt depends on. 
+* `import_chron()` now has default arguments for the columns names. 
 
 # ChronochRt 0.1.1.
 

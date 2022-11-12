@@ -1,4 +1,5 @@
-test_that("File Import", {
+suppressMessages(
+  test_that("File Import", {
 
   expect_equal(object = import_chron("ex_urnfield_periods.csv", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = ","),
                expected = readr::read_csv("ex_urnfield_periods_reference.csv", col_types = "ccnnnl"))
@@ -32,6 +33,7 @@ test_that("File Import", {
   expect_error(object = import_chron("NOT-EXISTENT/NOT-EXISTENT.txt", region = "Region", name = "Name", start = "Start", end = "End", level = "Level", add = "add", delim = "\t"),
                regexp = "The file path *")
   })
+)
 
 test_that("File Conversion", {
   expect_equal(object = convert_to_chron(data = test,
