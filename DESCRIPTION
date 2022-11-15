@@ -1,6 +1,6 @@
 Package: chronochrt
 Title: Creating Chronological Charts
-Version: 0.1.2
+Version: 0.1.2.900
 Date: 2022-11-12
 Authors@R: 
     c(person(given = "Thomas",
