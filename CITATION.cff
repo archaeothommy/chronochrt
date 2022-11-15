@@ -8,7 +8,7 @@ message: 'To cite package "chronochrt" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'chronochrt: Creating Chronological Charts'
-version: 0.1.1
+version: 0.1.2
 abstract: Easy way to draw chronological charts from tables, aiming to include an
   intuitive environment for anyone new to R. Includes 'ggplot2' geoms and theme for
   chronological charts.
@@ -40,7 +40,7 @@ preferred-citation:
   repository: https://CRAN.R-project.org/package=chronochrt
   repository-code: https://gitlab.com/archaeothommy/chronochrt
   url: https://gitlab.com/archaeothommy/chronochrt
-  date-released: '2022-06-08'
+  date-released: '2022-11-12'
   contact:
   - family-names: Rose
     given-names: Thomas
