@@ -1,13 +1,17 @@
-# ChronochRt 0.1.3.
+# ChronochRt 0.1.3.900
+
+* 
+
+# ChronochRt 0.1.3
 
 * CRAN fixes (see [r-lib/roxygen2#1491](https://github.com/r-lib/roxygen2/issues/1491)). 
 
-# ChronochRt 0.1.2.
+# ChronochRt 0.1.2
 
 * Update to maintain compatibility with newer versions of packages ChronochRt depends on. 
 * `import_chron()` now has default arguments for the columns names. 
 
-# ChronochRt 0.1.1.
+# ChronochRt 0.1.1
 
 ## Improvements
 
