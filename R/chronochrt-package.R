@@ -22,9 +22,7 @@
 #'   \href{https://gitlab.com/archaeothommy/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
 #'    \item Vignettes}
 #'
-#'
-#' @docType package
-#' @name chronochrt
+"_PACKAGE"
 #'
 #'
 #'

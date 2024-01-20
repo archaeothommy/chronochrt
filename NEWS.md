@@ -1,3 +1,7 @@
+# ChronochRt 0.1.3.
+
+* CRAN fixes (see [r-lib/roxygen2#1491](https://github.com/r-lib/roxygen2/issues/1491)). 
+
 # ChronochRt 0.1.2.
 
 * Update to maintain compatibility with newer versions of packages ChronochRt depends on. 
