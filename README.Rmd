@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # ChronochRt
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/archaeothommy/chronochrt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/archaeothommy/chronochrt/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/archaeothommy/chronochrt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/archaeothommy/chronochrt/actions/workflows/R-CMD-check.yaml) 
 [![Codecov test coverage](https://codecov.io/gh/archaeothommy/chronochrt/graph/badge.svg)](https://app.codecov.io/gh/archaeothommy/chronochrt)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/package=chronochrt)
 [![CRAN_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cran.r-project.org/package=chronochrt)
