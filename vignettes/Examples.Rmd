@@ -26,7 +26,7 @@ library(chronochrt)
 
 ## Examples
 
-This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://gitlab.com/archaeothommy/chronochrt/tree/master/inst/extdata). 
+This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://github.com/archaeothommy/chronochrt/tree/master/inst/extdata). 
 
 ### Examples 1: Chonological table
 This example illustrates the main purpose of the package: facilitating the hassle free drawing of chronological tables. 

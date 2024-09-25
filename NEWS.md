@@ -1,6 +1,7 @@
 # ChronochRt 0.1.3.900
 
-* 
+* moved repository from [gitlab.com](https://gitlab.com/archaeothommy/chronochrt) to [github.com](https://github.com/archaeothommy/chronochrt)
+
 
 # ChronochRt 0.1.3
 

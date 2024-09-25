@@ -5,10 +5,9 @@
 
 <!-- badges: start -->
 
-[![pipeline
-status](https://gitlab.com/archaeothommy/chronochrt/badges/master/pipeline.svg)](https://gitlab.com/archaeothommy/chronochrt/-/commits/master)
-[![coverage
-report](https://gitlab.com/archaeothommy/chronochrt/badges/master/coverage.svg)](https://gitlab.com/archaeothommy/chronochrt/-/commits/master)
+[![R-CMD-check](https://github.com/archaeothommy/chronochrt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/archaeothommy/chronochrt/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/archaeothommy/chronochrt/graph/badge.svg)](https://app.codecov.io/gh/archaeothommy/chronochrt)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/chronochrt)](https://cran.r-project.org/package=chronochrt)
 [![CRAN_downloads](https://cranlogs.r-pkg.org/badges/grand-total/chronochrt)](https://cran.r-project.org/package=chronochrt)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5154018.svg)](https://doi.org/10.5281/zenodo.5154018)
@@ -32,39 +31,39 @@ or install the development version with the newest bugfixes and features
 from gitlab with:
 
 ``` r
- devtools::install_gitlab("archaeothommy/chronochrt")
+ devtools::install_github("archaeothommy/chronochrt")
 ```
 
-Please help us to improve ChronochRt by filing observed bugs as an issue
-[here](mailto:incoming+archaeothommy-chronochrt-13993341-issue-@incoming.gitlab.com).
+You are very welcome to contribute to the package through forking the
+repository or creating an issue to suggest changes.
 
 ## Features
 
--   Slim structure of chronological datasets
--   Import tabular data files
--   Import Excel files (requires the package
-    [readxl](https://readxl.tidyverse.org/))
--   Possibility to display up to 2 chronological systems within the same
-    region (e.g. long and short chronologies)
--   Layout of the chronological chart optimised for easy readability and
-    comprehensibility
--   Years in BCE must be negative - that’s all you need to care about
-    dates
--   Handling of insecure dates
--   Handling of gaps, e.g. abandonment phases of sites
--   Optional text labels
--   Optional image labels to e.g. display key finds or show typological
-    developments
--   Geoms for the chronological chart and image labels
--   Export of the chronological chart in different file formats (raster
-    and vector graphics)
--   Easy customisation of the chronological chart
--   Based on the [tidyverse](https://www.tidyverse.org/): Seamless
-    integration in pipes, enhanced customisation with
-    [ggplot2](https://ggplot2.tidyverse.org/)
+- Slim structure of chronological datasets
+- Import tabular data files
+- Import Excel files (requires the package
+  [readxl](https://readxl.tidyverse.org/))
+- Possibility to display up to 2 chronological systems within the same
+  region (e.g. long and short chronologies)
+- Layout of the chronological chart optimised for easy readability and
+  comprehensibility
+- Years in BCE must be negative - that’s all you need to care about
+  dates
+- Handling of insecure dates
+- Handling of gaps, e.g. abandonment phases of sites
+- Optional text labels
+- Optional image labels to e.g. display key finds or show typological
+  developments
+- Geoms for the chronological chart and image labels
+- Export of the chronological chart in different file formats (raster
+  and vector graphics)
+- Easy customisation of the chronological chart
+- Based on the [tidyverse](https://www.tidyverse.org/): Seamless
+  integration in pipes, enhanced customisation with
+  [ggplot2](https://ggplot2.tidyverse.org/)
 
-Is there a feature missing? Please let us know
-[here](mailto:incoming+archaeothommy-chronochrt-13993341-issue-@incoming.gitlab.com).
+Is there a feature missing? Please let us know [by creating an
+issue](https://github.com/archaeothommy/chronochrt/issues/new/choose).
 
 ## Example
 
@@ -84,8 +83,8 @@ plot_chronochrt(data)
 
 ## Getting started
 
--   [Cheatsheet](https://gitlab.com/archaeothommy/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false)
--   [Vignettes](https://gitlab.com/archaeothommy/chronochrt/-/tree/master/vignettes)
+- [Cheatsheet](https://github.com/archaeothommy/chronochrt/blob/master/inst/ChronochRt_Cheatsheet.pdf)
+- [Vignettes](https://github.com/archaeothommy/chronochrt/tree/master/vignettes)
 
 ## Funding for the development of ChronochRt 0.0.5
 

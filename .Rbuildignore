@@ -12,4 +12,4 @@
 ^LICENSE$
 ^CRAN-SUBMISSION$
 ^CITATION\.cff$
-^\.gitlab-ci\.yml$
+^\.github$
