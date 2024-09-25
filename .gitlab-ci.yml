@@ -28,7 +28,8 @@ testing:
     script:
         - apt-get update
         - apt-get install -y libmagick++-dev
-        - Rscript -e 'install.packages(c("covr", "DT"))'
+        - R -e "remotes::install_deps(dependencies = TRUE)"
+        - Rscript -e 'install.packages("DT")'
         - Rscript -e 'covr::gitlab(quiet = FALSE)'
     artifacts:
         paths:
