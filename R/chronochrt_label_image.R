@@ -1,12 +1,12 @@
 #' Provide image labels for a chronological chart
 #'
-#' The function creates a tibble with the paths of the image labels to be plotted in a
-#' chronological chart or adds them to an already existing tibble.
+#' The function creates a tibble with the paths of the image labels to be
+#' plotted in a chronological chart or adds them to an already existing tibble.
 #'
-#' If the input is in the same order as the arguments, the arguments do not
-#' need to be explicitly named. Values can be provided as a number or
-#' character string, if they are the same for all other data. If not, they must
-#' be provided as vectors with equal lengths.
+#' If the input is in the same order as the arguments, the arguments do not need
+#' to be explicitly named. Values can be provided as a number or character
+#' string, if they are the same for all other data. If not, they must be
+#' provided as vectors with equal lengths.
 #'
 #' @param data An object to which labels should be added. Must not be provided
 #'   if \code{new = FALSE}.
@@ -21,9 +21,8 @@
 #' @param new Logical operator. If \code{TRUE}, a new data set will be created.
 #'   If \code{FALSE}, the default, the input will be added to an existing data
 #'   set.
-#' @param ... Further columns to include or additional arguments
-#'   passed to \code{\link[tibble]{tibble}} or
-#'   \code{\link[tibble]{add_row}}.
+#' @param ... Further columns to include or additional arguments passed to
+#'   \code{\link[tibble]{tibble}} or \code{\link[tibble]{add_row}}.
 #'
 #' @return A tibble with image labels ready-to-use for plotting with
 #'   \code{\link{plot_chronochrt}}.
@@ -58,7 +57,8 @@
 #'                           position = 0.9,
 #'                           image_path = "https://www.r-project.org/logo/Rlogo.png")
 
-add_label_image <- function (data, region, year, position = 0.75, image_path, new = FALSE, ...)
+add_label_image <- function (data, region, year, position = 0.75, image_path,
+                             new = FALSE, ...)
 {
   if (new == FALSE) {
     data <- tibble::add_row(data, region, year, position, image_path, ...)
@@ -66,10 +66,12 @@ add_label_image <- function (data, region, year, position = 0.75, image_path, ne
     data <- tibble::tibble(region, year, position, image_path, ...)
   }
 
-  if (!all(is.character(data$region), is.numeric(data$year), is.numeric(data$position))) {
-    stop("One or more columns of the data set contain incompatible data. Data must be strings (region), numeric (year, position).")
+  if (!all(is.character(data$region),
+           is.numeric(data$year),
+           is.numeric(data$position))) {
+    stop("One or more columns of the data set contain incompatible data. Data
+         must be strings (region), numeric (year, position).")
   }
 
   data
 }
-

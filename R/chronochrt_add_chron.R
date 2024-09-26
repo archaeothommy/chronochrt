@@ -3,20 +3,22 @@
 #' This function either creates a data set with chronological data which can be
 #' directly used for plotting or it adds chronological data to such a data set.
 #'
-#' If the input is in the same order as the arguments, the arguments do not
-#' need to be explicitly named. Values can be provided as one number or one
-#' character string, if they are the same for all other data. If not, they must
-#' be provided as vectors with equal lengths.
+#' If the input is in the same order as the arguments, the arguments do not need
+#' to be explicitly named. Values can be provided as one number or one character
+#' string, if they are the same for all other data. If not, they must be
+#' provided as vectors with equal lengths.
 #'
-#' \code{start} and \code{end} of neighbouring chronological units as well as respective
-#' oldest sub-units must be the same to achieve good plotting results. Dates in BCE must
-#' provided as negative data. Currently, only years can be handled (i.e. 2020
-#' but not 20.10.2020).The package can handle the year 0.
+#' \code{start} and \code{end} of neighbouring chronological units as well as
+#' respective oldest sub-units must be the same to achieve good plotting
+#' results. Dates in BCE must provided as negative data. Currently, only years
+#' can be handled (i.e. 2020 but not 20.10.2020).The package can handle the year
+#' 0.
 #'
 #' If \code{start} and \code{end} dates are not certain or the change between
 #' chronological units is regarded a period, dates must be given as character
 #' string in the format \code{"1000/2000"}. Consistency is required for matching
-#' \code{start} and \code{end} dates to avoid unclean or chaotic border orientation in the plot.
+#' \code{start} and \code{end} dates to avoid unclean or chaotic border
+#' orientation in the plot.
 #'
 #' The \code{level} indicates the position of the chronological unit.
 #' \code{level = 1} denotes a top chronological unit (e.g. Ha), a sub-unit (e.g.
@@ -46,8 +48,9 @@
 #'   ...) with the level(s) of the chronological unit(s). The default is
 #'   \code{1}, i.e. the top unit.
 #' @param add  A logical value (\code{TRUE} or \code{FALSE}) or a logical vector
-#'   signalling whether the chronological units within a geographical area should
-#'   be drawn separately (\code{TRUE}) or not (\code{FLASE}, the default).
+#'   signalling whether the chronological units within a geographical area
+#'   should be drawn separately (\code{TRUE}) or not (\code{FLASE}, the
+#'   default).
 #' @param new_table Logical operator. If \code{TRUE}, a new data set will be
 #'   created. If \code{FALSE}, the default, the input will be added to an
 #'   existing data set.
@@ -55,8 +58,7 @@
 #'   arguments passed to \code{\link[tibble]{tibble()}} (if \code{new_table =
 #'   TRUE}) or \code{\link[tibble]{add_row}} (if \code{new_table = FALSE}).
 #' @param ... Further arguments or columns to include in or additional arguments
-#'   passed to \code{\link[tibble]{tibble}} or
-#'   \code{\link[tibble]{add_row}}.
+#'   passed to \code{\link[tibble]{tibble}} or \code{\link[tibble]{add_row}}.
 #'
 #' @return A tibble with chronological data ready-to-use for plotting with
 #'   \code{\link{plot_chronochrt}}.
@@ -113,9 +115,9 @@
 #'
 
 
-add_chron <- function(data, region, name, start, end, level = 1,
-                      add = FALSE, new_table = FALSE, ...)
-{
+add_chron <- function(data, region, name, start, end,
+                      level = 1, add = FALSE, new_table = FALSE, ...) {
+
   if (new_table == FALSE) {
     if (!missing(data)) {
 
@@ -130,19 +132,29 @@ add_chron <- function(data, region, name, start, end, level = 1,
       }
 
       data <- tibble::add_row(data, region, name, start, end, level, add, ...)
-      } else {
-        stop("The argument `data` must be provided or `new_table` must be TRUE.")
-        }
     } else {
-      data <- tibble::tibble(region, name, start, end, level, add, ...)
+      stop("The argument `data` must be provided or `new_table` must be TRUE.")
     }
+  } else {
+    data <- tibble::tibble(region, name, start, end, level, add, ...)
+  }
 
-  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
-    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  if (!all(is.character(data$region),
+           is.character(data$name),
+           is.numeric(data$start) | is.character(data$start),
+           is.numeric(data$end) | is.character(data$end),
+           is.numeric(data$level), is.logical(data$add)
+           )
+      ) {
+    stop("One or more columns of the data set contain incompatible data. Data
+         must be strings (region, name), numbers (start, end), whole numbers
+         (level), and logical (add).")
   }
 
   if (!all(round(data$level) == data$level)) {
-    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
+    stop(
+      "Wrong input format: level must contain only whole numbers (1, 2, 3, ...)"
+      )
   }
 
   data

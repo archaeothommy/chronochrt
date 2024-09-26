@@ -5,7 +5,8 @@
 #' will be substituted by "!".
 #'
 #' @param path A character string with the path of the file to be imported.
-#' @param ... Additional arguments inherited from \code{\link[readxl]{read_excel}}.
+#' @param ... Additional arguments inherited from
+#'   \code{\link[readxl]{read_excel}}.
 #'
 #'
 #' @return A tibble containing the chronological information.
@@ -53,8 +54,8 @@ import_chron_csv <- function(path, delim, ...)
 #'
 #' @param path the path of the file to be imported.
 #' @param delim A character string with the separator
-#' @param ... Additional arguments inherited from \code{\link[readr]{read_delim}} and
-#'   \code{\link[readr]{read_table}}.
+#' @param ... Additional arguments inherited from
+#'   \code{\link[readr]{read_delim}} and \code{\link[readr]{read_table}}.
 #'
 #' @return A tibble containing the desired chronological information.
 #'

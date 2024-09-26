@@ -64,7 +64,8 @@
 #'                          position = 0.9,
 #'                          label = "Earthquake")
 
-add_label_text <- function(data, region, year, position = 0.9, label, new = FALSE, ...)
+add_label_text <- function(data, region, year, position = 0.9, label,
+                           new = FALSE, ...)
 {
   if (new == FALSE) {
     data <- tibble::add_row(data, region, year, position, label, ...)
@@ -72,8 +73,12 @@ add_label_text <- function(data, region, year, position = 0.9, label, new = FALS
       data <- tibble::tibble(region, year, position, label, ...)
     }
 
-  if (!all(is.character(data$region), is.numeric(data$year), is.character(data$label), is.numeric(data$position))) {
-    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, label) or numeric (year, position).")
+  if (!all(is.character(data$region),
+           is.numeric(data$year),
+           is.character(data$label),
+           is.numeric(data$position))) {
+    stop("One or more columns of the data set contain incompatible data. Data
+         must be strings (region, label) or numeric (year, position).")
   }
 
   data

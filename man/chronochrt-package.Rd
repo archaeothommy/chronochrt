@@ -35,8 +35,8 @@ aims to provide an intuitive environment for anyone new to R.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://gitlab.com/archaeothommy/chronochrt}
-  \item Report bugs at \url{https://gitlab.com/archaeothommy/chronochrt/-/issues}
+  \item \url{https://github.com/archaeothommy/chronochrt}
+  \item Report bugs at \url{https://github.com/archaeothommy/chronochrt/issues}
 }
 
 }
