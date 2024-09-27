@@ -11,16 +11,19 @@
 #' @return A ggplot-theme
 #' @export
 
-theme_chronochrt <- function (base_size = 11,
-                              base_family = "",
-                              base_line_size = base_size / 22,
-                              base_rect_size = base_size / 22
-) {
+theme_chronochrt <- function(
+    base_size = 11,
+    base_family = "",
+    base_line_size = base_size / 22,
+    base_rect_size = base_size / 22) {
+
   ggplot2::theme_grey(
     base_size = base_size,
     base_family = base_family,
     base_line_size = base_line_size,
-    base_rect_size = base_rect_size)
+    base_rect_size = base_rect_size
+  )
+
   ggplot2::`%+replace%`
   ggplot2::theme(
     panel.background = ggplot2::element_rect(fill = "grey90", colour = NA),
@@ -38,4 +41,3 @@ theme_chronochrt <- function (base_size = 11,
     complete = TRUE
   )
 }
-

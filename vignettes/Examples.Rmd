@@ -35,35 +35,57 @@ Many archaeological cultures have competing chronological systems or temporal sh
 First, loading of the data: 
 If the file is already in your current working directory, use
 ```{r Example_UK, echo=TRUE, eval=FALSE}
-# Data from St. Knöpke, Der urnenfelderzeitliche Männerfriedhof von Neckarsulm. 
+
+# Data from St. Knöpke, Der urnenfelderzeitliche Männerfriedhof von Neckarsulm.
 # Konrad Theiss Verlag (Stuttgart 2009), p. 15.
-UC_Chronology <- import_chron(path = "ex_urnfield_periods.xlsx",
-                               "Region", "Name", "Start", "End", "Level")
+
+UC_Chronology <- import_chron(
+  path = "ex_urnfield_periods.xlsx",
+  "Region",
+  "Name",
+  "Start",
+  "End",
+  "Level"
+)
 ```
 
 To access it directly from the package, use 
 ```{r Example_UK_hidden, echo=TRUE, message=FALSE}
-UC_Chronology <- import_chron(path = system.file("extdata/ex_urnfield_periods.xlsx", package = 'chronochrt'),
-                               "Region", "Name", "Start", "End", "Level")
+
+UC_Chronology <- import_chron(
+  path = system.file("extdata/ex_urnfield_periods.xlsx", package = "chronochrt"),
+  "Region",
+  "Name",
+  "Start",
+  "End",
+  "Level"
+)
 ```
 
 Then, create the chronological chart by: 
 ```{r Example_UK_plot, eval=FALSE, echo=TRUE}
- plot_chronochrt(UC_Chronology, 
-                 axis_title = "BCE", 
-                 size_text = 4, 
-                 line_break = 22, 
-                 filename = "UC-Chronology.png", plot_dim = c(16, 10, "cm"))
+
+plot_chronochrt(
+  UC_Chronology,
+  axis_title = "BCE",
+  size_text = 4,
+  line_break = 22,
+  filename = "UC-Chronology.png",
+  plot_dim = c(16, 10, "cm")
+)
 
 ```
 
 And that's it! Because a file name as well as physical dimensions were provided, the chart would be saved right away as "UC-Chronology.png" in your working directory, with the specified size of 16x10 cm when running the code. It would look like this: 
 
 ```{r Example_UK_plot2, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
- plot_chronochrt(UC_Chronology, 
-                 axis_title = "BCE", 
-                 size_text = 4, 
-                 line_break = 22)
+
+plot_chronochrt(
+  UC_Chronology,
+  axis_title = "BCE",
+  size_text = 4,
+  line_break = 22
+)
 
 ```
 
@@ -73,42 +95,68 @@ Additionally, the package can be used to display any kind of temporal informatio
 According to place of burial - during this time a partial indicator of socio-economic status - some cemeteries were placed in groups (the _region_). Their occupation phases were entered through the _start_ and _end_ arguments. Further, the death numbers of major plague events were added as a separate region. 
 
 Again, the first step is to load the chronological dataset:
+
 ```{r Example_London_hidden, echo=FALSE}
-London_cemeteries <- import_chron(path = system.file("extdata/ex_London_cem.xlsx", package = 'chronochrt'),
-                                  "Region", "Name", "Start", "End", "Level")
+
+London_cemeteries <- import_chron(
+  path = system.file("extdata/ex_London_cem.xlsx", package = "chronochrt"),
+  "Region",
+  "Name",
+  "Start",
+  "End",
+  "Level"
+)
+
 ```
 
 ```{r Example_London, eval=FALSE, echo = TRUE}
-London_cemeteries <- import_chron(path = "ex_London_cem.xlsx", package = 'ChronochRt'),
-                                  "Region", "Name", "Start", "End", "Level")
+
+London_cemeteries <- import_chron(
+  path = "ex_London_cem.xlsx",
+  "Region",
+  "Name",
+  "Start",
+  "End",
+  "Level"
+)
+
 ```
 
 Then add some labels, e.g. '12.04.1665 - The "Great Plague of London" begins' as well as some numbers from London's plague mortality bills and other interesting facts via the following code in different parts of the plot:
 ```{r Example_London_labels, echo=TRUE}
-London_labels <-add_label_text(region = "low socio-economic status",
-                               year = 1665,
-                               label = "12.04.1665:\n The \"Great Plague of London\"\n begins",
-                               position = 1.98, 
-                               new = TRUE) %>%
-               add_label_text(region = "urban",
-                              year = c(1559, 1660, 1670),
-                              label = c("1559: Coronation of Elizabeth I ", "1664: Sighting of a bright comet", "1666: Great Fire of London"),
-                              position = 1.98,
-                              new =  FALSE) %>% 
-              add_label_text(region = "plague death toll",
-                              year = c(1350, 1563, 1593, 1603, 1625, 1636, 1647, 1665),
-                              label = c( "1346-1353: ~62,000","1563-1564: 20 136" , "1593: 15 003","1603: 33 347", "1625: 41,313", "1636: 10 000", "1647: 3,597" ,"1665: 68 596"),
-                              position = 0.75,
-                              new =  FALSE) 
+
+London_labels <- add_label_text(
+  region = "low socio-economic status",
+  year = 1665,
+  label = "12.04.1665:\n The \"Great Plague of London\"\n begins",
+  position = 1.98,
+  new = TRUE
+) %>%
+  add_label_text(
+    region = "urban",
+    year = c(1559, 1660, 1670),
+    label = c("1559: Coronation of Elizabeth I ", "1664: Sighting of a bright comet", "1666: Great Fire of London"),
+    position = 1.98,
+    new =  FALSE
+  ) %>%
+  add_label_text(
+    region = "plague death toll",
+    year = c(1350, 1563, 1593, 1603, 1625, 1636, 1647, 1665),
+    label = c("1346-1353: ~62,000", "1563-1564: 20 136", "1593: 15 003", "1603: 33 347", "1625: 41,313", "1636: 10,000", "1647: 3,597", "1665: 68,596"),
+    position = 0.75,
+    new =  FALSE
+  )
+
 ```
 
 And now, create the graph:
 ```{r Example_London_plot, echo=TRUE, fig.align='center', fig.width=10, fig.height=6, message=FALSE, out.width="100%"}
- plot_chronochrt(data = London_cemeteries, 
-                 labels_text = London_labels, 
-                 size_text = 3, 
-                 line_break = 25, 
-                 color_line = "grey55")
 
-
+plot_chronochrt(
+  data = London_cemeteries,
+  labels_text = London_labels,
+  size_text = 3,
+  line_break = 25,
+  color_line = "grey55"
+)
 ```

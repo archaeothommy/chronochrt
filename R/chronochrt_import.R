@@ -14,8 +14,8 @@
 #' @export
 #' @keywords internal
 
-import_chron_excel <- function(path,  ...)
-{
+import_chron_excel <- function(path,  ...) {
+
   data <- readxl::read_excel(path = path,  ...)
 
   data
@@ -37,11 +37,15 @@ import_chron_excel <- function(path,  ...)
 #' @export
 #' @keywords internal
 
-import_chron_csv <- function(path, delim, ...)
-{
-  if (delim == ",") {data <- readr::read_csv(file = path, ...)}
+import_chron_csv <- function(path, delim, ...) {
 
-  if (delim == ";") {data <- readr::read_csv2(file = path, ...)}
+  if (delim == ",") {
+    data <- readr::read_csv(file = path, ...)
+  }
+
+  if (delim == ";") {
+    data <- readr::read_csv2(file = path, ...)
+  }
 
   data
 }
@@ -62,12 +66,18 @@ import_chron_csv <- function(path, delim, ...)
 #' @export
 #' @keywords internal
 
-import_chron_delim <- function(path, delim, ...)
-{
+import_chron_delim <- function(path, delim, ...) {
+
   if (delim %in% c("\t", " ")) {
-    if (delim == "\t") {data <- readr::read_tsv(file = path, ...)}
-    if (delim == " ") {data <- readr::read_table2(file = path, ...)}
-  } else {data <- readr::read_delim(file = path, delim = delim, ...)}
+    if (delim == "\t") {
+      data <- readr::read_tsv(file = path, ...)
+    }
+    if (delim == " ") {
+      data <- readr::read_table2(file = path, ...)
+    }
+  } else {
+    data <- readr::read_delim(file = path, delim = delim, ...)
+  }
 
   data
 }

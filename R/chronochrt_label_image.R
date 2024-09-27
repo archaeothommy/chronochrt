@@ -57,9 +57,9 @@
 #'                           position = 0.9,
 #'                           image_path = "https://www.r-project.org/logo/Rlogo.png")
 
-add_label_image <- function (data, region, year, position = 0.75, image_path,
-                             new = FALSE, ...)
-{
+add_label_image <- function(data, region, year, position = 0.75, image_path,
+                            new = FALSE, ...) {
+
   if (new == FALSE) {
     data <- tibble::add_row(data, region, year, position, image_path, ...)
   } else {
@@ -69,8 +69,7 @@ add_label_image <- function (data, region, year, position = 0.75, image_path,
   if (!all(is.character(data$region),
            is.numeric(data$year),
            is.numeric(data$position))) {
-    stop("One or more columns of the data set contain incompatible data. Data
-         must be strings (region), numeric (year, position).")
+    stop("One or more columns of the data set contain incompatible data. Data must be strings (region), numeric (year, position).")
   }
 
   data

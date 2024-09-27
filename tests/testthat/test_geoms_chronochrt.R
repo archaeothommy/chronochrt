@@ -15,7 +15,10 @@ test_that("Test geom chronochrt", {
 
 # Visual tests ------------------------------------------------------------
 test_that("geom_Chronochrt", {
-  expect_doppelganger("chronochrt",
-                      ggplot(test_reference) + geom_chronochRt(aes(name = name, region = region, level = level, start = start, end = end, add = add))
+  expect_doppelganger(
+    "chronochrt",
+    ggplot(test_reference) + geom_chronochRt(aes(name = name, region = region, level = level, start = start, end = end, add = add)
+    )
   )
-})
+}
+)
