@@ -80,9 +80,15 @@
 #'                        sheet = "data")
 #' }
 
-import_chron <- function(path, region = "region", name = "name",
-                         start = "start", end = "end", level = "level",
-                         add = "add", delim, ...) {
+import_chron <- function(path,
+                         region = "region",
+                         name = "name",
+                         start = "start",
+                         end = "end",
+                         level = "level",
+                         add = "add",
+                         delim,
+                         ...) {
 
   if (!file.exists(path)) {
     stop("The file path is not correct or the file does not exist.")
@@ -114,15 +120,14 @@ import_chron <- function(path, region = "region", name = "name",
   }
 
   data <- dplyr::rename(
-    data, tidyselect::all_of(
-      c(
-        region = region,
+    data,
+    tidyselect::all_of(
+      c(region = region,
         name = name,
         start = start,
         end = end,
         level = level,
-        add = add
-      )
+        add = add)
     )
   )
 
@@ -133,15 +138,17 @@ import_chron <- function(path, region = "region", name = "name",
          " contains empty cells or non-logical values. ")
   }
 
-  if (!all(
-    is.character(data$region),
-    is.character(data$name),
-    is.numeric(data$start) | is.character(data$start),
-    is.numeric(data$end) | is.character(data$end),
-    is.numeric(data$level), is.logical(data$add)
-  )
-  ) {
-    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  if (!all(is.character(data$region),
+           is.character(data$name),
+           is.numeric(data$start) | is.character(data$start),
+           is.numeric(data$end) | is.character(data$end),
+           is.numeric(data$level),
+           is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be:
+         strings (region, name),
+         numbers (start, end),
+         whole numbers (level),
+         and logical (add).")
   }
 
   if (!all(round(data$level) == data$level)) {

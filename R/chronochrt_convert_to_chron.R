@@ -38,30 +38,36 @@
 #'                            add = Parallel)
 
 convert_to_chron <- function(data, region, name, start, end, level, add) {
-
   if (!is.data.frame(data)) {
     stop("Wrong input format: ", substitute(data),
          " must be a data frame or tibble.")
   }
 
-  pos <- tidyselect::eval_rename(rlang::expr(c(region = {{region}},
-                                               name = {{name}},
-                                               start = {{start}},
-                                               end = {{end}},
-                                               level = {{level}},
-                                               add = {{add}})),
-                                 data)
+  pos <- tidyselect::eval_rename(
+    rlang::expr(
+      c(region = {{region}},
+        name = {{name}},
+        start = {{start}},
+        end = {{end}},
+        level = {{level}},
+        add = {{add}}
+      )
+    ),
+    data
+  )
   names(data)[pos] <- names(pos)
 
-  if (!all(
-    is.character(data$region),
-    is.character(data$name),
-    is.numeric(data$start) | is.character(data$start),
-    is.numeric(data$end) | is.character(data$end),
-    is.numeric(data$level), is.logical(data$add)
-  )
-  ) {
-    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  if (!all(is.character(data$region),
+           is.character(data$name),
+           is.numeric(data$start) | is.character(data$start),
+           is.numeric(data$end) | is.character(data$end),
+           is.numeric(data$level),
+           is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be:
+         strings (region, name),
+         numbers (start, end),
+         whole numbers (level), and
+         logical (add).")
   }
 
   if (!all(round(data$level) == data$level)) {

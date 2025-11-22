@@ -58,8 +58,7 @@
 #' q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y,
 #' height = height, width = width))
 
-geom_chronochRtImage <- function(mapping = NULL, data = NULL,
-                                 inherit.aes = TRUE, ...) {
+geom_chronochRtImage <- function(mapping = NULL, data = NULL, inherit.aes = TRUE, ...) {
   ggplot2::layer(
     geom = GeomChronochRtImage,
     mapping = mapping,
@@ -78,27 +77,23 @@ GeomChronochRtImage <- ggplot2::ggproto("GeomChronochRtImage", ggplot2:::Geom,
     data
   },
   setup_data = function(self, data, params) {
-    data <- ggplot2:::ggproto_parent(ggplot2:::Geom, self)$setup_data(data,
-                                                                      params)
+    data <- ggplot2:::ggproto_parent(ggplot2:::Geom, self)$setup_data(data, params)
     data
   },
   draw_panel = function(data, panel_scales, coord) {
     coords <- coord$transform(data, panel_scales)
 
-    data <- data[file.exists(data$image_path) | grepl("http", data$image_path,
-                                                      fixed = TRUE), ]
+    data <- data[file.exists(data$image_path) | grepl("http", data$image_path, fixed = TRUE), ]
 
     # Let magick::image_read fail gracefully if source is not available
     image_exist <- function(x) {
-      return(
-        tryCatch(
-          magick::image_read(x),
-          error = function(e) {
-            message(conditionMessage(e))
-            NA
-          }
-        )
-      )
+      return(tryCatch(
+        magick::image_read(x),
+        error = function(e) {
+          message(conditionMessage(e))
+          NA
+        }
+      ))
     }
 
     data$image <- lapply(data$image_path, function(x) image_exist(x))
@@ -111,17 +106,12 @@ GeomChronochRtImage <- ggplot2::ggproto("GeomChronochRtImage", ggplot2:::Geom,
     }
 
     gl <- lapply(seq_along(data$image), function(i) {
-      .g <- do.call(grid::rasterGrob, c(
-        list(data$image[[i]]),
-        height = list(data$height[[i]]),
-        width = list(data$width[[i]])
-      ))
-      grid::editGrob(
-        .g,
-        x = grid::unit(coords$x[i], "native"),
-        y = grid::unit(coords$y[i], "native")
-      )
-    })
+      .g <- do.call(grid::rasterGrob, c(list(data$image[[i]]), height = list(data$height[[i]]), width = list(data$width[[i]])))
+      grid::editGrob(.g,
+                     x = grid::unit(coords$x[i], "native"),
+                     y = grid::unit(coords$y[i], "native"))
+    }
+    )
 
     do.call(grid::grobTree, gl)
   },

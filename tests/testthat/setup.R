@@ -70,7 +70,10 @@ test_plot_reference <- tibble(
   end = c(-1500, -200, -200, "-750_-500", -350, -250, 100, 300, 500, 300, "-1100/-1000", "-750_-500"),
   level = c(1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 3, 3),
   add = c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE)
-)
+) # ,
+# x_label = 0.5,
+# y_label = -1500,
+# angle_label = 90)
 
 # for checking convert_to_chron()
 
@@ -182,22 +185,10 @@ p1 <- plot_chronochrt(test_reference, axis_title = "Jahre")
 
 p2 <- plot_chronochrt(
   data = test_plot_reference,
-  labels_text = test_labels_reference,
-  labels_image = test_images_reference,
-  axis_title = "BC/AD",
-  year_lim = c(-1500, 100),
-  filename = file.path(tempdir(), "Test_that.jpg"),
-  height_image = 5,
-  plot_dim = c(3, 3, "mm"),
-  line_break = 10,
-  fill_chron = "red",
-  color_chron = "green",
-  size_line = 5,
-  background = c("white", "dashed"),
-  dpi = 1200,
-  minimal = TRUE,
-  color_label = "orange",
-  size_text = 5
+  labels_text = test_labels_reference, labels_image = test_images_reference,
+  axis_title = "BC/AD", year_lim = c(-1500, 100),
+  filename = file.path(tempdir(), "Test_that.jpg"), height_image = 5, plot_dim = c(3, 3, "mm"),
+  line_break = 10, fill_chron = "red", color_chron = "green", size_line = 5,
+  background = c("white", "dashed"), dpi = 1200, minimal = TRUE, color_label = "orange", size_text = 5
 )
-
 print(p2)

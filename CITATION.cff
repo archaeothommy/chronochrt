@@ -8,15 +8,15 @@ message: 'To cite package "chronochrt" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'chronochrt: Creating Chronological Charts'
-version: 0.1.3
-date-released: '2024-01-14'
+version: 0.1.4
+date-released: '2025-11-22'
 abstract: Easy way to draw chronological charts from tables, aiming to include an
   intuitive environment for anyone new to R. Includes 'ggplot2' geoms and theme for
   chronological charts.
 authors:
 - family-names: Rose
   given-names: Thomas
-  email: thomas.rose@daad-alumni.de
+  email: roseth@posteo.com
   orcid: https://orcid.org/0000-0002-8186-3566
 - family-names: Girotto
   given-names: Chiara
@@ -28,34 +28,34 @@ preferred-citation:
   authors:
   - family-names: Rose
     given-names: Thomas
-    email: thomas.rose@daad-alumni.de
+    email: roseth@posteo.com
     orcid: https://orcid.org/0000-0002-8186-3566
   - family-names: Girotto
     given-names: Chiara
     email: chiara.girotto@web.de
     orcid: https://orcid.org/0000-0001-6412-342X
-  version: 0.1.3
+  version: 0.1.4
   abstract: Easy way to draw chronological charts from tables, aiming to include an
     intuitive environment for anyone new to R. Includes 'ggplot2' geoms and theme
     for chronological charts.
   repository: https://CRAN.R-project.org/package=chronochrt
-  repository-code: https://gitlab.com/archaeothommy/chronochrt
-  url: https://gitlab.com/archaeothommy/chronochrt
+  repository-code: https://github.com/archaeothommy/chronochrt
+  url: https://github.com/archaeothommy/chronochrt
   date-released: '2024-01-14'
   contact:
   - family-names: Rose
     given-names: Thomas
-    email: thomas.rose@daad-alumni.de
+    email: roseth@posteo.com
     orcid: https://orcid.org/0000-0002-8186-3566
   license: GPL-3.0-only
   year: '2024'
 repository: https://CRAN.R-project.org/package=chronochrt
-repository-code: https://gitlab.com/archaeothommy/chronochrt
-url: https://gitlab.com/archaeothommy/chronochrt
+repository-code: https://github.com/archaeothommy/chronochrt
+url: https://github.com/archaeothommy/chronochrt
 contact:
 - family-names: Rose
   given-names: Thomas
-  email: thomas.rose@daad-alumni.de
+  email: roseth@posteo.com
   orcid: https://orcid.org/0000-0002-8186-3566
 references:
 - type: software

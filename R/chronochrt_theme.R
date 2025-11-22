@@ -23,7 +23,6 @@ theme_chronochrt <- function(
     base_line_size = base_line_size,
     base_rect_size = base_rect_size
   )
-
   ggplot2::`%+replace%`
   ggplot2::theme(
     panel.background = ggplot2::element_rect(fill = "grey90", colour = NA),

@@ -15,7 +15,6 @@
 #' @keywords internal
 
 import_chron_excel <- function(path,  ...) {
-
   data <- readxl::read_excel(path = path,  ...)
 
   data
@@ -38,7 +37,6 @@ import_chron_excel <- function(path,  ...) {
 #' @keywords internal
 
 import_chron_csv <- function(path, delim, ...) {
-
   if (delim == ",") {
     data <- readr::read_csv(file = path, ...)
   }
@@ -67,7 +65,6 @@ import_chron_csv <- function(path, delim, ...) {
 #' @keywords internal
 
 import_chron_delim <- function(path, delim, ...) {
-
   if (delim %in% c("\t", " ")) {
     if (delim == "\t") {
       data <- readr::read_tsv(file = path, ...)
