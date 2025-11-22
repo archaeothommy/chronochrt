@@ -75,7 +75,7 @@
 #'    geom_chronochRt()
 #'
 #' # If more than one region should be plotted, they must be separated with
-#' facet_grid:
+#' # facet_grid():
 #' ggplot(chrons) +
 #'    geom_chronochRt(aes(name = name, region = region, level = level,
 #'                        start = start, end = end, add = add)) +
@@ -113,8 +113,9 @@ geom_chronochRt <- function(mapping = NULL, data = NULL, inherit.aes = TRUE,
   )
 }
 
-GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom, handle_na = function(self, data, params) {
-
+GeomChronochRt <- ggplot2::ggproto(
+  "GeomChronochRt",
+  ggplot2:::Geom,
   handle_na = function(self, data, params) {
     data
   },
@@ -144,22 +145,32 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom, handle_na =
       year_min <- min(params$year_lim, na.rm = TRUE)
       year_max <- max(params$year_lim, na.rm = TRUE)
 
-  if (!is.null(params$year_lim)) {
-    if (!is.numeric(params$year_lim) || length(params$year_lim) != 2) {
-      stop("Error in 'geom_chronochRt': 'year_min' must be a numeric vector of length 2.")
+      data <- data %>%
+        dplyr::filter(!(start >= year_max & start2 >= year_max)) %>%
+        dplyr::filter(!(end <= year_min & end2 <= year_min)) %>%
+        dplyr::mutate(start = dplyr::if_else(start < year_min, year_min, start),
+                      start2 = dplyr::if_else(start2 < year_min, year_min, start2),
+                      end = dplyr::if_else(end > year_max, year_max, end),
+                      end2 = dplyr::if_else(end2 > year_max, year_max, end2))
     }
 
-    year_min <- min(params$year_lim, na.rm = TRUE)
-    year_max <- max(params$year_lim, na.rm = TRUE)
-
     data <- data %>%
-      dplyr::filter(!(start >= year_max & start2 >= year_max)) %>%
-      dplyr::filter(!(end <= year_min & end2 <= year_min)) %>%
-      dplyr::mutate(start = dplyr::if_else(start < year_min, year_min, start),
-                    start2 = dplyr::if_else(start2 < year_min, year_min, start2),
-                    end = dplyr::if_else(end > year_max, year_max, end),
-                    end2 = dplyr::if_else(end2 > year_max, year_max, end2))
-  }
+      dplyr::arrange(level, start) %>%
+      dplyr::group_by(region, add) %>%
+      dplyr::mutate(level = level - min(level) + 1) %>%
+      dplyr::mutate(xmin = (level - 1) / max(level),
+                    xmax = level / max(level)) %>%
+      dplyr::mutate(x = xmin + ((xmax - xmin) / 2),
+                    y = start + ((end - start) / 2)) %>%
+      dplyr::mutate(xmax_uncorr = corr_xmax(start, end, xmax)) %>%
+      dplyr::mutate(xmax = dplyr::if_else(xmax == xmax_uncorr, 1, xmax)) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(-xmax_uncorr) %>%
+      dplyr::mutate(xmax = dplyr::if_else(add == TRUE, xmax + 1, xmax),
+                    xmin = dplyr::if_else(add == TRUE, xmin + 1, xmin),
+                    x = dplyr::if_else(add == TRUE, x + 1, x)) %>%
+      dplyr::mutate(ymin = min(start, start2, na.rm = TRUE),
+                    ymax = max(end, end2, na.rm = TRUE))
 
     if (!"name" %in% names(data)) {
       if ("label" %in% names(data)) {
@@ -356,6 +367,7 @@ GeomChronochRt <- ggplot2::ggproto("GeomChronochRt", ggplot2:::Geom, handle_na =
     lineheight = 1.2
   )
 )
+
 
 #' Determine maximum x value of parallel chrons
 #'

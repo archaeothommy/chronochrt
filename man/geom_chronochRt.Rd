@@ -117,7 +117,8 @@ ggplot(chrons, aes(name = name, region = region, level = level,
                    start = start, end = end, add = add)) +
    geom_chronochRt()
 
-# If more than one region should be plotted, they must be separated with facet_grid:
+# If more than one region should be plotted, they must be separated with
+# facet_grid():
 ggplot(chrons) +
    geom_chronochRt(aes(name = name, region = region, level = level,
                        start = start, end = end, add = add)) +

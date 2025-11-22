@@ -11,8 +11,8 @@ import_chron_delim(path, delim, ...)
 
 \item{delim}{A character string with the separator}
 
-\item{...}{Additional arguments inherited from \code{\link[readr]{read_delim}} and
-\code{\link[readr]{read_table}}.}
+\item{...}{Additional arguments inherited from
+\code{\link[readr]{read_delim}} and \code{\link[readr]{read_table}}.}
 }
 \value{
 A tibble containing the desired chronological information.

@@ -3,6 +3,7 @@
 ^ChronochRt\.Rproj$
 ^README\.Rmd$
 ^.gitlab-ci\.yml$
+^.lintr$
 ^Public$
 ^Public/\.gitkeep$
 ^inst/Cheatsheet$

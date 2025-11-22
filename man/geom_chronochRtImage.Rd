@@ -32,7 +32,9 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 
-\item{...}{Other arguments passed on to \code{\link[ggplot2]{layer}}. These are often aesthetics, used to set an aesthetic to a fixed value, like \code{height = 1}.}
+\item{...}{Other arguments passed on to \code{\link[ggplot2]{layer}}. These
+are often aesthetics, used to set an aesthetic to a fixed value, like
+\code{height = 1}.}
 }
 \value{
 Layer of a ggplot2 object.
@@ -75,14 +77,19 @@ q <- ggplot(data) + lims(x = c(0, 6), y = c(0, 6))
 q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y))
 
 # Scale images to individual heights/widths by specifying one of them:
-q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = height))
+q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y,
+height = height))
 
 # Scale images to uniform height/width (i.e. independent of input data):
-q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = 1))
+q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y,
+height = 1))
 
 # Specifying height and width might result in distorted images:
-q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y, height = height, width = width))
+q + geom_chronochRtImage(aes(image_path = image_path, x = x, y = y,
+height = height, width = width))
 }
 \author{
-This geom is a modified version of the \code{geom_custom()} from \href{https://github.com/baptiste}{Baptiste Auguié}'s \href{https://cran.r-project.org/package=egg}{egg package}.
+This geom is a modified version of the \code{geom_custom()} from
+\href{https://github.com/baptiste}{Baptiste Auguié}'s
+\href{https://cran.r-project.org/package=egg}{egg package}.
 }

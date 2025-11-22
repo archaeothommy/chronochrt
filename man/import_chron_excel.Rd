@@ -9,7 +9,8 @@ import_chron_excel(path, ...)
 \arguments{
 \item{path}{A character string with the path of the file to be imported.}
 
-\item{...}{Additional arguments inherited from \code{\link[readxl]{read_excel}}.}
+\item{...}{Additional arguments inherited from
+\code{\link[readxl]{read_excel}}.}
 }
 \value{
 A tibble containing the chronological information.

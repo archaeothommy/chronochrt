@@ -41,7 +41,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Thomas Rose \email{thomas.rose@daad-alumni.de} (\href{https://orcid.org/0000-0002-8186-3566}{ORCID})
+\strong{Maintainer}: Thomas Rose \email{roseth@posteo.com} (\href{https://orcid.org/0000-0002-8186-3566}{ORCID})
 
 Authors:
 \itemize{

@@ -36,5 +36,4 @@ chrons <- add_chron(region = c("A", "B"),
 
 chrons <- arrange_regions(data = chrons, order = c("B", "A"))
 
-
 }
