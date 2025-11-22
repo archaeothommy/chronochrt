@@ -22,13 +22,13 @@ aims to provide an intuitive environment for anyone new to R.
   developments \item Geoms for the chronological chart and image labels \item
   Export of the chronological chart in different file formats (raster and
   vector graphics) \item Easy customisation of the chronological chart \item
-  Based on the \href{https://www.tidyverse.org/}{tidyverse}: Seamless
+  Based on the \href{https://tidyverse.org/}{tidyverse}: Seamless
   integration in pipes, enhanced customisation with \pkg{ggplot2}}
 }
 
 \section{Getting started}{
  \itemize{ \item
-  \href{https://gitlab.com/archaeothommy/chronochrt/-/raw/master/inst/ChronochRt_Cheatsheet.pdf?inline=false}{Cheatsheet}
+  \href{https://github.com/archaeothommy/chronochrt/blob/main/inst/ChronochRt_Cheatsheet.pdf}{Cheatsheet}
    \item Vignettes}
 }
 
@@ -36,7 +36,7 @@ aims to provide an intuitive environment for anyone new to R.
 Useful links:
 \itemize{
   \item \url{https://github.com/archaeothommy/chronochrt}
-  \item Report bugs at \url{https://github.com/archaeothommy/chronochrt/-/issues}
+  \item Report bugs at \url{https://github.com/archaeothommy/chronochrt/issues}
 }
 
 }
