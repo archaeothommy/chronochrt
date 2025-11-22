@@ -55,7 +55,7 @@ You are very welcome to contribute to the package through forking the repository
 * Geoms for the chronological chart and image labels
 * Export of the chronological chart in different file formats (raster and vector graphics)
 * Easy customisation of the chronological chart
-* Based on the [tidyverse](https://www.tidyverse.org/): Seamless integration in pipes, enhanced customisation with [ggplot2](https://ggplot2.tidyverse.org/) 
+* Based on the [tidyverse](https://tidyverse.org/): Seamless integration in pipes, enhanced customisation with [ggplot2](https://ggplot2.tidyverse.org/) 
 
 Is there a feature missing? Please let us know [by creating an issue](https://github.com/archaeothommy/chronochrt/issues/new/choose).
 

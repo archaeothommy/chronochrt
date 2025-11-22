@@ -58,8 +58,8 @@ repository or creating an issue to suggest changes.
 - Export of the chronological chart in different file formats (raster
   and vector graphics)
 - Easy customisation of the chronological chart
-- Based on the [tidyverse](https://www.tidyverse.org/): Seamless
-  integration in pipes, enhanced customisation with
+- Based on the [tidyverse](https://tidyverse.org/): Seamless integration
+  in pipes, enhanced customisation with
   [ggplot2](https://ggplot2.tidyverse.org/)
 
 Is there a feature missing? Please let us know [by creating an
@@ -89,16 +89,25 @@ plot_chronochrt(data)
 ## Funding for the development of ChronochRt 0.0.5
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
+
 <tbody>
+
 <tr>
+
 <td valign="bottom">
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"  width="200">
 </td>
+
 <td valign="bottom" halign="left">
+
 This project has received funding from the European Union’s Horizon 2020
 research and innovation programme under the Marie Skłodowska-Curie grant
 agreement No 766311.
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
