@@ -17,7 +17,7 @@ Description: Easy way to draw chronological charts from tables, aiming to includ
 Language: en-GB
 License: GPL-3
 URL: https://github.com/archaeothommy/chronochrt
-BugReports: https://github.com/archaeothommy/chronochrt/-/issues
+BugReports: https://github.com/archaeothommy/chronochrt/issues
 Imports:
     dplyr (>= 1.0.0),
     ggplot2 (>= 3.4.0),

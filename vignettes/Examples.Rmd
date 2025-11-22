@@ -72,7 +72,7 @@ plot_chronochrt(
 
 ### Example 2: Occupation phases and other data
 
-Additionally, the package can be used to display any kind of temporal information. The following example ‒ whilst being very circumstantial in connections of the data ‒ highlights how different types of temporal data can be merged. This dataset is partially based on the cemetery data of the Wellcome Osteological Research Database (https://www.museumoflondon.org.uk/collections/other-collection-databases-and-libraries/centre-human-bioarchaeology/osteological-database) as well as general information for the labels.
+Additionally, the package can be used to display any kind of temporal information. The following example ‒ whilst being very circumstantial in connections of the data ‒ highlights how different types of temporal data can be merged. This dataset is partially based on the cemetery data of the Wellcome Osteological Research Database (https://www.londonmuseum.org.uk/collections/research/bioarchaeological-research/) as well as general information for the labels.
 According to place of burial - during this time a partial indicator of socio-economic status - some cemeteries were placed in groups (the _region_). Their occupation phases were entered through the _start_ and _end_ arguments. Further, the death numbers of major plague events were added as a separate region. 
 
 Again, the first step is to load the chronological dataset:

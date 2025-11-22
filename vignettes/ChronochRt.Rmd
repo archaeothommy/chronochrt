@@ -204,7 +204,7 @@ plot_chronochrt(data, labels_image = image)
 
 ```
 
-## Compatibility with the [tidyverse](https://www.tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
+## Compatibility with the [tidyverse](https://tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
 
 ChronochRt builds upon the tidyverse environment. Hence its functions can be seamlessly integrated into e.g. pipes (as seen in some examples, look for the [pipe operator `%>%`](https://style.tidyverse.org/pipes.html)). Likewise, `plot_chronochrt()` returns a ggplot2-object, which can be easily enhanced afterwards by e.g. more complex designs using the `+` operator. As an example, the first plot in this vignette was created with the following code to display the usually omitted x-axis: 
 ```{r , eval=FALSE, echo=TRUE}
