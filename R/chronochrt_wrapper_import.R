@@ -80,8 +80,16 @@
 #'                        sheet = "data")
 #' }
 
-import_chron <- function(path, region = "region", name = "name", start = "start", end = "end", level = "level", add = "add", delim, ...)
-{
+import_chron <- function(path,
+                         region = "region",
+                         name = "name",
+                         start = "start",
+                         end = "end",
+                         level = "level",
+                         add = "add",
+                         delim,
+                         ...) {
+
   if (!file.exists(path)) {
     stop("The file path is not correct or the file does not exist.")
   }
@@ -99,19 +107,29 @@ import_chron <- function(path, region = "region", name = "name", start = "start"
     }
 
     data <- import_chron_excel(path = path, ...)
-    } else {
-      if (ext == "csv") {
-        if (delim %in% c(",", ";")) {
-          data <- import_chron_csv(path = path, delim = delim, ...)
-          } else {
-            stop("No valid separator for csv files: ", delim)
-            }
-        } else {
-          data <- import_chron_delim(path = path, delim = delim, ...)
-        }
+  } else {
+    if (ext == "csv") {
+      if (delim %in% c(",", ";")) {
+        data <- import_chron_csv(path = path, delim = delim, ...)
+      } else {
+        stop("No valid separator for csv files: ", delim)
       }
+    } else {
+      data <- import_chron_delim(path = path, delim = delim, ...)
+    }
+  }
 
-  data <- dplyr::rename(data, tidyselect::all_of(c(region = region, name = name, start = start, end = end, level = level, add = add)))
+  data <- dplyr::rename(
+    data,
+    tidyselect::all_of(
+      c(region = region,
+        name = name,
+        start = start,
+        end = end,
+        level = level,
+        add = add)
+    )
+  )
 
   data$add <- as.logical(data$add)
 
@@ -119,8 +137,17 @@ import_chron <- function(path, region = "region", name = "name", start = "start"
     stop("Wrong input format: ", substitute(add), " contains empty cells or non-logical values. ")
   }
 
-  if (!all(is.character(data$region), is.character(data$name), is.numeric(data$start) | is.character(data$start), is.numeric(data$end) | is.character(data$end), is.numeric(data$level), is.logical(data$add))) {
-    stop("One or more columns of the data set contain incompatible data. Data must be strings (region, name), numbers (start, end), whole numbers (level), and logical (add).")
+  if (!all(is.character(data$region),
+           is.character(data$name),
+           is.numeric(data$start) | is.character(data$start),
+           is.numeric(data$end) | is.character(data$end),
+           is.numeric(data$level),
+           is.logical(data$add))) {
+    stop("One or more columns of the data set contain incompatible data. Data must be:
+         strings (region, name),
+         numbers (start, end),
+         whole numbers (level),
+         and logical (add).")
   }
 
   if (!all(round(data$level) == data$level)) {

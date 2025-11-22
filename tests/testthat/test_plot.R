@@ -58,22 +58,22 @@ test_that("Plotting", {
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, height_image = "not_existent"),
                regexp = "Wrong input format: *")
-  expect_error(object = plot_chronochrt(test_reference, height_image = c(1,2)),
+  expect_error(object = plot_chronochrt(test_reference, height_image = c(1, 2)),
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, line_break =  "not_existent"),
                regexp = "Wrong input format: *")
-  expect_error(object = plot_chronochrt(test_reference, line_break =  c(1,2)),
+  expect_error(object = plot_chronochrt(test_reference, line_break =  c(1, 2)),
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, size_line = "not_existent"),
                regexp = "Wrong input format: *")
-  expect_error(object = plot_chronochrt(test_reference, size_line = c(1,2)),
+  expect_error(object = plot_chronochrt(test_reference, size_line = c(1, 2)),
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, size_text = "not_existent"),
                regexp = "Wrong input format: *")
-  expect_error(object = plot_chronochrt(test_reference, size_text = c(1,2)),
+  expect_error(object = plot_chronochrt(test_reference, size_text = c(1, 2)),
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test_reference, minimal = 1),
                regexp = "Wrong input format: *")
   expect_error(object = plot_chronochrt(test),
                regexp = "Wrong input format: The column*")
-  })
+})

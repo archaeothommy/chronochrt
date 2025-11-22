@@ -30,7 +30,7 @@ from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2]{layer}}. These are often aesthetics, used to set an aesthetic to a fixed value, like \code{height = 1}.}
 }

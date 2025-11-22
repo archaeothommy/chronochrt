@@ -28,12 +28,8 @@
 #'
 #' chrons <- arrange_regions(data = chrons, order = c("B", "A"))
 #'
-#'
 
-
-
-arrange_regions <- function(data, order)
-{
+arrange_regions <- function(data, order) {
   if (!is.data.frame(data)) {
     stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
   }
@@ -45,7 +41,8 @@ arrange_regions <- function(data, order)
   if (!is.character(order)) {
     if (!is.vector(order)) {
       stop("Incompatible input format: ", substitute(order), " must be a vector of unique character strings.")
-    } else {stop("Incompatible input format: ", substitute(order), " is not a character vector.")
+    } else {
+      stop("Incompatible input format: ", substitute(order), " is not a character vector.")
     }
   }
 
@@ -53,5 +50,3 @@ arrange_regions <- function(data, order)
 
   data
 }
-
-
