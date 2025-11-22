@@ -26,7 +26,7 @@ library(chronochrt)
 
 ## Examples
 
-This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://gitlab.com/archaeothommy/chronochrt/tree/master/inst/extdata). 
+This vignette demonstrates examples of chronological datasets which have been compiled from the literature. They are included in the package (see first example) or alternatively can be downloaded [here](https://github.com/archaeothommy/chronochrt/tree/master/inst/extdata). 
 
 ### Examples 1: Chonological table
 This example illustrates the main purpose of the package: facilitating the hassle free drawing of chronological tables. 
@@ -76,6 +76,7 @@ Additionally, the package can be used to display any kind of temporal informatio
 According to place of burial - during this time a partial indicator of socio-economic status - some cemeteries were placed in groups (the _region_). Their occupation phases were entered through the _start_ and _end_ arguments. Further, the death numbers of major plague events were added as a separate region. 
 
 Again, the first step is to load the chronological dataset:
+
 ```{r Example_London_hidden, echo=FALSE}
 London_cemeteries <- import_chron(path = system.file("extdata/ex_London_cem.xlsx", package = "chronochrt"),
                                   "Region", "Name", "Start", "End", "Level")

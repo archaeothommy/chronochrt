@@ -1,6 +1,7 @@
 # ChronochRt 0.1.4
 
 * Deprecated function replaced in `import_chron_delim()`.
+* Moved repository from [gitlab.com](https://gitlab.com/archaeothommy/chronochrt) to [github.com](https://github.com/archaeothommy/chronochrt)
 
 # ChronochRt 0.1.3
 

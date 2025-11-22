@@ -1,12 +1,12 @@
 #' Provide image labels for a chronological chart
 #'
-#' The function creates a tibble with the paths of the image labels to be plotted in a
-#' chronological chart or adds them to an already existing tibble.
+#' The function creates a tibble with the paths of the image labels to be
+#' plotted in a chronological chart or adds them to an already existing tibble.
 #'
-#' If the input is in the same order as the arguments, the arguments do not
-#' need to be explicitly named. Values can be provided as a number or
-#' character string, if they are the same for all other data. If not, they must
-#' be provided as vectors with equal lengths.
+#' If the input is in the same order as the arguments, the arguments do not need
+#' to be explicitly named. Values can be provided as a number or character
+#' string, if they are the same for all other data. If not, they must be
+#' provided as vectors with equal lengths.
 #'
 #' @param data An object to which labels should be added. Must not be provided
 #'   if \code{new = FALSE}.
@@ -21,9 +21,8 @@
 #' @param new Logical operator. If \code{TRUE}, a new data set will be created.
 #'   If \code{FALSE}, the default, the input will be added to an existing data
 #'   set.
-#' @param ... Further columns to include or additional arguments
-#'   passed to \code{\link[tibble]{tibble}} or
-#'   \code{\link[tibble]{add_row}}.
+#' @param ... Further columns to include or additional arguments passed to
+#'   \code{\link[tibble]{tibble}} or \code{\link[tibble]{add_row}}.
 #'
 #' @return A tibble with image labels ready-to-use for plotting with
 #'   \code{\link{plot_chronochrt}}.

@@ -31,7 +31,8 @@
 
 arrange_regions <- function(data, order) {
   if (!is.data.frame(data)) {
-    stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
+    stop("Wrong input format: ", substitute(data),
+         " must be a data frame or tibble.")
   }
 
   if (!"region" %in% names(data)) {

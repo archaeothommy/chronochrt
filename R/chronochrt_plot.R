@@ -96,8 +96,9 @@
 #'
 #' # Customise plot
 #' plot_chronochrt(chrons, axis_title = "BC/AD", year_lim = c(-50,100),
-#'                 fill_chron = "black", color_chron = "white", size_line = 5)
-#' plot_chronochrt(chrons, labels, images, color_label = "red", size_text = 5, height_image = 4)
+#' fill_chron = "black", color_chron = "white", size_line = 5)
+#' plot_chronochrt(chrons, labels, images, color_label = "red", size_text = 5,
+#' height_image = 4)
 #'
 #' # Export plot
 #'

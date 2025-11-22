@@ -49,6 +49,7 @@ In ChronochRt, each _chron_ is independently evaluated. Consequently, all parame
 This example highlights the structure of a chronological dataset, called `chrons`, with a x-axis included for educational reasons: 
 
 ```{r plot_structure_data, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+
 chrons <- add_chron(
   region = c("region = A", "region = A", "region = A", "region = A", "region = A",
     "region = A", "region = A", "region = A", "region = A", "region = A",
@@ -178,6 +179,7 @@ text <- add_label_text(
 )
 
 plot_chronochrt(data, labels_text = text)
+
 ```
 
 Likewise, image labels are added by `add_label_images()`. This function works exactly the same, with taking the path to the image (web address or path to a file on your computer) instead of the text. It can handle raster and vector files: 
@@ -199,6 +201,7 @@ image <- add_label_image(
   )
 
 plot_chronochrt(data, labels_image = image)
+
 ```
 
 ## Compatibility with the [tidyverse](https://www.tidyverse.org/), incl. [ggplot2](https://ggplot2.tidyverse.org/)
@@ -226,6 +229,7 @@ The examples shown in this vignette contain some "tricks", which might facilitat
 Although `plot_chronochRt()` provides some basic options for the customisation and export of the generated graph, they might not always be sufficient and allows significantly less control how the different elements are placed in the chronological chart and how it is designed. For these reasons, ChronochRt provides two geoms. The `geom_chronochRt()` will convert the  and `geom_chronochRtImage()`. While `geom_chronochRt()` transforms a set of _chrons_ into a chronological chart, `geom_chronochRtImage()` is handling the placement of images. To create a chronological chart as shown in the examples above, they must be combined with a faceting function from and, for the text labels, with the `geom_text()`, all from the package [ggplot2](https://ggplot2.tidyverse.org/). Consequently, the general code will be similar to: 
 
 ```{r eval=FALSE, include=FALSE}
+
 library(ggplot2)
 library(ChronochRt)
 
@@ -234,6 +238,7 @@ ggplot() +
   geom_text(data = label, aes(x = position, y = year, label = label)) +
   geom_chronochRtImage(data = image, aes(x = position, y = year, image_path = image_path)) +
   facet_grid(cols = vars(region), scales = "free_x", space = "free_x")
+
 ```
 
 Putting it into practice to reproduce the last example yields: 
@@ -246,11 +251,14 @@ plot <- ggplot() +
   facet_grid(cols = vars(region))
 
 plot
+
 ```
 
 Set the general design with the `theme_chronochrt()`: 
 ```{r advanced2, echo=TRUE, fig.align='center', fig.width=10, message=FALSE, out.width="100%"}
+
 plot + theme_chronochrt()
+
 ```
 
 However, some fine tuning is still required. By default, the axes are expanded. Additionally, the first example indicates, that the default faceting of ggplot2 is not optimal: 
@@ -262,6 +270,7 @@ ggplot() +
                                                level = level, add = add)) +
   facet_grid(cols = vars(region)) +
   theme_chronochrt()
+
 ```
 
 Therefore, some additional arguments and functions must be provided to obtain the desired layout: 
@@ -275,6 +284,7 @@ ggplot() +
   scale_y_continuous(name = "Year", expand = c(0, 0)) +
   facet_grid(cols = vars(region), scales = "free_x", space = "free_x") +
   theme_chronochrt()
+
 ```
 
 And for the example with the image labels, the code now looks like: 
@@ -287,6 +297,7 @@ ggplot() +
   scale_y_continuous(name = "Year", expand = c(0, 0)) +
   facet_grid(cols = vars(region), scales = "free_x", space = "free_x") +
   theme_chronochrt()
+
 ```
 
 Although this approach might seem cumbersome at first, it provides all the freedom for the construction and design of a chronological chart that a regular ggplot2 object offers, like adding other geoms and using other themes:

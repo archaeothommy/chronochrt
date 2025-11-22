@@ -39,7 +39,8 @@
 
 convert_to_chron <- function(data, region, name, start, end, level, add) {
   if (!is.data.frame(data)) {
-    stop("Wrong input format: ", substitute(data), " must be a data frame or tibble.")
+    stop("Wrong input format: ", substitute(data),
+         " must be a data frame or tibble.")
   }
 
   pos <- tidyselect::eval_rename(
@@ -70,7 +71,9 @@ convert_to_chron <- function(data, region, name, start, end, level, add) {
   }
 
   if (!all(round(data$level) == data$level)) {
-    stop("Wrong input format: level must contain only whole numbers (1, 2, 3, ...)")
+    stop(
+      "Wrong input format: level must contain only whole numbers (1, 2, 3, ...)"
+    )
   }
 
   data

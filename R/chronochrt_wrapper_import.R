@@ -134,7 +134,8 @@ import_chron <- function(path,
   data$add <- as.logical(data$add)
 
   if (sum(!is.na(data$add)) != length(data$add)) {
-    stop("Wrong input format: ", substitute(add), " contains empty cells or non-logical values. ")
+    stop("Wrong input format: ", substitute(add),
+         " contains empty cells or non-logical values. ")
   }
 
   if (!all(is.character(data$region),
@@ -151,7 +152,8 @@ import_chron <- function(path,
   }
 
   if (!all(round(data$level) == data$level)) {
-    stop("Wrong input format: ", substitute(level), " must contain only whole numbers (1, 2, 3, ...).")
+    stop("Wrong input format: ", substitute(level),
+         " must contain only whole numbers (1, 2, 3, ...).")
   }
 
   data
