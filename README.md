@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-:warning: **Develop of this package was moved to [GitHub](https://github.com/archaeothommy/chronochrt/). The repository on GitLab is not longer actively used and will be archived in due time.** :warning:
-
 # ChronochRt
 
 <!-- badges: start -->
