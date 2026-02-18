@@ -1,7 +1,7 @@
 # ChronochRt 0.1.5.900
 
 # ChronochRt 0.1.5
-* Deprecated function replaced in `import_chron_delim()`.
+* Deprecated function replaced in `import_chron_delim()`. (@jennybc, #3)
 
 # ChronochRt 0.1.4
 
