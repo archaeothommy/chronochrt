@@ -70,7 +70,7 @@ import_chron_delim <- function(path, delim, ...) {
       data <- readr::read_tsv(file = path, ...)
     }
     if (delim == " ") {
-      data <- readr::read_table2(file = path, ...)
+      data <- readr::read_table(file = path, ...)
     }
   } else {
     data <- readr::read_delim(file = path, delim = delim, ...)
